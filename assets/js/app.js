@@ -3,7 +3,7 @@
  */
 import { initTheme } from './theme.js';
 import { initAvatarUpload, getCurrentAvatar, setInitialAvatar } from './upload.js';
-import { calculateExactAge, calculateNextBirthday, getZodiac, toBnDigits } from './calculator.js';
+import { calculateExactAge, calculateNextBirthday, getZodiac, getDecan, toBnDigits } from './calculator.js';
 import { saveProfile, loadSavedProfile, clearProfile, getState, setBirthDate, setLiveTicker } from './state.js';
 import { renderBioCard } from './components/bioCard.js';
 import { updateAgeStats } from './components/ageStats.js';
@@ -11,6 +11,8 @@ import { updateBirthdayCountdown, renderZodiacCard } from './components/countdow
 import { renderHistoricalInsights } from './components/historicalView.js';
 import { renderBenchmarkTable } from './components/milestonesTable.js';
 import { initAdSlots } from './components/adSlots.js';
+import { initZodiacModal, openZodiacModal } from './components/zodiacModal.js';
+import { initArchetypeModal, openArchetypeModal } from './components/archetypeModal.js';
 
 function initApp() {
   // 1. Initialize Theme (Light / Dark)
@@ -19,10 +21,14 @@ function initApp() {
   // 2. Initialize Ad Slots (Multi-platform: AdSense, Media.net, etc.)
   initAdSlots();
 
-  // 3. Populate Days (1 to 31)
+  // 3. Initialize Zodiac Deep Insights Modal & Archetype Modal
+  initZodiacModal();
+  initArchetypeModal();
+
+  // 4. Populate Days (1 to 31)
   populateDaysDropdown();
 
-  // 4. Initialize Avatar Upload (click, drag-drop, canvas compression)
+  // 5. Initialize Avatar Upload (click, drag-drop, canvas compression)
   initAvatarUpload((newAvatarBase64) => {
     const currentState = getState();
     if (currentState.profile) {
@@ -44,7 +50,7 @@ function initApp() {
     }
   });
 
-  // 5. Restore Saved Data from localStorage
+  // 6. Restore Saved Data from localStorage
   const savedData = loadSavedProfile();
   if (savedData) {
     restoreFormData(savedData);
@@ -53,7 +59,7 @@ function initApp() {
     }
   }
 
-  // 6. Bind Event Listeners
+  // 7. Bind Event Listeners
   setupEventListeners();
 }
 
@@ -77,6 +83,8 @@ function restoreFormData(data) {
   const userCountrySelect = document.getElementById('userCountry');
   const userNameInput = document.getElementById('userName');
   const userGenderSelect = document.getElementById('userGender');
+  const userRelationshipSelect = document.getElementById('userRelationship');
+  const userBloodGroupSelect = document.getElementById('userBloodGroup');
   const birthTimeInput = document.getElementById('birthTime');
 
   if (data.day && dobDaySelect) dobDaySelect.value = data.day;
@@ -85,6 +93,8 @@ function restoreFormData(data) {
   if (data.country && userCountrySelect) userCountrySelect.value = data.country;
   if (data.name && userNameInput) userNameInput.value = data.name;
   if (data.gender && userGenderSelect) userGenderSelect.value = data.gender;
+  if (data.relationship && userRelationshipSelect) userRelationshipSelect.value = data.relationship;
+  if (data.bloodGroup && userBloodGroupSelect) userBloodGroupSelect.value = data.bloodGroup;
   if (data.time && birthTimeInput) birthTimeInput.value = data.time;
 
   if (data.avatar) {
@@ -100,6 +110,45 @@ function setupEventListeners() {
   const filterAll = document.getElementById('filterAllMilestones');
   const filterNear = document.getElementById('filterNearMilestones');
 
+  const zodiacCard = document.getElementById('zodiacCardInteractive');
+  const openZodiacBtn = document.getElementById('openZodiacDetailBtn');
+  const zodiacPill = document.getElementById('resultZodiacPill');
+
+  const openArchetypeBtn = document.getElementById('openArchetypeModalBtn');
+  const archetypeCard = document.getElementById('archetypeCardInteractive');
+
+  // Trigger Zodiac Modal
+  const triggerZodiacModal = () => {
+    const currentState = getState();
+    if (!currentState.profile) return;
+    const { month, day, year, relationship, gender, name, bloodGroup } = currentState.profile;
+    const zodiac = getZodiac(month, day);
+    openZodiacModal(zodiac, month, day, year, relationship, gender, name, bloodGroup, currentState.birthDate);
+  };
+
+  // Trigger Archetype Modal
+  const triggerArchetypeModal = () => {
+    const currentState = getState();
+    if (!currentState.profile) return;
+    const { month, day, year, relationship, gender, name, bloodGroup, avatar } = currentState.profile;
+    const zodiac = getZodiac(month, day);
+    const userData = { month, day, year, relationship, gender, name, bloodGroup, zodiac, birthDate: currentState.birthDate };
+    openArchetypeModal(userData, avatar || getCurrentAvatar());
+  };
+
+  if (zodiacCard) zodiacCard.addEventListener('click', triggerZodiacModal);
+  if (openZodiacBtn) openZodiacBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerZodiacModal();
+  });
+  if (zodiacPill) zodiacPill.addEventListener('click', triggerZodiacModal);
+
+  if (openArchetypeBtn) openArchetypeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerArchetypeModal();
+  });
+  if (archetypeCard) archetypeCard.addEventListener('click', triggerArchetypeModal);
+
   // Form Submit
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -111,6 +160,8 @@ function setupEventListeners() {
       const country = document.getElementById('userCountry').value;
       const name = document.getElementById('userName').value.trim();
       const gender = document.getElementById('userGender').value;
+      const relationship = document.getElementById('userRelationship')?.value || 'single';
+      const bloodGroup = document.getElementById('userBloodGroup')?.value || 'unknown';
       const time = document.getElementById('birthTime').value || '00:00';
       const avatar = getCurrentAvatar();
 
@@ -119,7 +170,7 @@ function setupEventListeners() {
         return;
       }
 
-      const userData = { day, month, year, country, name, gender, time, avatar };
+      const userData = { day, month, year, country, name, gender, relationship, bloodGroup, time, avatar };
       executeAnalysis(userData, true);
     });
   }
@@ -152,15 +203,32 @@ function setupEventListeners() {
       const profile = currentState.profile;
       const age = calculateExactAge(currentState.birthDate);
       const zodiac = getZodiac(profile.month, profile.day);
+      const decan = getDecan(zodiac, profile.month, profile.day);
       const bday = calculateNextBirthday(currentState.birthDate);
       const genderLabel = profile.gender === 'female' ? 'মহিলা' : (profile.gender === 'other' ? 'অন্যান্য' : 'পুরুষ');
+      
+      const relMap = {
+        single: "সিঙ্গেল",
+        relationship: "সম্পর্কে আছেন",
+        married: "বিবাহিত",
+        living_together: "লিভিং টুগেদার",
+        divorced: "বিচ্ছেদপ্রাপ্ত",
+        widowed: "সঙ্গীহারা"
+      };
+      const relText = relMap[profile.relationship] || "সিঙ্গেল";
+      const bloodText = profile.bloodGroup && profile.bloodGroup !== 'unknown' ? ` • রক্তের গ্রুপ: ${profile.bloodGroup}` : '';
+
+      const bdaysOfWeek = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+      const bDayOfWeek = bdaysOfWeek[currentState.birthDate.getDay()] || '';
+      const bDayOfWeekText = bDayOfWeek ? ` (${bDayOfWeek})` : '';
 
       const summary = `🌟 লাইফ-টাইমলাইন ও এজ অ্যানালাইসিস 🌟\n` +
-        `👤 নাম: ${profile.name || 'ইউজার'} (${genderLabel})\n` +
-        `📅 জন্মতারিখ: ${toBnDigits(profile.day)}/${toBnDigits(profile.month)}/${toBnDigits(profile.year)}\n` +
+        `👤 নাম: ${profile.name || 'ইউজার'} (${genderLabel} • ${relText}${bloodText})\n` +
+        `📅 জন্মতারিখ: ${toBnDigits(profile.day)}/${toBnDigits(profile.month)}/${toBnDigits(profile.year)}${bDayOfWeekText}\n` +
         `⏳ বর্তমান বয়স: ${toBnDigits(age.years)} বছর, ${toBnDigits(age.months)} মাস, ${toBnDigits(age.days)} দিন\n` +
         `⏱️ অতিবাহিত সময়: ${toBnDigits(age.totalDays.toLocaleString('en-US'))} দিন (${toBnDigits(age.totalHours.toLocaleString('en-US'))} ঘণ্টা)\n` +
-        `✨ রাশিচক্র: ${zodiac.nameBn} (${zodiac.sign})\n` +
+        `✨ রাশিচক্র: ${zodiac.nameBn} (${zodiac.sign}) • দ্রেক্বাণ: ${toBnDigits(decan?.decanNumber || 1)}ম ভাগ\n` +
+        `🪐 শাসক গ্রহ: ${zodiac.planet} (উপ-গ্রহ: ${decan?.subPlanet || zodiac.planet})\n` +
         `🎂 পরবর্তী জন্মদিন: আর ${toBnDigits(bday.days)} দিন বাকি (হবে ${toBnDigits(bday.nextAge)} বছর)\n\n` +
         `🌐 লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার দ্বারা বিশ্লেষিত`;
 

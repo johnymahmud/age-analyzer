@@ -170,7 +170,7 @@
             </button>
           </div>
 
-          <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
             <!-- Full Name -->
             <div>
               <label for="userName"
@@ -192,6 +192,23 @@
                 <option value="male" selected>👨 পুরুষ (Male)</option>
                 <option value="female">👩 মহিলা (Female)</option>
                 <option value="other">✨ অন্যান্য (Other / Non-Binary)</option>
+              </select>
+            </div>
+
+            <!-- Relationship Status -->
+            <div>
+              <label for="userRelationship"
+                class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                সম্পর্কের অবস্থা (Status)
+              </label>
+              <select id="userRelationship"
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm">
+                <option value="single" selected>💎 সিঙ্গেল (Single)</option>
+                <option value="relationship">❤️ সম্পর্কে আছেন (In a Relationship)</option>
+                <option value="married">💍 বিবাহিত (Married)</option>
+                <option value="living_together">🤝 লিভিং টুগেদার (Living Together)</option>
+                <option value="divorced">🕊️ বিচ্ছেদপ্রাপ্ত (Divorced)</option>
+                <option value="widowed">🥀 সঙ্গীহারা (Widowed)</option>
               </select>
             </div>
           </div>
@@ -260,8 +277,8 @@
           </div>
         </div>
 
-        <!-- Optional Birth Time -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+        <!-- Optional Birth Time & Blood Group -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3 border-t border-slate-200 dark:border-slate-800/80">
           <div>
             <label for="birthTime" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
               জন্ম সময় (যদি জানা থাকে - ঐচ্ছিক)
@@ -269,6 +286,25 @@
             <input type="time" id="birthTime" value="00:00"
               class="w-full bg-slate-50 dark:bg-slate-950/70 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
           </div>
+
+          <div>
+            <label for="userBloodGroup" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+              রক্তের গ্রুপ (Blood Group - ঐচ্ছিক)
+            </label>
+            <select id="userBloodGroup"
+              class="w-full bg-slate-50 dark:bg-slate-950/70 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+              <option value="unknown" selected>জানি না / উল্লেখ নেই (ঐচ্ছিক)</option>
+              <option value="A+">🅰️ A+ (এ পজিটিভ)</option>
+              <option value="A-">🅰️ A- (এ নেগেটিভ)</option>
+              <option value="B+">🅱️ B+ (বি পজিটিভ)</option>
+              <option value="B-">🅱️ B- (বি নেগেটিভ)</option>
+              <option value="O+">🅾️ O+ (ও পজিটিভ)</option>
+              <option value="O-">🅾️ O- (ও নেগেটিভ)</option>
+              <option value="AB+">🆎 AB+ (এবি পজিটিভ)</option>
+              <option value="AB-">🆎 AB- (এবি নেগেটিভ)</option>
+            </select>
+          </div>
+
           <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 sm:pt-4">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 shrink-0"></span>
             আপনার ছবি ও তথ্য সম্পূর্ণ সুরক্ষিতভাবে কেবল ব্রাউজারের লোকাল স্টোরেজে থাকে।
@@ -343,10 +379,17 @@
           </div>
           <div class="text-center sm:text-left space-y-1.5 flex-1">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h2 id="resultUserName" class="text-2xl font-extrabold text-slate-900 dark:text-white print-text-dark">MD.
-                SHAH MAHMUD</h2>
-              <span id="activeBirthDateTag"
-                class="text-xs font-mono px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-300 border border-slate-200 dark:border-slate-700 font-semibold"></span>
+              <h2 id="resultUserName" class="text-2xl font-extrabold text-slate-900 dark:text-white print-text-dark">MD. SHAH MAHMUD</h2>
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="activeBirthDayOfWeekTag"
+                  class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold shadow-sm"
+                  title="আপনার জন্মবার">
+                  <span>🗓️</span>
+                  <span id="activeBirthDayOfWeekText">জন্মবার: রবিবার</span>
+                </span>
+                <span id="activeBirthDateTag"
+                  class="text-xs font-mono px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-300 border border-slate-200 dark:border-slate-700 font-semibold"></span>
+              </div>
             </div>
             <p id="resultUserMeta" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 print-text-dark"></p>
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
@@ -354,6 +397,10 @@
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-semibold"></span>
               <span id="resultNextBdayPill"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-semibold"></span>
+              <span id="resultRelationshipPill"
+                class="hidden text-[11px] px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/30 font-semibold"></span>
+              <span id="resultBloodGroupPill"
+                class="hidden text-[11px] px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/30 font-semibold"></span>
               <span
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold">ব্যক্তিগত
                 প্রোফাইল</span>
@@ -448,8 +495,8 @@
         </div>
       </section>
 
-      <!-- 2. Next Birthday & Zodiac -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- 2. Next Birthday, Zodiac & Royal Archetype (3-Column Luxury Grid) -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Birthday Countdown Card -->
         <div
           class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
@@ -495,44 +542,105 @@
 
           <div
             class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-            <span>পরবর্তী জন্মদিনে আপনার বয়স হবে:</span>
+            <span>পরবর্তী জন্মদিনে বয়স হবে:</span>
             <span id="nextAgeLabel" class="font-bold text-slate-800 dark:text-slate-200 text-sm">০ বছর</span>
           </div>
         </div>
 
-        <!-- Zodiac Card -->
-        <div
-          class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
+        <!-- Zodiac Card (Interactive) -->
+        <div id="zodiacCardInteractive"
+          class="group bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card hover:border-cyan-500/50 hover:shadow-cyan-500/10 hover:shadow-2xl transition-all cursor-pointer relative overflow-hidden"
+          title="রাশিফলের সম্পূর্ণ বিশ্লেষণ ও গ্রহের প্রভাব দেখতে ক্লিক করুন">
+          
+          <!-- Subtle decorative glow -->
+          <div class="absolute -top-10 -right-10 w-28 h-28 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all pointer-events-none"></div>
+
           <div>
             <div class="flex items-center justify-between mb-4">
               <span
-                class="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                ✨ রাশিচক্র (Zodiac Sign)
+                class="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center gap-1.5">
+                ✨ রাশিচক্র ও গ্রহচর
               </span>
               <span id="zodiacDateSpan" class="text-xs text-slate-500 dark:text-slate-400 font-semibold"></span>
             </div>
 
             <div class="flex items-center space-x-4 mb-4">
               <div id="zodiacSymbol"
-                class="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-4xl text-cyan-600 dark:text-cyan-300 shadow-inner">
+                class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-3xl text-cyan-600 dark:text-cyan-300 shadow-inner group-hover:scale-105 transition-transform">
                 ♈
               </div>
               <div>
-                <h3 id="zodiacNameBn" class="text-2xl font-bold text-slate-900 dark:text-slate-100">মেষ (Aries)</h3>
+                <h3 id="zodiacNameBn" class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">মেষ (Aries)</h3>
                 <p id="zodiacElement" class="text-xs text-cyan-700 dark:text-cyan-400 font-semibold mt-0.5">উপাদান:
                   অগ্নি | শাসক গ্রহ: মঙ্গল</p>
+                <span id="zodiacDecanBadge" class="inline-block mt-1 text-[10px] font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
+                  ১ম দ্রেক্বাণ (Decan)
+                </span>
               </div>
             </div>
 
             <p id="zodiacTraits"
-              class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-950/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/70">
+              class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-950/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800/70 line-clamp-3">
             </p>
           </div>
 
-          <div
-            class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
-            <span>বৈশিষ্ট্য: নেতৃত্ব, উদ্যম ও দৃঢ়তা</span>
-            <span class="text-slate-400 dark:text-slate-500">পাশ্চাত্য জ্যোতিষবিজ্ঞান</span>
+          <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 dark:text-slate-400">৭টি গভীর ইনসাইট</span>
+            <button type="button" id="openZodiacDetailBtn"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-600 hover:bg-cyan-700 text-white shadow-sm transition-all group-hover:scale-105">
+              <span>রাশিফল বিশ্লেষণ</span>
+              <span>↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Astro-Morphology & Royal Archetype Card (Interactive) -->
+        <div id="archetypeCardInteractive"
+          class="group bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card hover:border-amber-500/50 hover:shadow-amber-500/10 hover:shadow-2xl transition-all cursor-pointer relative overflow-hidden"
+          title="ফেসিয়াল অরা ও রাজকীয় আর্কিটাইপ ড্যাশবোর্ড দেখতে ক্লিক করুন">
+          
+          <!-- Subtle decorative gold glow -->
+          <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all pointer-events-none"></div>
+
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center gap-1.5">
+                👑 ফেসিয়াল অরা ও আর্কিটাইপ
+              </span>
+              <span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                AI স্ক্যান রেডি
+              </span>
+            </div>
+
+            <div class="flex items-center space-x-4 mb-4">
+              <div
+                class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-purple-500/20 border border-amber-500/30 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition-transform">
+                🔮
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  সামুদ্রিক লক্ষণ ও আর্কিটাইপ
+                </h3>
+                <p class="text-xs text-amber-700 dark:text-amber-400 font-semibold mt-0.5">৭টি রাজকীয় ও মহাজাগতিক রূপরেখা</p>
+                <span class="inline-block mt-1 text-[10px] font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
+                  চেহারা, চোখ, কপাল ও অরা মেট্রিক্স
+                </span>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-950/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800/70 line-clamp-3">
+              চেহারার গড়ন, চোখ ও অভিব্যক্তি বিশ্লেষণ করে আপনি রাজকীয় অধিপতি, সেনাপতি, আধ্যাত্মিক দ্রষ্টা নাকি সৃজনশীল রূপকার তা উন্মোচন করুন।
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 dark:text-slate-400">বায়োমেট্রিক ও বৈদিক</span>
+            <button type="button" id="openArchetypeModalBtn"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold shadow-sm transition-all group-hover:scale-105">
+              <span>আর্কিটাইপ স্ক্যানার</span>
+              <span>↗</span>
+            </button>
           </div>
         </div>
       </section>
@@ -677,6 +785,592 @@
         নীতিমালা</span>
     </div>
   </footer>
+
+  <!-- Advanced Zodiac & Planetary Insights Modal -->
+  <div id="zodiacModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+    <!-- Backdrop Overlay -->
+    <div id="zodiacModalBackdrop" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md transition-opacity"></div>
+
+    <!-- Modal Card Container -->
+    <div class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/50 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div id="modalZodiacSymbol"
+            class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-3xl text-cyan-600 dark:text-cyan-300 shadow-inner">
+            ♈
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 id="modalZodiacName" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">মেষ (Aries)</h2>
+              <div id="modalUserRelBadge"></div>
+            </div>
+            <p id="modalZodiacMeta" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">উপাদান: অগ্নি | শাসক গ্রহ: মঙ্গল</p>
+          </div>
+        </div>
+
+        <button type="button" id="closeZodiacModalBtn"
+          class="w-10 h-10 rounded-2xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center text-lg font-bold transition-all shadow-sm"
+          title="বন্ধ করুন (Esc)">
+          ✕
+        </button>
+      </div>
+
+      <!-- Tab Navigation Bar -->
+      <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-x-auto flex items-center space-x-2 no-scrollbar">
+        <button type="button" class="zodiac-tab-btn" data-tab="personality">
+          <span>🌟</span>
+          <span>ব্যক্তিত্ব ও স্বভাব</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="planets">
+          <span>🪐</span>
+          <span>গ্রহ ও দ্রেক্বাণ</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="travel">
+          <span>✈️</span>
+          <span>বিদেশ ভ্রমণ ভাগ্য</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="relationship">
+          <span>❤️</span>
+          <span>প্রেম ও পার্টনার ম্যাচিং</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="health">
+          <span>🩸</span>
+          <span>বায়ো-অ্যাস্ট্রো ও স্বাস্থ্য</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="weekly">
+          <span>📅</span>
+          <span>সাপ্তাহিক পূর্বাভাস</span>
+        </button>
+        <button type="button" class="zodiac-tab-btn" data-tab="lucky">
+          <span>🔮</span>
+          <span>শুভ বিষয় ও রত্ন</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable Tab Contents) -->
+      <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+        
+        <!-- Tab 1: Personality & Traits -->
+        <div id="zodiacTab_personality" class="zodiac-tab-panel space-y-5">
+          <!-- Nature summary -->
+          <div class="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-900 dark:text-cyan-200">
+            <span class="text-xs font-bold uppercase tracking-wider block mb-1">মূল চালিকাশক্তি ও স্বভাব</span>
+            <p id="modalTraitNature" class="text-sm font-medium leading-relaxed"></p>
+          </div>
+
+          <!-- Deep Personality Paragraph -->
+          <div class="bg-slate-50 dark:bg-slate-950/50 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
+              <span>🧬 মনস্তাত্ত্বিক রূপরেখা ও বৈশিষ্ট্য</span>
+            </h4>
+            <p id="modalTraitPersonality" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+          </div>
+
+          <!-- Strengths vs Weaknesses -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Strengths -->
+            <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                <span>💎 শক্তি ও ইতিবাচক দিক (পজিটিভিটি)</span>
+              </h4>
+              <ul id="modalStrengthsList" class="space-y-2"></ul>
+            </div>
+
+            <!-- Weaknesses -->
+            <div class="p-4 rounded-2xl bg-rose-500/5 border border-rose-500/20">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-3 flex items-center gap-2">
+                <span>⚠️ দুর্বলতা ও সতর্কতার দিক (নেগেটিভিটি)</span>
+              </h4>
+              <ul id="modalWeaknessesList" class="space-y-2"></ul>
+            </div>
+          </div>
+
+          <!-- Dos & Don'ts -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+              <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300 block mb-2">💡 যা করবেন (করণীয়)</span>
+              <ul id="modalDosList" class="space-y-1.5"></ul>
+            </div>
+            <div class="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20">
+              <span class="text-xs font-bold text-rose-700 dark:text-rose-300 block mb-2">🚫 যা এড়িয়ে চলবেন (বর্জনীয়)</span>
+              <ul id="modalDontsList" class="space-y-1.5"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Planetary Alignment & Decanates -->
+        <div id="zodiacTab_planets" class="zodiac-tab-panel space-y-5 hidden">
+          <!-- Active Decan Card -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-900/30 via-slate-900/50 to-purple-900/30 border border-indigo-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                🪐 আপনার দ্রেক্বাণ (Decanate Sub-Ruler)
+              </span>
+              <span id="modalDecanRange" class="text-xs text-slate-400 font-semibold"></span>
+            </div>
+            <h3 id="modalDecanTitle" class="text-lg font-bold text-slate-100"></h3>
+            <p id="modalDecanSubPlanet" class="text-xs text-indigo-300 font-mono font-medium"></p>
+            <p id="modalDecanTraits" class="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/50 p-3 rounded-xl border border-slate-800"></p>
+          </div>
+
+          <!-- Day of Week Ruler Card -->
+          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">☀️ জন্মবারের মহাজাগতিক সংযোগ (Cosmic Day Ruler)</span>
+              <span id="modalDayRulerPlanet" class="text-xs font-bold text-amber-700 dark:text-amber-300 font-mono"></span>
+            </div>
+            <h4 id="modalDayRulerTitle" class="text-sm font-bold text-slate-800 dark:text-slate-200"></h4>
+            <p id="modalDayRulerTraits" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"></p>
+          </div>
+
+          <!-- Scientific Note -->
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+            <p class="leading-relaxed">
+              <strong class="text-slate-800 dark:text-slate-200">দ্রেক্বাণ (Decanate) বিজ্ঞান:</strong> প্রতিটি রাশি ৩০ দিনব্যাপী বিস্তৃত এবং প্রতি ১০ দিন অন্তর একটি নির্দিষ্ট উপ-গ্রহের (Sub-ruler) প্রভাব থাকে। এ কারণেই একই রাশির জাতক হওয়া সত্ত্বেও জন্মতারিখের পার্থক্যের কারণে তাদের স্বভাব ও ভাগ্যে পরিবর্তন ঘটে।
+            </p>
+          </div>
+
+          <!-- All 3 Decans -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">এই রাশির ৩টি দ্রেক্বাণ উপ-বিভাগ:</h4>
+            <div id="modalAllDecansList" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Foreign Travel & Relocation -->
+        <div id="zodiacTab_travel" class="zodiac-tab-panel space-y-5 hidden">
+          <!-- Score Gauge -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-cyan-900/30 via-slate-900/50 to-blue-900/30 border border-cyan-500/30 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-1">অভিবাসন ও বিদেশ গমন যোগ</span>
+                <h3 class="text-lg font-bold text-slate-100">বিদেশ ভ্রমণ ও উচ্চশিক্ষা সম্ভাবনা সূচক</h3>
+              </div>
+              <div id="modalTravelScoreText" class="text-3xl font-extrabold text-cyan-400 font-mono">০%</div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-3.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+              <div id="modalTravelScoreBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Travel metadata grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-1">ভ্রমণের প্রকৃতি ও সাফল্য ক্ষেত্র</span>
+              <p id="modalTravelType" class="text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800">
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-1">অনুকূল দিক ও অঞ্চল</span>
+              <p id="modalTravelDirections" class="text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+            </div>
+          </div>
+
+          <!-- Insight box -->
+          <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-950 dark:text-indigo-200 text-xs sm:text-sm leading-relaxed">
+            <span class="font-bold block mb-1">✈️ জ্যোতিষশাস্ত্রীয় ভ্রমণ বিশ্লেষণ:</span>
+            <p id="modalTravelInsight"></p>
+          </div>
+        </div>
+
+        <!-- Tab 4: Relationship & Interactive Partner Matcher -->
+        <div id="zodiacTab_relationship" class="zodiac-tab-panel space-y-5 hidden">
+          <!-- Personalized status card -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-900/30 via-slate-900/50 to-purple-900/30 border border-rose-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-400">প্রেম ও সম্পর্ক নির্দেশনা</span>
+              <span id="modalRelStatusBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-semibold border border-rose-500/30"></span>
+            </div>
+            <p id="modalRelAdviceText" class="text-xs sm:text-sm text-slate-200 leading-relaxed bg-slate-950/50 p-4 rounded-xl border border-slate-800"></p>
+          </div>
+
+          <!-- Interactive Partner Compatibility Simulator -->
+          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                  <span>💞 লাইভ পার্টনার ম্যাচিং সিমুলেটর</span>
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">যেকোনো একটি রাশি নির্বাচন করে তাৎক্ষণিক সামঞ্জস্য ও বোঝাপড়ার স্কোর দেখুন</p>
+              </div>
+
+              <!-- Partner Select Dropdown -->
+              <div class="min-w-[180px]">
+                <select id="partnerSignSelect"
+                  class="w-full bg-white dark:bg-slate-900 border border-indigo-500/40 rounded-xl px-3.5 py-2 text-xs font-bold text-indigo-700 dark:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Match Score Gauge -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 space-y-3">
+              <div class="flex items-center justify-between">
+                <span id="partnerScoreLabel" class="text-xs font-bold text-indigo-600 dark:text-indigo-400"></span>
+                <span id="partnerScoreText" class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono">০%</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="partnerScoreBar" class="h-full rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+
+              <!-- Metrics Breakdown -->
+              <div class="grid grid-cols-3 gap-2 pt-2 text-center text-xs">
+                <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-950">
+                  <span class="text-[10px] text-slate-500 block">রোমান্স ও টান</span>
+                  <span id="partnerRomanceScore" class="font-bold text-rose-500 font-mono">০%</span>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-950">
+                  <span class="text-[10px] text-slate-500 block">যোগাযোগ</span>
+                  <span id="partnerCommScore" class="font-bold text-cyan-500 font-mono">০%</span>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-950">
+                  <span class="text-[10px] text-slate-500 block">দীর্ঘমেয়াদী স্থায়িত্ব</span>
+                  <span id="partnerStabScore" class="font-bold text-emerald-500 font-mono">০%</span>
+                </div>
+              </div>
+
+              <p id="partnerInsightText" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed pt-1"></p>
+            </div>
+          </div>
+
+          <!-- Compatibility Quick Matrix -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block mb-1">❤️ সহজাত সেরা মেলবন্ধন (Best Match)</span>
+              <p id="modalBestMatch" class="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20">
+              <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider block mb-1">⚡ সতর্ক থাকার রাশি (Challenging)</span>
+              <p id="modalChallengingMatch" class="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Bio-Astro Health & Nutrition -->
+        <div id="zodiacTab_health" class="zodiac-tab-panel space-y-5 hidden">
+          <div id="bioAstroHealthContent"></div>
+        </div>
+
+        <!-- Tab 6: Weekly Prediction & Golden Hours -->
+        <div id="zodiacTab_weekly" class="zodiac-tab-panel space-y-5 hidden">
+          <div class="flex items-center justify-between p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+            <span class="font-bold text-cyan-700 dark:text-cyan-300">📅 বর্তমান ক্যালেন্ডার সপ্তাহিক পূর্বাভাস</span>
+            <span id="modalWeeklyDateRange" class="font-semibold text-slate-600 dark:text-slate-400 font-mono"></span>
+          </div>
+
+          <!-- Golden Hours Box -->
+          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <span class="font-bold text-amber-800 dark:text-amber-300">☀️ আজকের শুভ কর্মঘণ্টা (Power Window):</span>
+            <span id="modalGoldenHoursText" class="font-mono font-bold text-amber-900 dark:text-amber-200"></span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Career -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+                <span>💼</span>
+                <h4 class="text-xs font-bold uppercase tracking-wider">কর্ম ও ক্যারিয়ার</h4>
+              </div>
+              <p id="modalWeeklyCareer" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <!-- Finance -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <span>💰</span>
+                <h4 class="text-xs font-bold uppercase tracking-wider">আর্থিক ভাগ্য</h4>
+              </div>
+              <p id="modalWeeklyFinance" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <!-- Wellness -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
+                <span>🌿</span>
+                <h4 class="text-xs font-bold uppercase tracking-wider">স্বাস্থ্য ও প্রশান্তি</h4>
+              </div>
+              <p id="modalWeeklyWellness" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 7: Lucky Elements -->
+        <div id="zodiacTab_lucky" class="zodiac-tab-panel space-y-5 hidden">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-center">
+              <span class="text-2xl block mb-1">🔢</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block">শুভ সংখ্যা</span>
+              <p id="modalLuckyNumbers" class="text-sm font-bold text-slate-800 dark:text-slate-200 font-mono mt-1"></p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-center">
+              <span class="text-2xl block mb-1">🎨</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block">শুভ রং</span>
+              <p id="modalLuckyColors" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mt-1"></p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-center">
+              <span class="text-2xl block mb-1">💎</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block">উপযুক্ত রত্নপাথর</span>
+              <p id="modalLuckyGemstone" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mt-1"></p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-center">
+              <span class="text-2xl block mb-1">🗓️</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block">শুভ বার</span>
+              <p id="modalLuckyDay" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1"></p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-center">
+              <span class="text-2xl block mb-1">🪙</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 block">শুভ ধাতু</span>
+              <p id="modalLuckyMetal" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/50 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+        <div class="flex items-center space-x-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+          <span>উন্নত জ্যোতির্বৈজ্ঞানিক ও রাশিফল ইঞ্জিন</span>
+        </div>
+
+        <button type="button" id="closeZodiacModalFooterBtn"
+          class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all cursor-pointer">
+          বন্ধ করুন
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Astro-Morphology & Royal Archetype Modal -->
+  <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+    <!-- Backdrop Overlay -->
+    <div id="archetypeModalBackdrop" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"></div>
+
+    <!-- Modal Card Container -->
+    <div class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-amber-500/30 dark:border-amber-500/20 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+      
+      <!-- Modal Header with Holographic Biometric Scanner -->
+      <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/40 to-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+          <!-- Biometric Avatar Frame with Laser Scan -->
+          <div class="relative w-16 h-16 rounded-2xl bg-slate-800 border-2 border-amber-500/50 overflow-hidden flex items-center justify-center shadow-lg">
+            <img id="archetypeAvatarPreview" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+            <div id="archetypeAvatarFallback" class="text-3xl flex items-center justify-center text-amber-400">👑</div>
+            
+            <!-- Holographic scanning laser line -->
+            <div id="archetypeScannerLaser" class="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_#f59e0b] animate-bounce hidden"></div>
+            <!-- Biometric Grid Overlay -->
+            <div id="archetypeScannerGrid" class="absolute inset-0 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:8px_8px] opacity-25 pointer-events-none hidden"></div>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="archetypePrimaryIcon" class="text-2xl">👑</span>
+              <h2 id="archetypePrimaryTitle" class="text-xl sm:text-2xl font-extrabold text-amber-300">রাজকীয় অধিপতি (The Sovereign)</h2>
+            </div>
+            <p id="archetypeTagline" class="text-xs text-amber-200/80 font-medium mt-0.5">জন্মগত শাসক, মহিমান্বিত ব্যক্তিত্ব ও অটল প্রতিষ্ঠাতা</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <span id="archetypeScanStatus" class="text-[11px] font-mono text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full border border-amber-500/30">
+            স্ক্যানিং সম্পন্ন ✓
+          </span>
+          <button type="button" id="closeArchetypeModalBtn"
+            class="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-lg font-bold transition-all shadow-sm"
+            title="বন্ধ করুন (Esc)">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Scrollable Body -->
+      <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+        
+        <!-- Top Archetype Overview & Quote -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span id="archetypeSecondaryBadge" class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold border border-purple-500/30">
+              সহকারী প্রভাব
+            </span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              অরা বর্ণচ্ছটা: <strong id="archetypeAuraColorText" class="text-amber-600 dark:text-amber-400">গোল্ডেন অরা</strong>
+            </span>
+          </div>
+
+          <blockquote id="archetypeQuoteText" class="text-xs sm:text-sm font-serif italic text-slate-700 dark:text-slate-300 bg-white/60 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 leading-relaxed"></blockquote >
+
+          <p id="archetypeNatureText" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- 6 Core Dimensional Metrics (Radars & Gauges) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+              <span>📊 মহাজাগতিক মেধার ৬টি ডাইমেনশন</span>
+            </h4>
+            <span class="text-[11px] text-slate-400">১০০% বায়োমেট্রিক ও অ্যাস্ট্রো স্কেল</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Leadership -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">👑 নেতৃত্ব ও রাজকীয় তেজ</span>
+                <span id="metricLeadershipText" class="font-mono font-bold text-amber-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricLeadershipBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Creativity -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🎨 সৃজনশীলতা ও শিল্পবোধ</span>
+                <span id="metricCreativityText" class="font-mono font-bold text-pink-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricCreativityBar" class="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Spirituality -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🔮 আধ্যাত্মিক অন্তর্দৃষ্টি</span>
+                <span id="metricSpiritualityText" class="font-mono font-bold text-purple-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricSpiritualityBar" class="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Magnetism -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">✨ বাচনভঙ্গি ও আকর্ষণ ক্ষমতা</span>
+                <span id="metricMagnetismText" class="font-mono font-bold text-cyan-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricMagnetismBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Willpower -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">⚔️ ইচ্ছাশক্তি ও মানসিক দৃঢ়তা</span>
+                <span id="metricWillpowerText" class="font-mono font-bold text-red-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricWillpowerBar" class="h-full rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Wisdom -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🧠 দূরদর্শিতা ও প্রজ্ঞা</span>
+                <span id="metricWisdomText" class="font-mono font-bold text-emerald-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricWisdomBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Samudrika Shastra Facial Signatures -->
+        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+            <span>📜 সামুদ্রিক লক্ষণ বিচার (Facial Morpho-Signatures)</span>
+          </h4>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">মুখের গড়ন (Face Shape):</span>
+              <p id="samudrikaFaceShapeText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">দৃষ্টি ও চোখের অরা (Eyes):</span>
+              <p id="samudrikaEyeAuraText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">কপাল ও প্রজ্ঞা প্যালেস:</span>
+              <p id="samudrikaForeheadText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Strengths vs Challenges -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              💎 রাজকীয় শক্তি ও দক্ষতা
+            </h4>
+            <ul id="archetypeStrengthsList" class="space-y-1.5"></ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              ⚠️ সচেতনতা ও ভারসাম্য রক্ষার দিক
+            </h4>
+            <ul id="archetypeChallengesList" class="space-y-1.5"></ul>
+          </div>
+        </div>
+
+        <!-- Career & Domain Guidance -->
+        <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs sm:text-sm text-indigo-900 dark:text-indigo-200">
+          <strong class="block mb-1">🏛️ সেরা কর্মক্ষেত্র ও সামাজিক ভূমিকা:</strong>
+          <p id="archetypeDomainsText"></p>
+        </div>
+
+        <!-- Interactive Manual Tuner Mode (Optional Customizer) -->
+        <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">🎭 ম্যানুয়াল ফেসিয়াল টিউনিং (ঐচ্ছিক কাস্টমাইজার)</span>
+            <span class="text-[10px] text-slate-400">লাইভ টিউন করে দেখতে পারেন</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="tuneFaceShape" class="block text-[11px] text-slate-500 mb-1">মুখের আকৃতি পরিবর্তন করুন:</label>
+              <select id="tuneFaceShape" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200"></select>
+            </div>
+            <div>
+              <label for="tuneEyeAura" class="block text-[11px] text-slate-500 mb-1">চোখ ও দৃষ্টির ধরন পরিবর্তন করুন:</label>
+              <select id="tuneEyeAura" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200"></select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/50 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+        <button type="button" id="copyArchetypeCardBtn"
+          class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+          <span>👑</span>
+          <span>রয়্যাল আর্কিটাইপ কার্ড কপি করুন</span>
+        </button>
+
+        <button type="button" id="closeArchetypeModalFooterBtn"
+          class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all cursor-pointer">
+          বন্ধ করুন
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div id="toast"

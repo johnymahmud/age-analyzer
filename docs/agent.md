@@ -11,8 +11,8 @@
 - পরিবর্তনের প্রয়োজন হলে নির্দিষ্ট ফাংশন বা স্টাইলে ইনক্রিমেন্টাল (ছোট ছোট লক্ষ্যভিত্তিক) এডিট করুন।
 
 ### ২. ডুপ্লিকেট ফিচার/ডেটা তৈরি নিষিদ্ধ (Zero Redundancy)
-- নতুন কোনো ঐতিহাসিক ব্যক্তিত্ব, ইভেন্ট বা রাশিচক্রের তথ্য যোগ করার আগে `assets/js/data/` ফোল্ডারের ফাইলগুলো পর্যবেক্ষণ করুন।
-- একাধিক ফাইল বা একাধিক জায়গায় একই ক্যালকুলেশন লজিক ডুপ্লিকেট করবেন না; সর্বদা `calculator.js` থেকে ফাংশন ইমপোর্ট করুন।
+- নতুন কোনো ঐতিহাসিক ব্যক্তিত্ব, ইভেন্ট, রাশিচক্র বা আর্কিটাইপের তথ্য যোগ করার আগে `assets/js/data/` ফোল্ডারের ফাইলগুলো পর্যবেক্ষণ করুন।
+- একাধিক ফাইল বা একাধিক জায়গায় একই ক্যালকুলেশন লজিক ডুপ্লিকেট করবেন না; সর্বদা `calculator.js` বা `morphologyEngine.js` থেকে ফাংশন ইমপোর্ট করুন।
 
 ### ৩. কোনো বিল্ড স্টেপ বা প্যাকেজ ডিপেনডেনসি চাপিয়ে দেওয়া যাবে না
 - প্রজেক্টটি ব্রাউজার-নেটিভ **Vanilla JavaScript (ES Modules)** এ চলে।
@@ -29,16 +29,21 @@
 | :--- | :--- | :--- |
 | `lifeTimelineForm` | `app.js` | মূল ইনপুট ফর্ম |
 | `dobDay`, `dobMonth`, `dobYear` | `app.js` | জন্মতারিখ ইনপুটসমূহ |
-| `userCountry`, `userName`, `userGender`, `birthTime` | `app.js` | ব্যবহারকারীর প্রোফাইল ইনপুটসমূহ |
+| `userCountry`, `userName`, `userGender`, `userRelationship`, `userBloodGroup`, `birthTime` | `app.js` | ব্যবহারকারীর প্রোফাইল ও বায়ো ইনপুটসমূহ |
 | `resultsContainer` | `app.js` | পুরো ফলাফল সেকশনের প্যারেন্ট কন্টেইনার |
 | `avatarUploadContainer`, `avatarInput`, `avatarImage`, `removeAvatarBtn` | `upload.js` | অ্যাভাটার আপলোড ও প্রিভিউ উইজেট |
-| `resultUserName`, `activeBirthDateTag`, `resultUserMeta`, `resultGenderBadge` | `bioCard.js` | ইউজারের বায়ো কার্ড এলিমেন্টস |
+| `resultUserName`, `activeBirthDayOfWeekTag`, `activeBirthDateTag`, `resultUserMeta`, `resultGenderBadge` | `bioCard.js` | ইউজারের বায়ো কার্ড এলিমেন্টস ও জন্মবার ব্যাজ |
 | `resultAvatarImg`, `resultAvatarFallback` | `bioCard.js` | বায়ো কার্ডের প্রোফাইল ছবি ও ইমোজি |
+| `resultZodiacPill`, `resultNextBdayPill`, `resultRelationshipPill`, `resultBloodGroupPill` | `bioCard.js` | বায়ো কার্ডের ইন্টারেক্টিভ কুইক পিলস |
 | `statYears`, `statMonths`, `statDays` | `ageStats.js` | মূল ৩টি বড় কাউন্টার (বছর, মাস, দিন) |
 | `statTotalWeeks`, `statTotalDays`, `statTotalHours`, `statTotalMinutes`, `statTotalSeconds` | `ageStats.js` | মাইক্রো টাইম ব্লকস |
 | `statHeartbeats`, `statDistanceTraveled`, `statBreaths`, `statSleepYears` | `ageStats.js` | বায়োলজিক্যাল ও মহাজাগতিক পরিমাপ |
 | `cdDays`, `cdHours`, `cdMinutes`, `cdSeconds`, `nextBirthdayDate`, `nextAgeLabel` | `countdown.js` | পরবর্তী জন্মদিনের কাউন্টডাউন টাইমার |
-| `zodiacSymbol`, `zodiacNameBn`, `zodiacElement`, `zodiacTraits`, `zodiacDateSpan` | `countdown.js` | রাশিচক্র কার্ড |
+| `zodiacCardInteractive`, `openZodiacDetailBtn`, `zodiacSymbol`, `zodiacNameBn` | `app.js`, `countdown.js` | ইন্টারঅ্যাক্টিভ রাশিচক্র কার্ড |
+| `zodiacModal`, `closeZodiacModalBtn`, `closeZodiacModalFooterBtn`, `zodiacModalBackdrop` | `zodiacModal.js` | অ্যাডভান্সড রাশিফল ও গ্রহচর মডাল |
+| `archetypeCardInteractive`, `openArchetypeModalBtn` | `app.js` | ইন্টারঅ্যাক্টিভ রয়্যাল আর্কিটাইপ কার্ড |
+| `archetypeModal`, `closeArchetypeModalBtn`, `closeArchetypeModalFooterBtn`, `archetypeModalBackdrop` | `archetypeModal.js` | রয়্যাল আর্কিটাইপ ও ফেসিয়াল স্ক্যানার মডাল |
+| `tuneFaceShape`, `tuneEyeAura`, `copyArchetypeCardBtn` | `archetypeModal.js` | আর্কিটাইপ ম্যানুয়াল টিউনার ও কপি বাটন |
 | `famousPersonalitiesGrid` | `historicalView.js` | সমসাময়িক মনীষী গ্রিড |
 | `historicalEventsContainer` | `historicalView.js` | ঐতিহাসিক ঘটনা ও বিশ্ব পটভূমি |
 | `benchmarkTableBody` | `milestonesTable.js` | মাইলস্টোন টেবিল বডি |
@@ -52,9 +57,13 @@
 ### খ. অপরিবর্তনীয় ফাংশন সিগনেচার ও রিটার্ন টাইপ
 নিম্নলিখিত কোর ফাংশনগুলোর ইনপুট ও আউটপুট স্ট্রাকচার বজায় রাখতে হবে:
 1. `calculateExactAge(birthDate, targetDate = new Date())` ➔ অবশ্যই `{ years, months, days, totalSeconds, totalMinutes, totalHours, totalDays, totalWeeks }` রিটার্ন করবে।
-2. `calculateNextBirthday(birthDate)` ➔ অবশ্যই `{ nextDate, days, hours, minutes, seconds, nextAge }` রিটার্ন করবে।
-3. `getZodiac(month, day)` ➔ অবশ্যই `{ nameBn, sign, element, planet, traits, start, end }` অবজেক্ট রিটার্ন করবে।
-4. `toBnDigits(number)` ➔ সংখ্যাকে ইংরেজি থেকে বাংলা অঙ্কে রূপান্তর করে স্ট্রিং প্রদান করবে।
+2. `getZodiac(month, day)` ➔ অবশ্যই `{ nameBn, sign, element, planet, traits, nature, start, end, ... }` রিটার্ন করবে।
+3. `getDecan(zodiac, month, day)` ➔ অবশ্যই `{ decanNumber, title, subPlanet, traits, rangeText }` রিটার্ন করবে।
+4. `calculateTravelIndex(zodiac, decan, birthYear)` ➔ অবশ্যই `{ travelScore, travelLevel, travelBadge, favorableContinents, travelAspects }` রিটার্ন করবে।
+5. `getBirthDayRuler(birthDate)` ➔ অবশ্যই `{ dayBn, planetBn, title, traits, favorableActivities }` রিটার্ন করবে।
+6. `getBioAstroHealth(zodiac, bloodGroup)` ➔ বায়ো-অ্যাস্ট্রো খাদ্যতালিকা ও অঙ্গ সুরক্ষার অবজেক্ট প্রদান করবে।
+7. `calculateArchetypeProfile(userData, visualFeatures)` ➔ অবশ্যই `{ primaryArchetype, secondaryArchetype, metrics, samudrika }` রিটার্ন করবে।
+8. `toBnDigits(number)` ➔ সংখ্যাকে ইংরেজি থেকে বাংলা অঙ্কে রূপান্তর করে স্ট্রিং প্রদান করবে।
 
 ---
 
@@ -65,30 +74,10 @@
      ```bash
      git checkout -b feature/notable-feature-name
      ```
-   - লোকালহোস্টে পরীক্ষা করার পর টেস্ট পাস হলে তা `main` ব্রাঞ্চে মার্জ করুন:
+   - লোকালহোস্টে পরীক্ষা করার পর টেস্ট পাস হলে এবং ব্যবহারকারীর স্পষ্ট অনুমোদন পেলে তা `main` ব্রাঞ্চে মার্জ ও পুশ করুন:
      ```bash
      git checkout main
      git merge feature/notable-feature-name
      git push origin main
      ```
-3. **কমিট মেসেজ স্ট্যান্ডার্ড:** পরিস্কার ও অর্থপূর্ণ মেসেজ দিন (যেমন: `feat: add sound effect on calculation`, `fix: correct leap year edge case`).
-
----
-
-## 🎨 UI/UX নীতি ও স্টাইলিং নির্দেশিকা
-- **Tailwind কালার প্যালেট:**
-  - ব্যাকগ্রাউন্ড: `slate-50` (লাইট মোড) / `slate-950` (ডার্ক মোড)।
-  - অ্যাকসেন্ট কালার: `indigo-600` ও `purple-600` এর গ্রেডিয়েন্ট।
-  - হাইলাইট ও সাফল্য: `emerald-500`।
-  - সতর্কবার্তা ও অ্যাকশন: `rose-500` / `amber-500`।
-- **প্রিন্ট ফরম্যাটিং:** নতুন কোনো সেকশন যোগ করার সময় যদি সেটি প্রিন্টে বাদ দিতে হয়, তবে `no-print` ক্লাস যোগ করুন। কার্ড হিসেবে প্রিন্ট করতে হলে `print-card` ক্লাস ব্যবহার করুন।
-- **রেসপনসিভ ডিজাইন:** মোবাইল-ফার্স্ট পদ্ধতি অনুসরণ করুন। ছোট স্ক্রিন (`sm`), ট্যাবলেট (`md`), এবং ডেস্কটপ (`lg`, `xl`) সব ডিভাইসেই লেআউট প্যাডিং ও গ্রিড ঠিক রাখতে হবে।
-
----
-
-## 🚀 নতুন সেশনের অনবোর্ডিং চেকলিস্ট (Agent Onboarding)
-যেকোনো নতুন সেশনে কাজ শুরুর পূর্বে এজেন্টকে নিচের ধাপগুলো অনুসরণ করতে হবে:
-1. [ ] `docs/blueprint.md` এবং `docs/current_state.md` ফাইলগুলো পড়ে প্রজেক্টের সামগ্রিক অবস্থা জানা।
-2. [ ] `git status` দিয়ে কোনো আনকমিটেড ফাইল আছে কি না চেক করা।
-3. [ ] লোকাল সার্ভার সচল আছে কি না (`http://localhost:3000`) যাচাই করা।
-4. [ ] কাজ শেষে `docs/current_state.md` এবং `docs/projectlog.md` আপডেট করা।
+3. **কমিট মেসেজ স্ট্যান্ডার্ড:** পরিস্কার ও অর্থপূর্ণ মেসেজ দিন (যেমন: `feat: add advanced zodiac decanates and archetype scanner`).

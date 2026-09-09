@@ -1,7 +1,7 @@
 /**
  * Birthday Countdown & Zodiac Details Component
  */
-import { calculateNextBirthday, getZodiac, toBnDigits } from '../calculator.js';
+import { calculateNextBirthday, getZodiac, getDecan, toBnDigits } from '../calculator.js';
 
 const BENGALI_MONTHS = [
   "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
@@ -39,12 +39,14 @@ export function updateBirthdayCountdown(birthDate) {
 
 export function renderZodiacCard(month, day) {
   const z = getZodiac(month, day);
+  const decan = getDecan(z, month, day);
 
   const zSymbol = document.getElementById('zodiacSymbol');
   const zName = document.getElementById('zodiacNameBn');
   const zElement = document.getElementById('zodiacElement');
   const zTraits = document.getElementById('zodiacTraits');
   const zDateSpan = document.getElementById('zodiacDateSpan');
+  const zDecanBadge = document.getElementById('zodiacDecanBadge');
 
   if (zSymbol) zSymbol.textContent = z.sign;
   if (zName) zName.textContent = z.nameBn;
@@ -53,4 +55,9 @@ export function renderZodiacCard(month, day) {
   if (zDateSpan) {
     zDateSpan.textContent = `তারিখ সীমা: ${toBnDigits(z.start[1])} ${BENGALI_MONTHS[z.start[0] - 1]} - ${toBnDigits(z.end[1])} ${BENGALI_MONTHS[z.end[0] - 1]}`;
   }
+  if (zDecanBadge && decan) {
+    zDecanBadge.textContent = `${toBnDigits(decan.decanNumber)}ম দ্রেক্বাণ (উপ-গ্রহ: ${decan.subPlanet})`;
+  }
+
+  return z;
 }
