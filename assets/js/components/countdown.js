@@ -74,5 +74,22 @@ export function renderZodiacCard(month, day, unlockLevel = 35) {
     }
   }
 
+  // Update static zodiac card display
+  const zodiacSymbol = document.getElementById('zodiacSymbol');
+  const zodiacNameBn = document.getElementById('zodiacNameBn');
+  const zodiacElement = document.getElementById('zodiacElement');
+  const zodiacTraits = document.getElementById('zodiacTraits');
+
+  if (zodiacSymbol) zodiacSymbol.textContent = z.sign || '';
+  if (zodiacNameBn) zodiacNameBn.textContent = lang === 'bn' ? (z.nameBn || z.name) : `${z.nameEn || z.name} (${z.sign})`;
+  if (zodiacElement) {
+    zodiacElement.textContent = lang === 'bn'
+      ? `উপাদান: ${z.element} | শাসক গ্রহ: ${z.planet}`
+      : `Element: ${z.element} | Ruler: ${z.planet}`;
+  }
+  if (zodiacTraits) {
+    zodiacTraits.textContent = z.traits || '';
+  }
+
   return z;
 }

@@ -70,13 +70,13 @@
           </svg>
         </div>
         <div>
-          <span
+          <span data-i18n="appTitle"
             class="text-lg font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
             লাইফ-টাইমলাইন
           </span>
-          <span
+          <span data-i18n="appVersionBadge"
             class="text-xs ml-2 px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 font-mono hidden sm:inline-block font-semibold">
-            v3.0 Pro
+            v3.2 Pro
           </span>
         </div>
       </div>
@@ -111,7 +111,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
           </svg>
-          <span class="hidden sm:inline">রিসেট</span>
+          <span data-i18n="resetBtn" class="hidden sm:inline">রিসেট</span>
         </button>
       </div>
     </div>
@@ -132,13 +132,13 @@
       <div
         class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold tracking-wide shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>সম্পূর্ণ ব্রাউজার-বেসড অ্যানালিটিক্স ও হিস্ট্রি ইঞ্জিন</span>
+        <span data-i18n="engineBadge">সম্পূর্ণ ব্রাউজার-বেসড অ্যানালিটিক্স ও হিস্ট্রি ইঞ্জিন</span>
       </div>
-      <h1
+      <h1 data-i18n="mainHeading"
         class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-indigo-300">
         লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার
       </h1>
-      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+      <p data-i18n="mainSubheading" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
         আপনার বয়সকে শুধু সংখ্যায় নয়, আবিষ্কার করুন পৃথিবীর ইতিহাস ও যুগান্তকারী মাইলফলকের মেলবন্ধনে।
       </p>
     </section>
@@ -167,7 +167,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                     d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span class="text-[10px] mt-1 font-semibold text-slate-600 dark:text-slate-400">ছবি আপলোড</span>
+                <span data-i18n="avatarUpload" class="text-[10px] mt-1 font-semibold text-slate-600 dark:text-slate-400">ছবি আপলোড</span>
               </div>
             </div>
             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
@@ -180,25 +180,25 @@
           <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Full Name -->
             <div>
-              <label for="userName"
+              <label for="userName" data-i18n="userNameLabel"
                 class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                 আপনার পুরো নাম (Name)
               </label>
-              <input type="text" id="userName" placeholder="যেমন: মোঃ শাহ মাহমুদ"
+              <input type="text" id="userName" data-i18n-placeholder="userNamePlaceholder" placeholder="যেমন: মোঃ শাহ মাহমুদ"
                 class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm">
             </div>
 
             <!-- Gender / Sex -->
             <div>
-              <label for="userGender"
+              <label for="userGender" data-i18n="userGenderLabel"
                 class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                 লিঙ্গ (Gender / Sex)
               </label>
               <select id="userGender"
                 class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm">
-                <option value="male" selected>👨 পুরুষ (Male)</option>
-                <option value="female">👩 মহিলা (Female)</option>
-                <option value="other">✨ অন্যান্য (Other / Non-Binary)</option>
+                <option value="male" data-i18n="genderMale" selected>👨 পুরুষ (Male)</option>
+                <option value="female" data-i18n="genderFemale">👩 মহিলা (Female)</option>
+                <option value="other" data-i18n="genderOther">✨ অন্যান্য (Other / Non-Binary)</option>
               </select>
             </div>
           </div>
@@ -208,7 +208,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- Day -->
           <div>
-            <label for="dobDay"
+            <label for="dobDay" data-i18n="dayLabel"
               class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               দিন (Day)
             </label>
@@ -251,7 +251,7 @@
 
           <!-- Month -->
           <div>
-            <label for="dobMonth"
+            <label for="dobMonth" data-i18n="monthLabel"
               class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               মাস (Month)
             </label>
@@ -275,17 +275,17 @@
 
           <!-- Year -->
           <div>
-            <label for="dobYear"
+            <label for="dobYear" data-i18n="yearLabel"
               class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               বছর (Year)
             </label>
-            <input type="number" id="dobYear" min="1900" max="2026" placeholder="যেমন: 1988" required
+            <input type="number" id="dobYear" min="1900" max="2026" data-i18n-placeholder="yearPlaceholder" placeholder="যেমন: 1988" required
               class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
           </div>
 
           <!-- Region / Country -->
           <div>
-            <label for="userCountry"
+            <label for="userCountry" data-i18n="countryLabel"
               class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               দেশ / অঞ্চল (Region)
             </label>
@@ -301,7 +301,7 @@
         <!-- Optional Birth Time -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-200 dark:border-slate-800/80">
           <div>
-            <label for="birthTime" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label for="birthTime" data-i18n="birthTimeLabel" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
               জন্ম সময় (যদি জানা থাকে - ঐচ্ছিক)
             </label>
             <input type="time" id="birthTime" value="00:00"
@@ -309,7 +309,7 @@
           </div>
           <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 sm:pt-4">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 shrink-0"></span>
-            আপনার ছবি ও তথ্য সম্পূর্ণ সুরক্ষিতভাবে কেবল ব্রাউজারের লোকাল স্টোরেজে থাকে।
+            <span data-i18n="privacyNote">আপনার ছবি ও তথ্য সম্পূর্ণ সুরক্ষিতভাবে কেবল ব্রাউজারের লোকাল স্টোরেজে থাকে।</span>
           </div>
         </div>
 
@@ -320,7 +320,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
-            <span>লাইফ টাইমলাইন বিশ্লেষণ করুন</span>
+            <span data-i18n="calculateBtn">লাইফ টাইমলাইন বিশ্লেষণ করুন</span>
           </button>
         </div>
       </form>
@@ -341,7 +341,7 @@
         class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 backdrop-blur-md shadow-sm no-print">
         <div class="flex items-center space-x-2 text-slate-600 dark:text-slate-300 text-sm">
           <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-          <span class="font-semibold text-slate-800 dark:text-slate-200">লাইভ আপডেট সক্রিয়</span>
+          <span data-i18n="liveUpdateActive" class="font-semibold text-slate-800 dark:text-slate-200">লাইভ আপডেট সক্রিয়</span>
         </div>
         <div class="flex items-center space-x-3">
           <button id="copySummaryBtn" type="button"
@@ -350,7 +350,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
             </svg>
-            <span>Copy Summary</span>
+            <span data-i18n="copySummaryBtn">Copy Summary</span>
           </button>
           <button id="downloadPdfBtn" type="button"
             class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/25 transition-all flex items-center space-x-2">
@@ -358,7 +358,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <span>Download PDF Report</span>
+            <span data-i18n="downloadPdfBtn">Download PDF Report</span>
           </button>
         </div>
       </div>
@@ -392,7 +392,7 @@
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-semibold"></span>
               <span id="resultNextBdayPill"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-semibold"></span>
-              <span
+              <span data-i18n="profileTitle"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold">ব্যক্তিগত
                 প্রোফাইল</span>
             </div>
@@ -409,77 +409,73 @@
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">১. নিখুঁত বয়স ও অতিবাহিত
-            সময়</h2>
+          <h2 data-i18n="ageSectionTitle" class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">১. নিখুঁত বয়স ও অতিবাহিত সময়</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
             class="bg-white/90 dark:bg-gradient-to-br dark:from-indigo-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-indigo-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
-            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block mb-1">বছর
-              (Years)</span>
+            <span data-i18n="yearsLabel" class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block mb-1">বছর (Years)</span>
             <div id="statYears"
               class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
               ০</div>
-            <span class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">পূর্ণ সৌর পরিক্রমা</span>
+            <span data-i18n="yearsSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">পূর্ণ সৌর পরিক্রমা</span>
           </div>
 
           <div
             class="bg-white/90 dark:bg-gradient-to-br dark:from-purple-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-purple-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 block mb-1">মাস
-              (Months)</span>
+            <span data-i18n="monthsLabel" class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 block mb-1">মাস (Months)</span>
             <div id="statMonths"
               class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
               ০</div>
-            <span class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত মাস</span>
+            <span data-i18n="monthsSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত মাস</span>
           </div>
 
           <div
             class="bg-white/90 dark:bg-gradient-to-br dark:from-emerald-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-emerald-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
-            <span
-              class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">দিন
-              (Days)</span>
+            <span data-i18n="daysLabel"
+              class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">দিন (Days)</span>
             <div id="statDays"
               class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
               ০</div>
-            <span class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত দিন</span>
+            <span data-i18n="daysSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত দিন</span>
           </div>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট সপ্তাহ</span>
+            <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট সপ্তাহ</span>
             <span id="statTotalWeeks"
               class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
           </div>
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট দিন</span>
+            <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট দিন</span>
             <span id="statTotalDays"
               class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
           </div>
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">অতিবাহিত ঘণ্টা</span>
+            <span data-i18n="elapsedHours" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">অতিবাহিত ঘণ্টা</span>
             <span id="statTotalHours"
               class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
           </div>
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট মিনিট</span>
+            <span data-i18n="totalMinutes" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট মিনিট</span>
             <span id="statTotalMinutes"
               class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
           </div>
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-indigo-500/30 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 block">লাইভ সেকেন্ড ⏱️</span>
+            <span data-i18n="liveSeconds" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 block">লাইভ সেকেন্ড ⏱️</span>
             <span id="statTotalSeconds"
               class="text-xl font-bold text-indigo-600 dark:text-indigo-300 font-mono print-text-dark">০</span>
           </div>
           <div
             class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">আনুমানিক হৃদস্পন্দন ❤️</span>
+            <span data-i18n="heartbeats" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">আনুমানিক হৃদস্পন্দন ❤️</span>
             <span id="statHeartbeats"
               class="text-xl font-bold text-rose-600 dark:text-rose-400 font-mono print-text-dark">০</span>
           </div>
@@ -493,14 +489,14 @@
           class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span
+              <span data-i18n="birthdayCardTitle"
                 class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
                 🎂 পরবর্তী জন্মদিন কাউন্টডাউন
               </span>
               <span id="nextBirthdayDate"
                 class="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold"></span>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">পরবর্তী জন্মদিন উদযাপন করার জন্য সময় বাকি আছে:
+            <p data-i18n="birthdayRemainingText" class="text-sm text-slate-600 dark:text-slate-300 mb-6">পরবর্তী জন্মদিন উদযাপন করার জন্য সময় বাকি আছে:
             </p>
 
             <div class="grid grid-cols-4 gap-2 text-center">
@@ -508,32 +504,32 @@
                 class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
                 <span id="cdDays"
                   class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০</span>
-                <span class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">দিন</span>
+                <span data-i18n="cdDays" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">দিন</span>
               </div>
               <div
                 class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
                 <span id="cdHours"
                   class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                <span class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">ঘণ্টা</span>
+                <span data-i18n="cdHours" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">ঘণ্টা</span>
               </div>
               <div
                 class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
                 <span id="cdMinutes"
                   class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                <span class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">মিনিট</span>
+                <span data-i18n="cdMinutes" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">মিনিট</span>
               </div>
               <div
                 class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
                 <span id="cdSeconds"
                   class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                <span class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">সেকেন্ড</span>
+                <span data-i18n="cdSeconds" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">সেকেন্ড</span>
               </div>
             </div>
           </div>
 
           <div
             class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-            <span>পরবর্তী জন্মদিনে আপনার বয়স হবে:</span>
+            <span data-i18n="nextAgeText">পরবর্তী জন্মদিনে আপনার বয়স হবে:</span>
             <span id="nextAgeLabel" class="font-bold text-slate-800 dark:text-slate-200 text-sm">০ বছর</span>
           </div>
         </div>
@@ -543,7 +539,7 @@
           class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span
+              <span data-i18n="zodiacCardHeader"
                 class="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
                 ✨ রাশিচক্র (Zodiac Sign)
               </span>
@@ -569,8 +565,8 @@
 
           <div
             class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
-            <span>বৈশিষ্ট্য: নেতৃত্ব, উদ্যম ও দৃঢ়তা</span>
-            <span class="text-slate-400 dark:text-slate-500">পাশ্চাত্য জ্যোতিষবিজ্ঞান</span>
+            <span data-i18n="zodiacCardFooterTrait">বৈশিষ্ট্য: নেতৃত্ব, উদ্যম ও দৃঢ়তা</span>
+            <span data-i18n="zodiacCardFooterSystem" class="text-slate-400 dark:text-slate-500">পাশ্চাত্য জ্যোতিষবিজ্ঞান</span>
           </div>
         </div>
       </section>
@@ -586,9 +582,9 @@
               </svg>
             </div>
             <div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">২. ঐতিহাসিক মেলবন্ধন
+              <h2 data-i18n="historicalSectionTitle" class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">২. ঐতিহাসিক মেলবন্ধন
                 (Historical Insights)</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">আপনার জন্মদিনের তারিখে বিশ্ব ইতিহাসের বিশিষ্ট
+              <p data-i18n="historicalSectionSub" class="text-xs text-slate-500 dark:text-slate-400">আপনার জন্মদিনের তারিখে বিশ্ব ইতিহাসের বিশিষ্ট
                 ব্যক্তিত্ব ও যুগান্তকারী ঘটনা</p>
             </div>
           </div>
@@ -596,7 +592,7 @@
 
         <!-- Personalities Grid -->
         <div class="space-y-3">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+          <h3 data-i18n="famousPeopleTitle" class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             🌟 আপনার জন্মদিনে জন্ম নেওয়া বিখ্যাত ব্যক্তিত্ব
           </h3>
           <div id="famousPersonalitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -604,7 +600,7 @@
 
         <!-- Events Container -->
         <div class="space-y-3">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+          <h3 data-i18n="eventsTitle" class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             📜 উল্লেখযোগ্য ঐতিহাসিক ঘটনা ও আবিষ্কার
           </h3>
           <div id="historicalEventsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -622,17 +618,17 @@
               </svg>
             </div>
             <div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">৩. "আপনার বয়সে তাঁরা যা
+              <h2 data-i18n="milestonesTitle" class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">৩. "আপনার বয়সে তাঁরা যা
                 করেছিলেন" (Milestone Benchmark)</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">আপনার বর্তমান বয়সের সাথে মনীষীদের অর্জনের তুলনামূলক
+              <p data-i18n="milestonesSub" class="text-xs text-slate-500 dark:text-slate-400">আপনার বর্তমান বয়সের সাথে মনীষীদের অর্জনের তুলনামূলক
                 পর্যবেক্ষণ</p>
             </div>
           </div>
           <div class="flex items-center space-x-2">
-            <button id="filterAllMilestones" type="button"
+            <button id="filterAllMilestones" data-i18n="filterAll" type="button"
               class="text-xs px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-sm transition-all">সব
               দেখুন</button>
-            <button id="filterNearMilestones" type="button"
+            <button id="filterNearMilestones" data-i18n="filterNear" type="button"
               class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all font-semibold">আপনার
               বয়সের কাছাকাছি</button>
           </div>
@@ -644,11 +640,11 @@
             <thead>
               <tr
                 class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                <th class="py-3.5 px-4 font-bold">বয়স (Age)</th>
-                <th class="py-3.5 px-4 font-bold">মনীষী / ব্যক্তিত্ব</th>
-                <th class="py-3.5 px-4 font-bold">ক্ষেত্র</th>
-                <th class="py-3.5 px-4 font-bold">ঐতিহাসিক কীর্তি ও যুগান্তকারী অর্জন</th>
-                <th class="py-3.5 px-4 font-bold text-right">স্ট্যাটাস</th>
+                <th data-i18n="thAge" class="py-3.5 px-4 font-bold">বয়স (Age)</th>
+                <th data-i18n="thPerson" class="py-3.5 px-4 font-bold">মনীষী / ব্যক্তিত্ব</th>
+                <th data-i18n="thField" class="py-3.5 px-4 font-bold">ক্ষেত্র</th>
+                <th data-i18n="thAchievement" class="py-3.5 px-4 font-bold">ঐতিহাসিক কীর্তি ও যুগান্তকারী অর্জন</th>
+                <th data-i18n="thStatus" class="py-3.5 px-4 font-bold text-right">স্ট্যাটাস</th>
               </tr>
             </thead>
             <tbody id="benchmarkTableBody" class="divide-y divide-slate-200 dark:divide-slate-800/60"></tbody>
@@ -659,31 +655,31 @@
       <!-- 5. Cosmic Stats -->
       <section
         class="no-print bg-white/90 dark:bg-gradient-to-r dark:from-slate-900 dark:via-indigo-950/30 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-lg">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-4">
+        <h3 data-i18n="cosmicTitle" class="text-sm font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-4">
           🚀 আপনার মহাজাগতিক যাত্রা (Cosmic Statistics)
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
           <div
             class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">সূর্যকে প্রদক্ষিণ করে মহাকাশে পাড়ি
+            <span data-i18n="cosmicDist" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">সূর্যকে প্রদক্ষিণ করে মহাকাশে পাড়ি
               দিয়েছেন</span>
             <span id="statDistanceTraveled"
               class="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-300 font-mono">০</span>
-            <span class="text-[11px] text-slate-500 block mt-1">কিলোমিটার (আনুমানিক)</span>
+            <span data-i18n="cosmicDistUnit" class="text-[11px] text-slate-500 block mt-1">কিলোমিটার (আনুমানিক)</span>
           </div>
           <div
             class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">মোট গৃহীত আনুমানিক নিঃশ্বাস</span>
+            <span data-i18n="cosmicBreaths" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">মোট গৃহীত আনুমানিক নিঃশ্বাস</span>
             <span id="statBreaths"
               class="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-300 font-mono">০</span>
-            <span class="text-[11px] text-slate-500 block mt-1">বার (প্রতি মিনিটে গড়ে ১৬টি)</span>
+            <span data-i18n="cosmicBreathsUnit" class="text-[11px] text-slate-500 block mt-1">বার (প্রতি মিনিটে গড়ে ১৬টি)</span>
           </div>
           <div
             class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">ঘুমের মধ্যে কাটিয়েছেন প্রায়</span>
+            <span data-i18n="cosmicSleep" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">ঘুমের মধ্যে কাটিয়েছেন প্রায়</span>
             <span id="statSleepYears"
               class="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-300 font-mono">০</span>
-            <span class="text-[11px] text-slate-500 block mt-1">বছর (দৈনিক গড়ে ৮ ঘণ্টা হিসাব)</span>
+            <span data-i18n="cosmicSleepUnit" class="text-[11px] text-slate-500 block mt-1">বছর (দৈনিক গড়ে ৮ ঘণ্টা হিসাব)</span>
           </div>
         </div>
       </section>
@@ -700,17 +696,17 @@
   <!-- Footer with Legal & Privacy Compliance for AdSense / Media.net -->
   <footer
     class="mt-16 border-t border-slate-200 dark:border-slate-900 py-8 text-center text-xs text-slate-500 no-print space-y-2">
-    <p>© লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার | ডেটা ব্রাউজারের লোকাল স্টোরেজে সম্পূর্ণ সুরক্ষিত ও গোপনীয়</p>
+    <p data-i18n="footerCopyright">© লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার | ডেটা ব্রাউজারের লোকাল স্টোরেজে সম্পূর্ণ সুরক্ষিত ও গোপনীয়</p>
     <div class="flex items-center justify-center space-x-4 text-[11px] text-slate-400">
-      <span class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="privacyPolicyLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('গোপনীয়তা নীতি: এই অ্যাপ্লিকেশনটি আপনার কোনো ব্যক্তিগত তথ্য বা ছবি কোনো সার্ভারে পাঠায় না। সকল তথ্য শুধুমাত্র আপনার নিজস্ব ডিভাইসের ব্রাউজারে সংরক্ষিত থাকে।')">প্রাইভেসি
         পলিসি</span>
       <span>•</span>
-      <span class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="termsLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('শর্তাবলী: এই অ্যাপের ঐতিহাসিক ও জ্যোতির্বৈজ্ঞানিক তথ্যসমূহ শিক্ষামূলক এবং বিনোদনমূলক উদ্দেশ্যে উপস্থাপিত।')">ব্যবহারের
         শর্তাবলী</span>
       <span>•</span>
-      <span class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="adPolicyLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('অ্যাডভার্টাইজমেন্ট নীতি: এই সাইটে দেখানো বিজ্ঞাপনসমূহ তৃতীয় পক্ষ অ্যাড নেটওয়ার্ক (যেমন Google AdSense, Media.net) দ্বারা পরিচালিত হতে পারে।')">বিজ্ঞাপন
         নীতিমালা</span>
     </div>
@@ -729,7 +725,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.1"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.2"></script>
 </body>
 
 </html>

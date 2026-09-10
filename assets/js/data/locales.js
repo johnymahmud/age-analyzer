@@ -21,7 +21,9 @@ export const LOCALES = {
     mainHeading: "লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার",
     mainSubheading: "আপনার বয়সকে শুধু সংখ্যায় নয়, আবিষ্কার করুন পৃথিবীর ইতিহাস ও যুগান্তকারী মাইলফলকের মেলবন্ধনে।",
 
-    // Stage 1: Ultra-Slim Form
+    // Stage 1: Form
+    avatarUpload: "ছবি আপলোড",
+    privacyNote: "আপনার ছবি ও তথ্য সম্পূর্ণ সুরক্ষায় শুধুমাত্র আপনার ব্রাউজারের লোকাল স্টোরেজে থাকবে।",
     formTitle: "আপনার জন্মতারিখ প্রদান করুন",
     formSubtitle: "মুহূর্তের মধ্যে বয়স, পরবর্তী জন্মদিন ও মহাজাগতিক পরিভ্রমণ আবিষ্কার করুন",
     dayLabel: "দিন (Day)",
@@ -29,8 +31,8 @@ export const LOCALES = {
     monthLabel: "মাস (Month)",
     monthPlaceholder: "মাস নির্বাচন করুন",
     yearLabel: "বছর (Year)",
-    yearPlaceholder: "যেমন: 1996",
-    calculateBtn: "⚡ তাৎক্ষণিক বয়স ও টাইমলাইন উন্মোচন করুন",
+    yearPlaceholder: "যেমন: 1988",
+    calculateBtn: "লাইফ টাইমলাইন বিশ্লেষণ করুন",
     validationError: "অনুগ্রহ করে দিন, মাস ও বছর সঠিকভাবে নির্বাচন করুন।",
 
     // Months
@@ -179,7 +181,18 @@ export const LOCALES = {
     storyCardTitle: "সোশ্যাল স্টোরি কার্ড প্রস্তুত!",
     storyCardSubtitle: "Instagram, WhatsApp ও Facebook Story-তে শেয়ার করার জন্য সেরা সাইজ",
     downloadImageBtn: "📥 ইমেজ ডাউনলোড করুন",
-    closeBtn: "বন্ধ করুন"
+    closeBtn: "বন্ধ করুন",
+
+    // Zodiac Card Footer & Countries & Legal
+    zodiacCardFooterTrait: "বৈশিষ্ট্য: নেতৃত্ব, উদ্যম ও দৃঢ়তা",
+    zodiacCardFooterSystem: "পাশ্চাত্য জ্যোতিষবিজ্ঞান",
+    countryBD: "🇧🇩 বাংলাদেশ (Bangladesh)",
+    countryIN: "🇮🇳 ভারত (India)",
+    countryGlobal: "🌐 বৈশ্বিক (Global / Others)",
+    footerCopyright: "© লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার | ডেটা ব্রাউজারের লোকাল স্টোরেজে সম্পূর্ণ সুরক্ষিত ও গোপনীয়",
+    privacyPolicyLink: "প্রাইভেসি পলিসি",
+    termsLink: "ব্যবহারের শর্তাবলী",
+    adPolicyLink: "বিজ্ঞাপন নীতিমালা"
   },
 
   en: {
@@ -199,7 +212,9 @@ export const LOCALES = {
     mainHeading: "Life Timeline & Historical Age Analyzer",
     mainSubheading: "Discover your age not just in numbers, but through the tapestry of human history and cosmic milestones.",
 
-    // Stage 1: Ultra-Slim Form
+    // Stage 1: Form
+    avatarUpload: "Upload Photo",
+    privacyNote: "Your photo and data remain 100% private in your browser's local storage.",
     formTitle: "Enter Your Date of Birth",
     formSubtitle: "Instant age, next birthday countdown and cosmic orbital journey in seconds",
     dayLabel: "Day",
@@ -207,8 +222,8 @@ export const LOCALES = {
     monthLabel: "Month",
     monthPlaceholder: "Select Month",
     yearLabel: "Year",
-    yearPlaceholder: "e.g., 1996",
-    calculateBtn: "⚡ Reveal Life Timeline & Age Matrix",
+    yearPlaceholder: "e.g., 1988",
+    calculateBtn: "Analyze Life Timeline",
     validationError: "Please select day, month and year accurately.",
 
     // Months
@@ -357,6 +372,17 @@ export const LOCALES = {
     storyCardTitle: "Social Story Card Ready!",
     storyCardSubtitle: "Perfect 9:16 aspect ratio for Instagram, WhatsApp & Facebook Stories",
     downloadImageBtn: "📥 Download Image",
-    closeBtn: "Close"
+    closeBtn: "Close",
+
+    // Zodiac Card Footer & Countries & Legal
+    zodiacCardFooterTrait: "Traits: Leadership, vitality & fortitude",
+    zodiacCardFooterSystem: "Western Astrology",
+    countryBD: "🇧🇩 Bangladesh",
+    countryIN: "🇮🇳 India",
+    countryGlobal: "🌐 Global / Others",
+    footerCopyright: "© Life Timeline & Historical Age Analyzer | 100% private in browser local storage",
+    privacyPolicyLink: "Privacy Policy",
+    termsLink: "Terms of Use",
+    adPolicyLink: "Advertising Policy"
   }
 };

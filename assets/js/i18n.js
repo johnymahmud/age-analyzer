@@ -73,20 +73,17 @@ export function formatNumberWithCommas(num) {
 
 function updateLangButtonUI() {
   const langToggleBtn = document.getElementById('langToggleBtn');
-  const langLabel = document.getElementById('langLabel');
-  if (!langToggleBtn || !langLabel) return;
+  const langLabel = document.getElementById('langLabel') || document.getElementById('langToggleText');
+  if (!langToggleBtn) return;
 
-  if (currentLanguage === 'bn') {
-    langLabel.textContent = 'EN';
-    langToggleBtn.title = 'Switch to English';
-  } else {
-    langLabel.textContent = 'বাংলা';
-    langToggleBtn.title = 'বাংলায় পরিবর্তন করুন';
+  if (langLabel) {
+    langLabel.textContent = currentLanguage === 'bn' ? 'English' : 'বাংলা';
   }
+  langToggleBtn.title = currentLanguage === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন';
 }
 
 export function translateDOM() {
-  // Elements with data-i18n (textContent)
+  // 1. Elements with data-i18n (textContent)
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = el.getAttribute('data-i18n');
     const text = t(key);
@@ -95,7 +92,7 @@ export function translateDOM() {
     }
   });
 
-  // Elements with data-i18n-placeholder
+  // 2. Elements with data-i18n-placeholder
   document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
     const key = el.getAttribute('data-i18n-placeholder');
     const text = t(key);
@@ -104,7 +101,7 @@ export function translateDOM() {
     }
   });
 
-  // Elements with data-i18n-title
+  // 3. Elements with data-i18n-title
   document.querySelectorAll('[data-i18n-title]').forEach((el) => {
     const key = el.getAttribute('data-i18n-title');
     const text = t(key);
@@ -112,4 +109,53 @@ export function translateDOM() {
       el.title = text;
     }
   });
+
+  // 4. Month Dropdown Options Translation
+  const dobMonthSelect = document.getElementById('dobMonth');
+  if (dobMonthSelect && dobMonthSelect.options) {
+    if (dobMonthSelect.options[0]) {
+      dobMonthSelect.options[0].textContent = t('monthPlaceholder');
+    }
+    const bnMonths = LOCALES.bn.months;
+    const enMonths = LOCALES.en.months;
+    for (let m = 1; m <= 12; m++) {
+      if (dobMonthSelect.options[m]) {
+        dobMonthSelect.options[m].textContent = currentLanguage === 'bn' 
+          ? `${bnMonths[m - 1]} (${enMonths[m - 1]})`
+          : enMonths[m - 1];
+      }
+    }
+  }
+
+  // 5. Gender Dropdown Options Translation
+  const genderSelect = document.getElementById('userGender');
+  if (genderSelect && genderSelect.options) {
+    for (let opt of genderSelect.options) {
+      if (opt.value === 'male') opt.textContent = t('genderMale');
+      if (opt.value === 'female') opt.textContent = t('genderFemale');
+      if (opt.value === 'other') opt.textContent = t('genderOther');
+    }
+  }
+
+  // 6. Country / Region Dropdown Options Translation
+  const countrySelect = document.getElementById('userCountry');
+  if (countrySelect && countrySelect.options) {
+    for (let opt of countrySelect.options) {
+      if (opt.value === 'BD') opt.textContent = t('countryBD');
+      if (opt.value === 'IN') opt.textContent = t('countryIN');
+      if (opt.value === 'GLOBAL') opt.textContent = t('countryGlobal');
+    }
+  }
+
+  // 7. Submit & Action Buttons fallback translation
+  const submitBtnSpan = document.querySelector('#lifeTimelineForm button[type="submit"] span:not(.animate-ping)');
+  if (submitBtnSpan) {
+    submitBtnSpan.textContent = t('calculateBtn');
+  }
+
+  const resetBtnSpan = document.querySelector('#resetStorageBtn span');
+  if (resetBtnSpan) {
+    resetBtnSpan.textContent = t('resetBtn');
+  }
 }
+
