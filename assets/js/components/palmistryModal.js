@@ -419,9 +419,17 @@ function renderReportDashboard() {
             ${elemental.symbol}
           </div>
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-              ${isBn ? 'হস্ত আর্কিটাইপ' : 'Palm Archetype'}
-            </span>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                ${isBn ? 'বায়োমেট্রিক হস্ত আর্কিটাইপ' : 'Biometric Palm Archetype'}
+              </span>
+              <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-800/80 text-slate-300 border border-slate-700">
+                ${isBn ? 'তালু অনুপাত:' : 'Palm Ratio:'} ${formatDigits(data.palmRatio)}
+              </span>
+              <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-800/80 text-slate-300 border border-slate-700">
+                ${isBn ? 'আঙুল অনুপাত:' : 'Finger Ratio:'} ${formatDigits(data.fingerRatio)}
+              </span>
+            </div>
             <h4 class="text-xl sm:text-2xl font-black text-slate-100 mt-1">
               ${isBn ? elemental.name_bn : elemental.name_en}
             </h4>
