@@ -154,6 +154,12 @@ export const LOCALES = {
     unlockSubmitBtn: "✨ সম্পূর্ণ রাশিফল ও কোষ্ঠী উন্মোচন করুন",
     modalCancelBtn: "বাতিল করুন",
 
+    // Completion Meter
+    meterTitle: "প্রোফাইল কমপ্লিশন ও ইনসাইট ট্র্যাকার",
+    meterStage1: "প্রাথমিক বয়স ও টাইমলাইন সক্রিয় (৩৫%)। গভীর রাশিফল ও আর্কিটাইপ আনলক করতে নিচের কার্ডে ক্লিক করুন।",
+    meterStage2: "রাশিচক্র ও কোষ্ঠী ডেটা সম্পূর্ণ (৭০%)। ১০০% প্রোফাইল সম্পন্ন করতে ফেসিয়াল আর্কিটাইপ স্ক্যান করুন।",
+    meterStage3: "অভিনন্দন! আপনার সম্পূর্ণ ১০০% পার্সোনালাইজড লাইফ ড্যাশবোর্ড আনলক হয়েছে।",
+
     // 4 Interactive Discovery Hook Cards
     discoverySectionTitle: "🌟 ইন্টারেক্টিভ এক্সপ্লোরেশন ও লাইফ ড্যাশবোর্ড",
     discoverySectionSub: "আপনার জন্মদিন ও বয়সের ভিত্তিতে গভীরতর অন্তর্দৃষ্টি, কোষ্ঠী ও গোপনীয় রূপরেখা উন্মোচন করুন",
@@ -344,6 +350,12 @@ export const LOCALES = {
     bloodUnknown: "Unknown / Prefer not to say",
     unlockSubmitBtn: "✨ Unlock Full Astrological Blueprint",
     modalCancelBtn: "Cancel",
+
+    // Completion Meter
+    meterTitle: "Profile Completion & Insight Tracker",
+    meterStage1: "Core age & timeline unlocked (35%). Click discovery cards below to unlock deep astrology and royal archetype.",
+    meterStage2: "Astrology coordinates unlocked (70%). Scan facial archetype to reach 100% completion.",
+    meterStage3: "Congratulations! Your full 100% personalized life dashboard is unlocked.",
 
     // 4 Interactive Discovery Hook Cards
     discoverySectionTitle: "🌟 Interactive Exploration & Life Dashboard",
