@@ -24,11 +24,12 @@ import { renderCompletionMeter } from './components/completionMeter.js';
 import { openSocialStoryModal } from './components/socialStory.js';
 import { initAdSlots } from './components/adSlots.js';
 import { openZodiacModal } from './components/zodiacModal.js';
-import { openArchetypeModal } from './components/archetypeModal.js';
+import { openArchetypeModal, resetArchetypeModalState } from './components/archetypeModal.js';
 import { openHistoricalModal, closeHistoricalModal } from './components/historicalModal.js';
 import { openMilestonesModal, closeMilestonesModal } from './components/milestonesModal.js';
 import { openAstroInputModal, closeAstroInputModal } from './components/astroInputModal.js';
-import { openPalmistryModal, closePalmistryModal } from './components/palmistryModal.js';
+import { openPalmistryModal, closePalmistryModal, resetPalmistryModalState } from './components/palmistryModal.js';
+import { resetAvatarUpload } from './upload.js';
 import { closeAllModals } from './components/modalManager.js';
 
 function initApp() {
@@ -302,8 +303,23 @@ function setupEventListeners() {
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       if (confirm(t('resetConfirm'))) {
+        // 1. Clear Central State & LocalStorage
         clearProfile();
+
+        // 2. Clear In-Memory Module States
+        resetArchetypeModalState();
+        resetAvatarUpload();
+        resetPalmistryModalState();
+
+        // 3. Clear Modal Containers & Close All Modals
+        closeAllModals();
+        const modalContainer = document.getElementById('modal-container');
+        if (modalContainer) modalContainer.innerHTML = '';
+
+        // 4. Reset Primary Input Form
         if (form) form.reset();
+
+        // 5. Hide Results Dashboard & Live Ticker
         const results = document.getElementById('resultsContainer');
         if (results) results.classList.add('hidden');
         const navLive = document.getElementById('navLiveIndicator');
@@ -311,6 +327,37 @@ function setupEventListeners() {
           navLive.classList.add('hidden');
           navLive.classList.remove('inline-flex', 'flex');
         }
+
+        // 6. Reset BioCard Avatar & Fallback DOM
+        const bioAvatarImg = document.getElementById('resultAvatarImg');
+        const bioAvatarFallback = document.getElementById('resultAvatarFallback');
+        if (bioAvatarImg) {
+          bioAvatarImg.src = '';
+          bioAvatarImg.classList.add('hidden');
+        }
+        if (bioAvatarFallback) {
+          bioAvatarFallback.textContent = '👤';
+          bioAvatarFallback.classList.remove('hidden');
+        }
+        const bioName = document.getElementById('resultUserName');
+        if (bioName) bioName.textContent = '';
+        const genderBadge = document.getElementById('resultGenderBadge');
+        if (genderBadge) genderBadge.classList.add('hidden');
+
+        // 7. Reset Gamification Meter & Card 4 Hook Badge
+        setUnlockLevel(35);
+        renderCompletionMeter(35);
+        const archBadge = document.getElementById('hookArchetypeBadge');
+        const archBtnText = document.getElementById('hookArchetypeBtnText');
+        const lang = getLanguage();
+        if (archBadge) {
+          archBadge.textContent = lang === 'bn' ? 'লক করা 🔒' : 'Locked 🔒';
+          archBadge.className = 'text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20';
+        }
+        if (archBtnText) {
+          archBtnText.textContent = lang === 'bn' ? 'আনলক করুন ↗' : 'Unlock ↗';
+        }
+
         showToast(t('resetSuccess'));
       }
     });

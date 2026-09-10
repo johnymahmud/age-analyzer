@@ -519,6 +519,13 @@ function setMetricBar(idPrefix, value) {
   if (val) val.textContent = `${toBnDigits(value)}%`;
 }
 
+export function resetArchetypeModalState() {
+  currentArchetypeProfile = null;
+  currentModalUserData = null;
+  currentAvatar = null;
+  stagedScanImage = null;
+}
+
 export function openArchetypeModal(userData, avatarBase64) {
   if (!userData) return;
 
@@ -537,7 +544,7 @@ export function openArchetypeModal(userData, avatarBase64) {
     } else {
       showScannerIntakeView(modalEl);
     }
-  });
+  }, true);
 }
 
 function showScannerIntakeView(modalEl) {
@@ -552,6 +559,10 @@ function showScannerIntakeView(modalEl) {
     preview.src = stagedScanImage;
     preview.classList.remove('hidden');
     placeholder.classList.add('hidden');
+  } else if (preview && placeholder) {
+    preview.src = '';
+    preview.classList.add('hidden');
+    placeholder.classList.remove('hidden');
   }
 }
 

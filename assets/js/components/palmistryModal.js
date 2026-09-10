@@ -73,6 +73,15 @@ export function closePalmistryModal() {
   if (container) container.innerHTML = '';
 }
 
+export function resetPalmistryModalState() {
+  singleAnalysisData = null;
+  dualAnalysisData = { left: null, right: null, matrix: null };
+  currentUserAge = 30;
+  currentUserData = {};
+  closePalmistryModal();
+}
+
+
 /**
  * Screen 1: Mode Selection (Single Hand vs Dual-Hand)
  */

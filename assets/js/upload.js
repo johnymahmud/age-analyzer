@@ -164,3 +164,9 @@ export function setInitialAvatar(base64Str) {
     if (removeBtn) removeBtn.classList.add('hidden');
   }
 }
+
+export function resetAvatarUpload() {
+  setInitialAvatar('');
+  currentAvatarBase64 = '';
+}
+
