@@ -42,7 +42,7 @@
   </script>
 
   <!-- Modular Stylesheets (Cache Busted) -->
-  <link rel="stylesheet" href="./assets/css/style.css?v=1.4.11">
+  <link rel="stylesheet" href="./assets/css/style.css?v=1.4.12">
   <link rel="stylesheet" href="./assets/css/ads.css?v=1.4.4">
 </head>
 
@@ -228,20 +228,21 @@
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          <div class="flex items-center text-xs text-slate-500 dark:text-slate-400">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 shrink-0 animate-pulse"></span>
-            <span data-i18n="privacyNote">১০০% ক্লায়েন্ট-সাইড সুরক্ষিত অ্যানালিটিক্স ইঞ্জিন</span>
-          </div>
-
+        <!-- Center-Aligned Calculate Action -->
+        <div class="flex flex-col items-center justify-center space-y-3 pt-4">
           <button type="submit" id="calculateBtn"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 text-white font-bold text-sm sm:text-base shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-2 cursor-pointer">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="w-full sm:w-auto px-8 sm:px-12 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 text-white font-bold text-sm sm:text-base shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-2.5 cursor-pointer whitespace-nowrap">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
-            <span data-i18n="calculateBtn">লাইফ টাইমলাইন বিশ্লেষণ করুন</span>
+            <span data-i18n="calculateBtn" class="whitespace-nowrap">লাইফ টাইমলাইন বিশ্লেষণ করুন</span>
           </button>
+
+          <div class="flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 text-center">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 shrink-0 animate-pulse"></span>
+            <span data-i18n="privacyNote">১০০% ক্লায়েন্ট-সাইড সুরক্ষিত অ্যানালিটিক্স ইঞ্জিন</span>
+          </div>
         </div>
       </form>
     </section>
@@ -675,7 +676,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.11"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.12"></script>
 </body>
 
 </html>
