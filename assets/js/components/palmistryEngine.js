@@ -1,8 +1,4 @@
-/**
- * AI Palmistry & Morphology Vision Engine
- * High-Accuracy Computer Vision Anatomical Hand Extractor & Biometric Palm Crease Engine
- */
-import { ELEMENTAL_HANDS, MAJOR_LINES, PLANETARY_MOUNTS, SPECIAL_AUSPICIOUS_SIGNS, getLifeTimelineMilestone, evaluateDigitRatio } from '../data/palmistry.js';
+import { ELEMENTAL_HANDS, MAJOR_LINES, PLANETARY_MOUNTS, SPECIAL_AUSPICIOUS_SIGNS, getLifeTimelineMilestone, evaluateDigitRatio, evaluateAstroPalmSynergy } from '../data/palmistry.js';
 
 /**
  * Computer Vision Skin Color, Contour & Anatomical Mount Extractor
@@ -163,9 +159,10 @@ function sampleSkinVariance(ctx, p1, p2, width, height) {
  * @param {HTMLImageElement|HTMLCanvasElement|string} imageSource
  * @param {'right'|'left'} handSide
  * @param {number} userAge
+ * @param {Object} userData
  * @returns {Promise<Object>}
  */
-export async function analyzePalmImage(imageSource, handSide = 'right', userAge = 30) {
+export async function analyzePalmImage(imageSource, handSide = 'right', userAge = 30, userData = {}) {
   return new Promise((resolve) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -439,10 +436,19 @@ export async function analyzePalmImage(imageSource, handSide = 'right', userAge 
       const specialSign = SPECIAL_AUSPICIOUS_SIGNS[0];
       const overallScore = Math.round((lineReadings[0].clarityScore + lineReadings[1].clarityScore + lineReadings[2].clarityScore) / 3);
 
+      // 6. Astro-Palmar Cosmic Fusion Synthesis
+      const astroPalmSynergy = evaluateAstroPalmSynergy(userData, {
+        mountProminences,
+        overallScore,
+        lineReadings,
+        elementalHand
+      });
+
       resolve({
         handSide,
         isRight: handSide === 'right',
         userAge,
+        userData,
         timelineMilestone,
         digitRatioData,
         elementalHand,
@@ -452,6 +458,7 @@ export async function analyzePalmImage(imageSource, handSide = 'right', userAge 
         mountProminences,
         specialSign,
         overallScore,
+        astroPalmSynergy,
         tracedImageUrl: overlayCanvas.toDataURL('image/jpeg', 0.88),
         analyzedAt: new Date().toISOString()
       });

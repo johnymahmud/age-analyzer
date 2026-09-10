@@ -231,10 +231,21 @@ function setupEventListeners() {
   const triggerPalmistryFlow = () => {
     const currentState = getState();
     let currentAge = 30;
+    let userData = {};
     if (currentState && currentState.birthDate) {
       currentAge = calculateExactAge(currentState.birthDate).years;
     }
-    openPalmistryModal(currentAge);
+    if (currentState && currentState.profile) {
+      const month = currentState.profile.month;
+      const day = currentState.profile.day;
+      const zodiac = getZodiac(month, day);
+      userData = {
+        ...currentState.profile,
+        zodiac,
+        birthDate: currentState.birthDate
+      };
+    }
+    openPalmistryModal(currentAge, userData);
   };
 
   if (hookPalmistryBtn) hookPalmistryBtn.addEventListener('click', (e) => {

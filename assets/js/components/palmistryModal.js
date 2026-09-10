@@ -12,10 +12,14 @@ let currentHandStep = 'right'; // 'right' | 'left'
 let singleAnalysisData = null;
 let dualAnalysisData = { left: null, right: null, matrix: null };
 let currentUserAge = 30;
+let currentUserData = {};
 
-export function openPalmistryModal(userAge = 30) {
+export function openPalmistryModal(userAge = 30, userData = {}) {
   if (typeof userAge === 'number' && userAge > 0) {
     currentUserAge = userAge;
+  }
+  if (userData && typeof userData === 'object') {
+    currentUserData = userData;
   }
   const container = document.getElementById('modal-container');
   if (!container) return;
@@ -377,7 +381,7 @@ async function processPalmImage(imageDataUrl) {
     if (bar) bar.style.width = '80%';
   }, 1400);
 
-  const result = await analyzePalmImage(imageDataUrl, currentHandStep, currentUserAge);
+  const result = await analyzePalmImage(imageDataUrl, currentHandStep, currentUserAge, currentUserData);
 
   setTimeout(() => {
     if (bar) bar.style.width = '100%';
@@ -458,6 +462,9 @@ function renderReportDashboard() {
         <button id="tabBtnMounts" class="palm-tab-btn px-4 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all flex items-center gap-1.5 shrink-0">
           <span>🪐</span> ${isBn ? 'গ্রহ পর্বত ও শুভ চিহ্ন' : 'Mounts & Signs'}
         </button>
+        <button id="tabBtnSynergy" class="palm-tab-btn px-4 py-2.5 rounded-xl text-purple-400 hover:text-purple-200 hover:bg-purple-950/40 border border-purple-500/30 transition-all flex items-center gap-1.5 shrink-0">
+          <span>🌌</span> ${isBn ? 'মহাজাগতিক সিনার্জি' : 'Cosmic Synergy'}
+        </button>
         ${isDual ? `
         <button id="tabBtnDual" class="palm-tab-btn px-4 py-2.5 rounded-xl text-emerald-400 hover:bg-emerald-950/40 border border-emerald-500/30 transition-all flex items-center gap-1.5 shrink-0">
           <span>⚖️</span> ${isBn ? 'ডুয়াল কার্মিক ম্যাট্রিক্স' : 'Dual Karmic Matrix'}
@@ -487,6 +494,7 @@ function renderReportDashboard() {
   document.getElementById('tabBtnTracer')?.addEventListener('click', () => switchTab('tracer'));
   document.getElementById('tabBtnLines')?.addEventListener('click', () => switchTab('lines'));
   document.getElementById('tabBtnMounts')?.addEventListener('click', () => switchTab('mounts'));
+  document.getElementById('tabBtnSynergy')?.addEventListener('click', () => switchTab('synergy'));
   if (isDual) {
     document.getElementById('tabBtnDual')?.addEventListener('click', () => switchTab('dual'));
   }
@@ -499,7 +507,7 @@ function renderReportDashboard() {
 
 function switchTab(tabId) {
   document.querySelectorAll('.palm-tab-btn').forEach(btn => {
-    btn.classList.remove('active', 'bg-amber-500/20', 'text-amber-300', 'border', 'border-amber-500/30');
+    btn.classList.remove('active', 'bg-amber-500/20', 'text-amber-300', 'bg-purple-500/20', 'text-purple-300', 'bg-emerald-500/20', 'text-emerald-300', 'border', 'border-amber-500/30', 'border-purple-500/30', 'border-emerald-500/30');
     btn.classList.add('text-slate-400');
   });
 
@@ -515,6 +523,9 @@ function switchTab(tabId) {
   } else if (tabId === 'mounts') {
     document.getElementById('tabBtnMounts')?.classList.add('active', 'bg-amber-500/20', 'text-amber-300', 'border', 'border-amber-500/30');
     renderTabMounts(data);
+  } else if (tabId === 'synergy') {
+    document.getElementById('tabBtnSynergy')?.classList.add('active', 'bg-purple-500/20', 'text-purple-300', 'border', 'border-purple-500/30');
+    renderTabSynergy(data);
   } else if (tabId === 'dual' && isDual) {
     document.getElementById('tabBtnDual')?.classList.add('active', 'bg-emerald-500/20', 'text-emerald-300', 'border', 'border-emerald-500/30');
     renderTabDualMatrix(dualAnalysisData);
@@ -799,74 +810,213 @@ function renderTabDualMatrix(dualData) {
 }
 
 /**
+ * Tab 5: Astro-Palmar Cosmic Fusion Synthesis
+ */
+function renderTabSynergy(data) {
+  const container = document.getElementById('palmTabContent');
+  if (!container) return;
+
+  const isBn = getLanguage() === 'bn';
+  const syn = data.astroPalmSynergy;
+
+  if (!syn) {
+    container.innerHTML = `<div class="p-6 text-center text-slate-400">তথ্য প্রস্তুত হচ্ছে...</div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="space-y-6">
+      
+      <!-- Top Cosmic Aura Banner -->
+      <div class="p-6 rounded-3xl bg-gradient-to-br from-purple-950/60 via-slate-900 to-indigo-950/50 border-2 border-purple-500/40 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="absolute -right-10 -top-10 w-48 h-48 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex items-center gap-4 relative z-10">
+          <span class="text-4xl p-3.5 rounded-2xl bg-purple-500/20 border border-purple-500/30 shadow-inner">
+            🌌
+          </span>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                ${isBn ? 'হস্ত-রাশি মহাজাগতিক সংশ্লেষ' : 'Astro-Palmar Cosmic Synergy'}
+              </span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-amber-500/30">
+                ${syn.zodiacConfig.sign_bn} ⟷ ${syn.zodiacConfig.mountName_bn}
+              </span>
+            </div>
+            <h4 class="text-lg sm:text-xl font-black text-slate-100">
+              ${isBn ? syn.mountStatus.bn : syn.mountStatus.en}
+            </h4>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed max-w-2xl">
+              ${isBn ? syn.cosmicVerdict_bn : syn.cosmicVerdict_en}
+            </p>
+          </div>
+        </div>
+
+        <div class="text-right md:border-l md:border-slate-800 md:pl-6 shrink-0 relative z-10">
+          <span class="text-[11px] text-purple-300 block">${isBn ? 'মহাজাগতিক সমন্বয়' : 'Cosmic Resonance'}</span>
+          <span class="text-3xl sm:text-4xl font-black font-mono text-purple-400">${formatDigits(syn.cosmicSynergyScore)}%</span>
+        </div>
+      </div>
+
+      <!-- 3 Core Synergy Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Card 1: Zodiac Mount Power -->
+        <div class="p-5 rounded-3xl bg-slate-800/60 border border-slate-700/80 hover:border-purple-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl p-2 rounded-xl bg-amber-500/10 border border-amber-500/30">🪐</span>
+            <span class="text-xs font-mono font-bold text-amber-400">${formatDigits(syn.mountScore)}% ${isBn ? 'শক্তি' : 'Power'}</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block mb-0.5">
+              ${isBn ? 'রাশি-অধিপতি ও পর্বত' : 'Ruling Planet & Mount'}
+            </span>
+            <h5 class="text-sm font-bold text-slate-100">
+              ${syn.zodiacConfig.ruler_bn} ⟷ ${syn.zodiacConfig.mountName_bn}
+            </h5>
+            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+              ${isBn 
+                ? `আপনার রাশি অধিপতি গ্রহের সংশ্লিষ্ট পর্বতটি করতলে বিশেষ তেজস্বী। এটি আপনার সার্বিক কর্তৃত্ব ও আত্মবিশ্বাসকে বহুগুণে বাড়িয়ে তোলে।` 
+                : `Your ruling planetary mount radiates high vitality, reinforcing personal sovereignty and active drive.`}
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: Blood Group & Metabolic Vitality -->
+        <div class="p-5 rounded-3xl bg-slate-800/60 border border-slate-700/80 hover:border-rose-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl p-2 rounded-xl bg-rose-500/10 border border-rose-500/30">🩸</span>
+            <span class="text-xs font-mono font-bold text-rose-400">${syn.bloodGroup}</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block mb-0.5">
+              ${isBn ? 'রক্তের ধাতু ও ক্রিজ প্রভাব' : 'Blood Constitution & Creases'}
+            </span>
+            <h5 class="text-sm font-bold text-slate-100">
+              ${isBn ? syn.bloodSynergy.dosha_bn : syn.bloodSynergy.dosha_en}
+            </h5>
+            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+              ${isBn ? syn.bloodSynergy.creaseImpact_bn : syn.bloodSynergy.creaseImpact_en}
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3: Relationship & Heart Dynamics -->
+        <div class="p-5 rounded-3xl bg-slate-800/60 border border-slate-700/80 hover:border-sky-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl p-2 rounded-xl bg-sky-500/10 border border-sky-500/30">💞</span>
+            <span class="text-xs font-mono font-bold text-sky-400">${isBn ? 'হারমোনি' : 'Harmony'}</span>
+          </div>
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block mb-0.5">
+              ${isBn ? 'সম্পর্ক ও হৃদয়রেখা অনুরণন' : 'Relationship & Heart Dynamic'}
+            </span>
+            <h5 class="text-sm font-bold text-slate-100">
+              ${isBn ? syn.relSynergy.status_bn : syn.relSynergy.status_en}
+            </h5>
+            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+              ${isBn ? syn.relSynergy.resonance_bn : syn.relSynergy.resonance_en}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Karmic Actionable Insight & Remedies Banner -->
+      <div class="p-5 rounded-3xl bg-gradient-to-r from-amber-950/30 via-slate-900 to-amber-950/20 border border-amber-500/30 flex items-start gap-4">
+        <span class="text-3xl p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 shrink-0">✨</span>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">
+            ${isBn ? 'শুভ রত্ন ও কার্মিক দিকনির্দেশনা' : 'Auspicious Gemstone & Karmic Guidance'}
+          </span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            ${isBn ? syn.remedy_bn : syn.remedy_en}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+/**
  * Export high-res palmistry certificate passport
  */
 function exportPalmistryCard(data) {
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
-  canvas.height = 1420;
+  canvas.height = 1460;
   const ctx = canvas.getContext('2d');
 
   // Background gradient
-  const bg = ctx.createLinearGradient(0, 0, 1080, 1420);
+  const bg = ctx.createLinearGradient(0, 0, 1080, 1460);
   bg.addColorStop(0, '#090d16');
   bg.addColorStop(0.5, '#111827');
   bg.addColorStop(1, '#05070a');
   ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1080, 1420);
+  ctx.fillRect(0, 0, 1080, 1460);
 
   // Border frame
   ctx.strokeStyle = '#f59e0b';
   ctx.lineWidth = 6;
-  ctx.strokeRect(30, 30, 1020, 1360);
+  ctx.strokeRect(30, 30, 1020, 1400);
 
   // Header
   ctx.fillStyle = '#fef3c7';
   ctx.font = 'bold 44px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('AI PALMISTRY PASSPORT', 540, 110);
+  ctx.fillText('AI PALMISTRY PASSPORT', 540, 105);
 
   ctx.fillStyle = '#f59e0b';
   ctx.font = 'bold 30px sans-serif';
-  ctx.fillText(`${data.elementalHand.name_en}`, 540, 165);
+  ctx.fillText(`${data.elementalHand.name_en}`, 540, 155);
 
   // Score
   ctx.fillStyle = '#34d399';
-  ctx.font = 'bold 46px monospace';
-  ctx.fillText(`Vitality Score: ${data.overallScore}%`, 540, 235);
+  ctx.font = 'bold 44px monospace';
+  ctx.fillText(`Vitality Score: ${data.overallScore}%`, 540, 220);
+
+  // Astro-Palm Cosmic Resonance
+  if (data.astroPalmSynergy) {
+    const syn = data.astroPalmSynergy;
+    ctx.fillStyle = '#c084fc';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(`Cosmic Resonance (${syn.zodiacConfig.sign_bn} ⟷ ${syn.zodiacConfig.mountName_bn}): ${syn.cosmicSynergyScore}%`, 540, 265);
+  }
 
   // Milestone Epoch & Digit Ratio Highlights
   if (data.timelineMilestone) {
     ctx.fillStyle = '#fbbf24';
-    ctx.font = 'bold 24px sans-serif';
-    ctx.fillText(`Life Epoch (Age ${data.timelineMilestone.currentAge}): ${data.timelineMilestone.phase.phase_en}`, 540, 290);
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(`Life Epoch (Age ${data.timelineMilestone.currentAge}): ${data.timelineMilestone.phase.phase_en}`, 540, 305);
   }
 
   if (data.digitRatioData) {
     ctx.fillStyle = '#38bdf8';
-    ctx.font = '22px monospace';
-    ctx.fillText(`2D:4D Ratio: ${data.digitRatioData.ratio} — ${data.digitRatioData.type_en}`, 540, 330);
+    ctx.font = '20px monospace';
+    ctx.fillText(`2D:4D Ratio: ${data.digitRatioData.ratio} — ${data.digitRatioData.type_en}`, 540, 345);
   }
 
   // Lines
-  let y = 410;
+  let y = 415;
   data.lineReadings.forEach(line => {
     ctx.fillStyle = line.color;
-    ctx.font = 'bold 26px sans-serif';
+    ctx.font = 'bold 25px sans-serif';
     ctx.fillText(`${line.name_en}: ${line.clarityScore}% Clarity`, 540, y);
     ctx.fillStyle = '#94a3b8';
-    ctx.font = '20px sans-serif';
-    ctx.fillText(line.label_en, 540, y + 32);
-    y += 85;
+    ctx.font = '19px sans-serif';
+    ctx.fillText(line.label_en, 540, y + 30);
+    y += 82;
   });
 
   // Footer branding
   ctx.fillStyle = '#64748b';
   ctx.font = '18px monospace';
-  ctx.fillText('Generated by Life-Timeline AI Palmistry Engine', 540, 1340);
+  ctx.fillText('Generated by Life-Timeline AI Astro-Palmistry Fusion Engine', 540, 1385);
 
   const link = document.createElement('a');
   link.download = `Palmistry-Passport-${Date.now()}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
+
