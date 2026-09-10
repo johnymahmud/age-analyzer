@@ -33,7 +33,7 @@ function getZodiacModalTemplate() {
   return `
   <div id="zodiacModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 hidden">
     <div id="zodiacModalBackdrop" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md transition-opacity"></div>
-    <div class="relative w-full max-w-6xl max-h-[94vh] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+    <div class="relative w-full max-w-6xl h-[92vh] max-h-[850px] min-h-[520px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
       <!-- Modal Header -->
       <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/50 flex items-center justify-between">
         <div class="flex items-center space-x-4">
@@ -57,42 +57,47 @@ function getZodiacModalTemplate() {
         </button>
       </div>
 
-      <!-- Tab Navigation Bar -->
-      <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-x-auto flex items-center space-x-2 no-scrollbar">
-        <button type="button" class="zodiac-tab-btn" data-tab="personality">
-          <span>🌟</span>
-          <span>ব্যক্তিত্ব ও স্বভাব</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="planets">
-          <span>🪐</span>
-          <span>গ্রহ ও দ্রেক্বাণ</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="travel">
-          <span>✈️</span>
-          <span>বিদেশ ভ্রমণ ভাগ্য</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="relationship">
-          <span>❤️</span>
-          <span>প্রেম ও পার্টনার ম্যাচিং</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="health">
-          <span>🩸</span>
-          <span>বায়ো-অ্যাস্ট্রো ও স্বাস্থ্য</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="weekly">
-          <span>📅</span>
-          <span>সাপ্তাহিক পূর্বাভাস</span>
-        </button>
-        <button type="button" class="zodiac-tab-btn" data-tab="lucky">
-          <span>🔮</span>
-          <span>শুভ বিষয় ও রত্ন</span>
-        </button>
-      </div>
+      <!-- Main Layout Body: Left Sidebar Tabs + Right Content Panel -->
+      <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
+        <!-- Tab Navigation Sidebar (Vertical on Desktop, Horizontal Scroll on Mobile) -->
+        <aside class="w-full lg:w-64 shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50 p-3 sm:p-4 flex flex-row lg:flex-col gap-1.5 overflow-x-auto lg:overflow-y-auto no-scrollbar">
+          <div class="hidden lg:block pb-2 mb-1 border-b border-slate-200/80 dark:border-slate-800/80">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">রাশিচক্র সূচিপত্র</span>
+          </div>
+          <button type="button" class="zodiac-tab-btn" data-tab="personality">
+            <span class="text-base shrink-0">🌟</span>
+            <span class="truncate">ব্যক্তিত্ব ও স্বভাব</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="planets">
+            <span class="text-base shrink-0">🪐</span>
+            <span class="truncate">গ্রহ ও দ্রেক্বাণ</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="travel">
+            <span class="text-base shrink-0">✈️</span>
+            <span class="truncate">বিদেশ ভ্রমণ ভাগ্য</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="relationship">
+            <span class="text-base shrink-0">❤️</span>
+            <span class="truncate">প্রেম ও পার্টনার ম্যাচিং</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="health">
+            <span class="text-base shrink-0">🩸</span>
+            <span class="truncate">বায়ো-অ্যাস্ট্রো ও স্বাস্থ্য</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="weekly">
+            <span class="text-base shrink-0">📅</span>
+            <span class="truncate">সাপ্তাহিক পূর্বাভাস</span>
+          </button>
+          <button type="button" class="zodiac-tab-btn" data-tab="lucky">
+            <span class="text-base shrink-0">🔮</span>
+            <span class="truncate">শুভ বিষয় ও রত্ন</span>
+          </button>
+        </aside>
 
-      <!-- Modal Body (Scrollable Tab Contents) -->
-      <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
-        <!-- Tab 1: Personality & Traits -->
-        <div id="zodiacTab_personality" class="zodiac-tab-panel space-y-5">
+        <!-- Modal Body (Scrollable Tab Contents) -->
+        <main class="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 min-h-0 bg-white dark:bg-slate-900">
+          <!-- Tab 1: Personality & Traits -->
+          <div id="zodiacTab_personality" class="zodiac-tab-panel space-y-5">
           <div class="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-900 dark:text-cyan-200">
             <span class="text-xs font-bold uppercase tracking-wider block mb-1">মূল চালিকাশক্তি ও স্বভাব</span>
             <p id="modalTraitNature" class="text-sm font-medium leading-relaxed"></p>
@@ -345,6 +350,7 @@ function getZodiacModalTemplate() {
             </div>
           </div>
         </div>
+        </main>
       </div>
 
       <!-- Modal Footer -->
@@ -750,9 +756,9 @@ export function switchZodiacTab(tabName) {
   tabButtons.forEach(btn => {
     const isTarget = btn.getAttribute('data-tab') === tabName;
     if (isTarget) {
-      btn.className = 'zodiac-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md transition-all flex items-center gap-2 whitespace-nowrap';
+      btn.className = 'zodiac-tab-btn w-auto lg:w-full px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-indigo-600 text-white shadow-md shadow-indigo-600/25 transition-all flex items-center gap-2.5 whitespace-nowrap lg:whitespace-normal text-left';
     } else {
-      btn.className = 'zodiac-tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2 whitespace-nowrap';
+      btn.className = 'zodiac-tab-btn w-auto lg:w-full px-4 py-3 rounded-2xl text-xs sm:text-sm font-semibold bg-slate-100/90 dark:bg-slate-900/70 lg:bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-slate-800 transition-all flex items-center gap-2.5 whitespace-nowrap lg:whitespace-normal text-left border border-slate-200/60 dark:border-slate-800/60 lg:border-transparent';
     }
   });
 
