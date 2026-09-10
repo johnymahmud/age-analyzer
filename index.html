@@ -319,57 +319,6 @@
 
         <!-- 📊 RIGHT CONTENT: Analytics, Countdown, Age Stats, Cosmic Stats, Discovery Cards, Export Hub -->
         <div class="flex-1 min-w-0 space-y-8">
-          
-          <!-- Top Row of Right: Birthday Countdown Card -->
-          <section
-            class="bg-white/95 dark:bg-gradient-to-br dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900 border border-amber-500/30 dark:border-amber-500/20 rounded-3xl p-6 shadow-xl dark:shadow-2xl backdrop-blur-xl flex flex-col justify-between print-card">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span data-i18n="birthdayCardTitle"
-                  class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
-                  🎂 পরবর্তী জন্মদিন কাউন্টডাউন
-                </span>
-                <span id="nextBirthdayDate"
-                  class="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold"></span>
-              </div>
-              <p data-i18n="birthdayRemainingText" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-4">
-                পরবর্তী জন্মদিন উদযাপন করার জন্য সময় বাকি আছে:
-              </p>
-
-              <div class="grid grid-cols-4 gap-2 text-center">
-                <div
-                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
-                  <span id="cdDays"
-                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০</span>
-                  <span data-i18n="cdDays" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">দিন</span>
-                </div>
-                <div
-                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
-                  <span id="cdHours"
-                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                  <span data-i18n="cdHours" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">ঘণ্টা</span>
-                </div>
-                <div
-                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
-                  <span id="cdMinutes"
-                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                  <span data-i18n="cdMinutes" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">মিনিট</span>
-                </div>
-                <div
-                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
-                  <span id="cdSeconds"
-                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
-                  <span data-i18n="cdSeconds" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">সেকেন্ড</span>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span data-i18n="nextAgeText">পরবর্তী জন্মদিনে বয়স হবে:</span>
-              <span id="nextAgeLabel" class="font-bold text-slate-800 dark:text-slate-200 text-sm font-mono">০ বছর</span>
-            </div>
-          </section>
 
           <!-- 1. Age Counter Cards & Hybrid Chrono-Pulse Live Engine -->
           <section class="space-y-4">
@@ -543,6 +492,57 @@
                 <span>সৌরজগতের কক্ষপথীয় গতি ও জৈবিক চক্রের বৈজ্ঞানিক হিসাব</span>
                 <span class="text-indigo-500 font-semibold">Cosmic Metrics</span>
               </div>
+            </div>
+          </section>
+
+          <!-- 🎂 Birthday Countdown Card (Placed just before Interactive Exploration) -->
+          <section
+            class="bg-white/95 dark:bg-gradient-to-br dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900 border border-amber-500/30 dark:border-amber-500/20 rounded-3xl p-6 shadow-xl dark:shadow-2xl backdrop-blur-xl flex flex-col justify-between print-card">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span data-i18n="birthdayCardTitle"
+                  class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+                  🎂 পরবর্তী জন্মদিন কাউন্টডাউন
+                </span>
+                <span id="nextBirthdayDate"
+                  class="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold"></span>
+              </div>
+              <p data-i18n="birthdayRemainingText" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-4">
+                পরবর্তী জন্মদিন উদযাপন করার জন্য সময় বাকি আছে:
+              </p>
+
+              <div class="grid grid-cols-4 gap-2 text-center">
+                <div
+                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
+                  <span id="cdDays"
+                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০</span>
+                  <span data-i18n="cdDays" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">দিন</span>
+                </div>
+                <div
+                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
+                  <span id="cdHours"
+                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                  <span data-i18n="cdHours" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">ঘণ্টা</span>
+                </div>
+                <div
+                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
+                  <span id="cdMinutes"
+                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                  <span data-i18n="cdMinutes" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">মিনিট</span>
+                </div>
+                <div
+                  class="bg-slate-100/90 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-inner">
+                  <span id="cdSeconds"
+                    class="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                  <span data-i18n="cdSeconds" class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">সেকেন্ড</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <span data-i18n="nextAgeText">পরবর্তী জন্মদিনে বয়স হবে:</span>
+              <span id="nextAgeLabel" class="font-bold text-slate-800 dark:text-slate-200 text-sm font-mono">০ বছর</span>
             </div>
           </section>
 
@@ -756,7 +756,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.18"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.19"></script>
 </body>
 
 </html>
