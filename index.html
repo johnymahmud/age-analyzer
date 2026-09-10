@@ -371,7 +371,7 @@
             </div>
           </section>
 
-          <!-- 1. Age Counter Cards -->
+          <!-- 1. Age Counter Cards & Hybrid Chrono-Pulse Live Engine -->
           <section class="space-y-4">
             <div class="flex items-center space-x-3">
               <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
@@ -383,6 +383,7 @@
               <h2 data-i18n="ageSectionTitle" class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">১. নিখুঁত বয়স ও অতিবাহিত সময়</h2>
             </div>
 
+            <!-- Big 3 Primary Counters: Years, Months, Days -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div
                 class="bg-white/90 dark:bg-gradient-to-br dark:from-indigo-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-indigo-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
@@ -413,42 +414,91 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <!-- ⚡ HYBRID MASTER LIVE CHRONO-PULSE ENGINE BAR (2 Wide Panoramic Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <!-- Card A: Total Elapsed Minutes Matrix -->
+              <div
+                class="relative bg-gradient-to-br from-indigo-50/90 via-white/95 to-slate-50/90 dark:from-indigo-950/50 dark:via-slate-900/90 dark:to-slate-900/80 border border-indigo-500/30 rounded-3xl p-5 sm:p-6 shadow-xl dark:shadow-2xl overflow-hidden print-card flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                      <span>⏱️</span> <span data-i18n="totalMinutes">মোট মিনিট</span>
+                    </span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-semibold">Time Precision</span>
+                  </div>
+                  <div class="my-2">
+                    <div id="statTotalMinutes"
+                      class="text-2xl sm:text-3xl xl:text-4xl font-black text-indigo-600 dark:text-indigo-300 font-mono tracking-tight print-text-dark break-all">
+                      ০
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1 block">
+                      অবিরাম অতিবাহিত মিনিট
+                    </span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-indigo-500/15 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                  <span class="flex items-center gap-1"><span>🌌</span> নিরবচ্ছিন্ন কাল পরিক্রমা</span>
+                  <span class="font-mono text-indigo-500 font-semibold">60s / Min</span>
+                </div>
+              </div>
+
+              <!-- Card B: Real-Time Live Seconds & Biological Pulse (ECG Wave) -->
+              <div
+                class="relative bg-gradient-to-br from-rose-50/90 via-white/95 to-slate-50/90 dark:from-rose-950/40 dark:via-slate-900/90 dark:to-slate-900/80 border border-rose-500/30 rounded-3xl p-5 sm:p-6 shadow-xl dark:shadow-2xl overflow-hidden print-card flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20">
+                      <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                      <span data-i18n="liveSeconds">লাইভ সেকেন্ড ⏱️</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> লাইভ সক্রিয়
+                    </span>
+                  </div>
+                  <div class="my-2">
+                    <div id="statTotalSeconds"
+                      class="text-2xl sm:text-3xl xl:text-4xl font-black text-rose-600 dark:text-rose-400 font-mono tracking-tight print-text-dark break-all">
+                      ০
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1 block">
+                      প্রতি মুহূর্তে বৃদ্ধি পাচ্ছে
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Bio-Pulse ECG & Heartbeat Integration -->
+                <div class="mt-3 pt-3 border-t border-rose-500/15 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-rose-500 text-sm animate-pulse">💓</span>
+                    <span data-i18n="heartbeats" class="font-medium">আনুমানিক হৃদস্পন্দন:</span>
+                    <span id="statHeartbeats" class="font-bold font-mono text-rose-600 dark:text-rose-400">০</span>
+                  </div>
+                  <span class="text-[10px] text-rose-500/80 font-mono tracking-widest hidden sm:inline">ﮩ٨ـﮩﮩ৮ـ</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Sub-Metrics 3-Column Row: Weeks, Days, Hours -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div
                 class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট সপ্তাহ</span>
+                <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট সপ্তাহ</span>
                 <span id="statTotalWeeks"
-                  class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
               </div>
               <div
                 class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট দিন</span>
+                <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট দিন</span>
                 <span id="statTotalDays"
-                  class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
               </div>
               <div
                 class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="elapsedHours" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">অতিবাহিত ঘণ্টা</span>
+                <span data-i18n="elapsedHours" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">অতিবাহিত ঘণ্টা</span>
                 <span id="statTotalHours"
-                  class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
-              </div>
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="totalMinutes" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট মিনিট</span>
-                <span id="statTotalMinutes"
-                  class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
-              </div>
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-indigo-500/30 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="liveSeconds" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 block">লাইভ সেকেন্ড ⏱️</span>
-                <span id="statTotalSeconds"
-                  class="text-xl font-bold text-indigo-600 dark:text-indigo-300 font-mono print-text-dark">০</span>
-              </div>
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="heartbeats" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">আনুমানিক হৃদস্পন্দন ❤️</span>
-                <span id="statHeartbeats"
-                  class="text-xl font-bold text-rose-600 dark:text-rose-400 font-mono print-text-dark">০</span>
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
               </div>
             </div>
           </section>
@@ -706,7 +756,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.16"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.17"></script>
 </body>
 
 </html>
