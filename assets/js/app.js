@@ -229,7 +229,12 @@ function setupEventListeners() {
   const hookPalmistryBtn = document.getElementById('hookPalmistryBtn');
 
   const triggerPalmistryFlow = () => {
-    openPalmistryModal();
+    const currentState = getState();
+    let currentAge = 30;
+    if (currentState && currentState.birthDate) {
+      currentAge = calculateExactAge(currentState.birthDate).years;
+    }
+    openPalmistryModal(currentAge);
   };
 
   if (hookPalmistryBtn) hookPalmistryBtn.addEventListener('click', (e) => {

@@ -2,7 +2,7 @@
  * AI Palmistry & Morphology Vision Engine
  * High-Accuracy Computer Vision Anatomical Hand Extractor & Biometric Palm Crease Engine
  */
-import { ELEMENTAL_HANDS, MAJOR_LINES, PLANETARY_MOUNTS, SPECIAL_AUSPICIOUS_SIGNS } from '../data/palmistry.js';
+import { ELEMENTAL_HANDS, MAJOR_LINES, PLANETARY_MOUNTS, SPECIAL_AUSPICIOUS_SIGNS, getLifeTimelineMilestone, evaluateDigitRatio } from '../data/palmistry.js';
 
 /**
  * Computer Vision Skin Color, Contour & Anatomical Mount Extractor
@@ -162,9 +162,10 @@ function sampleSkinVariance(ctx, p1, p2, width, height) {
  * Main Palm Analysis Processor with True Biometric Measurement
  * @param {HTMLImageElement|HTMLCanvasElement|string} imageSource
  * @param {'right'|'left'} handSide
+ * @param {number} userAge
  * @returns {Promise<Object>}
  */
-export async function analyzePalmImage(imageSource, handSide = 'right') {
+export async function analyzePalmImage(imageSource, handSide = 'right', userAge = 30) {
   return new Promise((resolve) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -183,6 +184,11 @@ export async function analyzePalmImage(imageSource, handSide = 'right') {
       // 1. Extract Anatomical Landmarks & Mounts from image pixels
       const anatomy = extractHandAnatomy(img, width, height);
       const { thumbOnRight, palmRatio, fingerRatio, mountJupiter, mountSaturn, mountSun, mountMercury, mountVenus, mountMoon, wristCenter, webbingPoint, bounds } = anatomy;
+
+      // Calculate 2D:4D Digit Ratio from Index & Ring finger biometric keypoints
+      const indexFingerLength = Math.abs(mountJupiter.y - bounds.y0);
+      const ringFingerLength = Math.abs(mountSun.y - bounds.y0);
+      const digitRatioData = evaluateDigitRatio(indexFingerLength, ringFingerLength);
 
       // 2. Classify Elemental Hand by Measured Proportions
       let elementalKey = 'earth';
@@ -277,6 +283,55 @@ export async function analyzePalmImage(imageSource, handSide = 'right') {
         y: wristCenter.y
       };
       drawSpline([lifeStart, lifeMid, lifeEnd], '#34d399', 5.5);
+
+      // --- Life Timeline Dynamic Age-on-Palm Marker ---
+      const timelineMilestone = getLifeTimelineMilestone(userAge);
+      const t = timelineMilestone.normalizedProgress;
+      const omt = 1 - t;
+      const agePtX = omt * omt * lifeStart.x + 2 * omt * t * lifeMid.x + t * t * lifeEnd.x;
+      const agePtY = omt * omt * lifeStart.y + 2 * omt * t * lifeMid.y + t * t * lifeEnd.y;
+
+      // Draw Glowing Age Pin
+      octx.save();
+      octx.strokeStyle = '#f59e0b';
+      octx.shadowColor = '#fbbf24';
+      octx.shadowBlur = 18;
+      octx.lineWidth = 3.5;
+      octx.beginPath();
+      octx.arc(agePtX, agePtY, 13, 0, Math.PI * 2);
+      octx.fillStyle = 'rgba(245, 158, 11, 0.45)';
+      octx.fill();
+      octx.stroke();
+
+      octx.fillStyle = '#ffffff';
+      octx.beginPath();
+      octx.arc(agePtX, agePtY, 5, 0, Math.PI * 2);
+      octx.fill();
+
+      // Label Pin Badge
+      octx.font = 'bold 13px Inter, -apple-system, sans-serif';
+      const labelText = `📍 বয়স: ${timelineMilestone.currentAge} বছর`;
+      const textMetrics = octx.measureText(labelText);
+      const badgeW = textMetrics.width + 18;
+      const badgeH = 26;
+      const badgeX = thumbOnRight ? Math.max(10, agePtX - badgeW - 16) : Math.min(width - badgeW - 10, agePtX + 16);
+      const badgeY = agePtY - badgeH / 2;
+
+      octx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      octx.strokeStyle = '#fbbf24';
+      octx.lineWidth = 1.5;
+      octx.beginPath();
+      if (typeof octx.roundRect === 'function') {
+        octx.roundRect(badgeX, badgeY, badgeW, badgeH, 6);
+      } else {
+        octx.rect(badgeX, badgeY, badgeW, badgeH);
+      }
+      octx.fill();
+      octx.stroke();
+
+      octx.fillStyle = '#fbbf24';
+      octx.fillText(labelText, badgeX + 9, badgeY + 17);
+      octx.restore();
 
       // --- Line 4: Fate Line (Amber / Golden) ---
       // From Wrist Center -> ascends vertically straight to Mount of Saturn
@@ -387,6 +442,9 @@ export async function analyzePalmImage(imageSource, handSide = 'right') {
       resolve({
         handSide,
         isRight: handSide === 'right',
+        userAge,
+        timelineMilestone,
+        digitRatioData,
         elementalHand,
         palmRatio,
         fingerRatio,

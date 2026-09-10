@@ -344,3 +344,93 @@ export function evaluateDualHandMatrix(leftHandData, rightHandData) {
     ]
   };
 }
+
+/**
+ * Classical Age Epochs on the Life & Fate Lines
+ */
+export const LIFE_TIMELINE_PHASES = [
+  {
+    minAge: 0,
+    maxAge: 20,
+    phase_bn: "ভিত্তি গঠন ও প্রারম্ভিক বিকাশ (Foundation & Discovery)",
+    phase_en: "Foundation & Discovery Epoch",
+    energy_bn: "শৈশব ও প্রারম্ভিক মেধা বিকাশ। জীবনের মূল চালিকাশক্তি ও আগ্রহের ক্ষেত্র গঠনের সময়।",
+    energy_en: "Formation of intellectual baseline, character building, and core values."
+  },
+  {
+    minAge: 21,
+    maxAge: 35,
+    phase_bn: "কর্মোন্মেষ ও আত্মপ্রতিষ্ঠার জয়যাত্রা (Launch & Ambition)",
+    phase_en: "Ambition & Career Ascendance",
+    energy_bn: "কেরিয়ার গঠন, জীবনের বড় সিদ্ধান্ত এবং নিজের স্বকীয়তা প্রমাণ করার সুবর্ণ সময়কাল।",
+    energy_en: "Defining life milestones, career momentum, identity anchoring, and key partnerships."
+  },
+  {
+    minAge: 36,
+    maxAge: 50,
+    phase_bn: "সর্বোচ্চ কর্তৃত্ব, সমৃদ্ধি ও নেতৃত্ব (Peak Mastery & Leadership)",
+    phase_en: "Peak Sovereign Mastery",
+    energy_bn: "অভিজ্ঞতার পূর্ণ রূপান্তর, পেশাগত কর্তৃত্ব অর্জন, সামাজিক প্রভাব ও সুদৃঢ় আর্থিক ভিত্তি গড়ার সময়।",
+    energy_en: "Peak executive leadership, material stability, high societal authority, and creative mastery."
+  },
+  {
+    minAge: 51,
+    maxAge: 100,
+    phase_bn: "দূরদর্শী প্রজ্ঞা ও স্থায়ী কীর্তি (Legacy & Spiritual Wisdom)",
+    phase_en: "Legacy & Transcendence",
+    energy_bn: "পরবর্তী প্রজন্মের জন্য স্থায়ী অনুপ্রেরণা, প্রজ্ঞা বিতরণ ও আত্মিক প্রশান্তিময় অর্জনের যুগ।",
+    energy_en: "Distilling life wisdom, enduring legacy, spiritual tranquility, and mentorship."
+  }
+];
+
+export function getLifeTimelineMilestone(age = 30) {
+  const currentAge = Math.max(1, Math.min(100, Math.floor(age)));
+  const phase = LIFE_TIMELINE_PHASES.find(p => currentAge >= p.minAge && currentAge <= p.maxAge) || LIFE_TIMELINE_PHASES[1];
+  
+  // Normalized position along the Life Line arc (0.0 to 1.0)
+  const normalizedProgress = Math.min(0.95, Math.max(0.08, currentAge / 75));
+
+  return {
+    currentAge,
+    phase,
+    normalizedProgress,
+    milestone_bn: `বয়স ${currentAge} বছর: আপনি বর্তমানে আপনার জীবনরেখার '${phase.phase_bn}' পর্বে অবস্থান করছেন।`,
+    milestone_en: `Age ${currentAge}: You are currently navigating the '${phase.phase_en}' on your Life Line.`
+  };
+}
+
+/**
+ * 2D:4D Digit Ratio (Index vs Ring Finger Evolutionary Biomarker)
+ */
+export function evaluateDigitRatio(indexLen, ringLen) {
+  const ratio = Number((indexLen / Math.max(1, ringLen)).toFixed(2));
+  
+  if (ratio < 0.98) {
+    // Ring finger significantly longer (Low 2D:4D)
+    return {
+      ratio,
+      type_bn: "উদ্যোক্তা ও নির্ভীক দূরদর্শী (Strategic Risk-Taker)",
+      type_en: "High Spatial & Strategic Drive",
+      desc_bn: "আপনার অনামিকা তর্জনীর চেয়ে দীর্ঘ। আধুনিক বায়োমেট্রিক্স অনুযায়ী এটি প্রবল সাহস, প্রতিযোগিতামূলক মনোভাব ও দ্রুত সিদ্ধান্ত গ্রহণের ক্ষমতার নির্দেশক।",
+      desc_en: "Longer ring finger correlates with high spatial endurance, decisive risk tolerance, and natural entrepreneurial drive."
+    };
+  } else if (ratio > 1.02) {
+    // Index finger longer (High 2D:4D)
+    return {
+      ratio,
+      type_bn: "কূটনৈতিক ও বাগ্মী ব্যক্তিত্ব (Diplomatic Communicator)",
+      type_en: "High Verbal & Relational Acumen",
+      desc_bn: "আপনার তর্জনী অনামিকার চেয়ে দীর্ঘ। এটি চমৎকার যোগাযোগ দক্ষতা, কূটনৈতিক প্রজ্ঞা এবং সহানুভূতিশীল সামাজিক নেতৃত্বের প্রতীক।",
+      desc_en: "Prominent index finger reflects exceptional linguistic eloquence, social emotional intelligence, and diplomatic leadership."
+    };
+  } else {
+    // Balanced ratio
+    return {
+      ratio,
+      type_bn: "ভারসাম্যপূর্ণ কৌশলবিদ (Harmonious Balancer)",
+      type_en: "Harmonious Strategic Balance",
+      desc_bn: "আপনার তর্জনী ও অনামিকা প্রায় সমান দীর্ঘ। এটি আবেগ ও যুক্তির নিখুঁত ভারসাম্য এবং বহুমুখী অভিযোজন ক্ষমতার লক্ষণ।",
+      desc_en: "Near-equal digit ratio indicates balanced cognitive adaptability, steady temperament, and multi-disciplinary talent."
+    };
+  }
+}

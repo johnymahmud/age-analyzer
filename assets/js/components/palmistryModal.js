@@ -11,8 +11,12 @@ let currentMode = 'single'; // 'single' | 'dual'
 let currentHandStep = 'right'; // 'right' | 'left'
 let singleAnalysisData = null;
 let dualAnalysisData = { left: null, right: null, matrix: null };
+let currentUserAge = 30;
 
-export function openPalmistryModal() {
+export function openPalmistryModal(userAge = 30) {
+  if (typeof userAge === 'number' && userAge > 0) {
+    currentUserAge = userAge;
+  }
   const container = document.getElementById('modal-container');
   if (!container) return;
 
@@ -373,7 +377,7 @@ async function processPalmImage(imageDataUrl) {
     if (bar) bar.style.width = '80%';
   }, 1400);
 
-  const result = await analyzePalmImage(imageDataUrl, currentHandStep);
+  const result = await analyzePalmImage(imageDataUrl, currentHandStep, currentUserAge);
 
   setTimeout(() => {
     if (bar) bar.style.width = '100%';
@@ -528,8 +532,8 @@ function renderTabTracer(data) {
 
   container.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-      <div class="relative rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-2xl bg-slate-950 max-h-[460px] flex items-center justify-center">
-        <img src="${data.tracedImageUrl}" class="w-full h-full object-contain max-h-[450px]">
+      <div class="relative rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-2xl bg-slate-950 max-h-[480px] flex items-center justify-center">
+        <img src="${data.tracedImageUrl}" class="w-full h-full object-contain max-h-[470px]">
         <div class="absolute bottom-3 inset-x-3 bg-slate-950/85 backdrop-blur-md p-3 rounded-2xl border border-amber-500/30 flex items-center justify-between text-xs">
           <span class="text-amber-300 font-bold flex items-center gap-1.5">
             <span>✨</span> ${isBn ? 'লেজার ট্রেস ভিউ' : 'Laser Traced AR View'}
@@ -540,14 +544,34 @@ function renderTabTracer(data) {
         </div>
       </div>
 
-      <div class="space-y-3.5">
-        <h5 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+      <div class="space-y-3">
+        <!-- Life Timeline Age-on-Palm Marker Card -->
+        ${data.timelineMilestone ? `
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/50 via-slate-800/90 to-slate-800/90 border border-amber-500/40 space-y-1.5 shadow-lg">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                <span>📍</span> ${isBn ? 'জীবনরেখা বয়স মাইলফলক' : 'Life-Timeline Age Marker'}
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold text-xs border border-amber-500/30">
+                ${isBn ? 'বয়স: ' : 'Age: '} ${formatDigits(data.timelineMilestone.currentAge)} ${isBn ? 'বছর' : 'Yrs'}
+              </span>
+            </div>
+            <h6 class="text-xs font-bold text-slate-100">
+              ${isBn ? data.timelineMilestone.phase.phase_bn : data.timelineMilestone.phase.phase_en}
+            </h6>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              ${isBn ? data.timelineMilestone.phase.energy_bn : data.timelineMilestone.phase.energy_en}
+            </p>
+          </div>
+        ` : ''}
+
+        <h5 class="text-xs font-bold text-slate-300 uppercase tracking-wider pt-1 flex items-center gap-1.5">
           <span>🎨</span> ${isBn ? 'রেখা কালার কোডিং গাইড' : 'Line Color Code Guide'}
         </h5>
         
         ${data.lineReadings.map(line => `
-          <div class="p-3.5 rounded-2xl bg-slate-800/70 border border-slate-700/80 flex items-center justify-between hover:border-slate-600 transition-colors">
-            <div class="flex items-center gap-3">
+          <div class="p-3 rounded-2xl bg-slate-800/70 border border-slate-700/80 flex items-center justify-between hover:border-slate-600 transition-colors">
+            <div class="flex items-center gap-2.5">
               <span class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color: ${line.color}; box-shadow: 0 0 10px ${line.color};"></span>
               <span class="text-xs font-bold text-slate-200">${isBn ? line.name_bn : line.name_en}</span>
             </div>
@@ -559,11 +583,11 @@ function renderTabTracer(data) {
         `).join('')}
 
         <!-- Special Auspicious Sign Badge -->
-        <div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 flex items-center gap-3.5">
-          <span class="text-3xl">${data.specialSign.symbol}</span>
+        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 flex items-center gap-3.5">
+          <span class="text-2xl">${data.specialSign.symbol}</span>
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">${isBn ? 'চিহ্নিত রাজযোগ চিহ্ন' : 'Detected Auspicious Sign'}</span>
-            <span class="text-sm font-bold text-slate-100">${isBn ? data.specialSign.name_bn : data.specialSign.name_en}</span>
+            <span class="text-xs font-bold text-slate-100">${isBn ? data.specialSign.name_bn : data.specialSign.name_en}</span>
           </div>
         </div>
       </div>
@@ -581,31 +605,58 @@ function renderTabLines(data) {
   const isBn = getLanguage() === 'bn';
 
   container.innerHTML = `
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      ${data.lineReadings.map(line => `
-        <div class="p-5 rounded-3xl bg-slate-800/60 border border-slate-700/80 hover:border-amber-500/30 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${line.bgClass}">
-                <span>${line.icon}</span> ${isBn ? line.name_bn : line.name_en}
-              </span>
-              <span class="text-xs font-mono text-slate-400">${formatDigits(line.clarityScore)}%</span>
+    <div class="space-y-4">
+      <!-- Life Timeline Age Epoch Banner -->
+      ${data.timelineMilestone ? `
+        <div class="p-5 rounded-3xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-emerald-950/30 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+          <div class="flex items-center gap-3.5">
+            <span class="text-3xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30">⏳</span>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                  ${isBn ? 'জীবনকাল ক্রোনোলজি ও মাইলফলক' : 'Life-Timeline Chronology & Milestones'}
+                </span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  ${formatDigits(data.timelineMilestone.currentAge)} ${isBn ? 'বছর' : 'Years'}
+                </span>
+              </div>
+              <h5 class="text-sm font-bold text-slate-100">
+                ${isBn ? data.timelineMilestone.phase.phase_bn : data.timelineMilestone.phase.phase_en}
+              </h5>
+              <p class="text-xs text-slate-300 mt-0.5">
+                ${isBn ? data.timelineMilestone.phase.energy_bn : data.timelineMilestone.phase.energy_en}
+              </p>
             </div>
-            <h5 class="text-sm font-bold text-slate-100 mt-2 mb-1">
-              ${isBn ? line.label_bn : line.label_en}
-            </h5>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              ${isBn ? line.reading_bn : line.reading_en}
-            </p>
           </div>
         </div>
-      `).join('')}
+      ` : ''}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        ${data.lineReadings.map(line => `
+          <div class="p-5 rounded-3xl bg-slate-800/60 border border-slate-700/80 hover:border-amber-500/30 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${line.bgClass}">
+                  <span>${line.icon}</span> ${isBn ? line.name_bn : line.name_en}
+                </span>
+                <span class="text-xs font-mono text-slate-400">${formatDigits(line.clarityScore)}%</span>
+              </div>
+              <h5 class="text-sm font-bold text-slate-100 mt-2 mb-1">
+                ${isBn ? line.label_bn : line.label_en}
+              </h5>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                ${isBn ? line.reading_bn : line.reading_en}
+              </p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
     </div>
   `;
 }
 
 /**
- * Tab 3: Planetary Mounts & Special Auspicious Signs
+ * Tab 3: Planetary Mounts & Special Auspicious Signs & 2D:4D Digit Ratio
  */
 function renderTabMounts(data) {
   const container = document.getElementById('palmTabContent');
@@ -615,6 +666,31 @@ function renderTabMounts(data) {
 
   container.innerHTML = `
     <div class="space-y-6">
+      <!-- 2D:4D Digit Ratio Biometric Analysis Card -->
+      ${data.digitRatioData ? `
+        <div class="p-5 rounded-3xl bg-gradient-to-r from-sky-950/40 via-slate-900 to-indigo-950/30 border border-sky-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+          <div class="flex items-center gap-4">
+            <span class="text-3xl p-3 rounded-2xl bg-sky-500/10 border border-sky-500/30 shrink-0">📏</span>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">
+                  ${isBn ? 'বায়োমেট্রিক ২ডি:৪ডি ডিজিট অনুপাত (তর্জনী vs অনামিকা)' : 'Biometric 2D:4D Digit Ratio (Index vs Ring)'}
+                </span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                  ${formatDigits(data.digitRatioData.ratio)}
+                </span>
+              </div>
+              <h5 class="text-sm font-bold text-slate-100">
+                ${isBn ? data.digitRatioData.type_bn : data.digitRatioData.type_en}
+              </h5>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed max-w-2xl">
+                ${isBn ? data.digitRatioData.desc_bn : data.digitRatioData.desc_en}
+              </p>
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
         ${data.mountProminences.map(mount => `
           <div class="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/80 flex flex-col justify-between">
@@ -728,53 +804,66 @@ function renderTabDualMatrix(dualData) {
 function exportPalmistryCard(data) {
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
-  canvas.height = 1350;
+  canvas.height = 1420;
   const ctx = canvas.getContext('2d');
 
   // Background gradient
-  const bg = ctx.createLinearGradient(0, 0, 1080, 1350);
+  const bg = ctx.createLinearGradient(0, 0, 1080, 1420);
   bg.addColorStop(0, '#090d16');
   bg.addColorStop(0.5, '#111827');
   bg.addColorStop(1, '#05070a');
   ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1080, 1350);
+  ctx.fillRect(0, 0, 1080, 1420);
 
   // Border frame
   ctx.strokeStyle = '#f59e0b';
   ctx.lineWidth = 6;
-  ctx.strokeRect(30, 30, 1020, 1290);
+  ctx.strokeRect(30, 30, 1020, 1360);
 
   // Header
   ctx.fillStyle = '#fef3c7';
   ctx.font = 'bold 44px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('AI PALMISTRY PASSPORT', 540, 120);
+  ctx.fillText('AI PALMISTRY PASSPORT', 540, 110);
 
   ctx.fillStyle = '#f59e0b';
-  ctx.font = 'bold 32px sans-serif';
-  ctx.fillText(`${data.elementalHand.name_en}`, 540, 180);
+  ctx.font = 'bold 30px sans-serif';
+  ctx.fillText(`${data.elementalHand.name_en}`, 540, 165);
 
   // Score
   ctx.fillStyle = '#34d399';
-  ctx.font = 'bold 50px monospace';
-  ctx.fillText(`Vitality Score: ${data.overallScore}%`, 540, 260);
+  ctx.font = 'bold 46px monospace';
+  ctx.fillText(`Vitality Score: ${data.overallScore}%`, 540, 235);
+
+  // Milestone Epoch & Digit Ratio Highlights
+  if (data.timelineMilestone) {
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillText(`Life Epoch (Age ${data.timelineMilestone.currentAge}): ${data.timelineMilestone.phase.phase_en}`, 540, 290);
+  }
+
+  if (data.digitRatioData) {
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '22px monospace';
+    ctx.fillText(`2D:4D Ratio: ${data.digitRatioData.ratio} — ${data.digitRatioData.type_en}`, 540, 330);
+  }
 
   // Lines
-  let y = 360;
+  let y = 410;
   data.lineReadings.forEach(line => {
     ctx.fillStyle = line.color;
-    ctx.font = 'bold 28px sans-serif';
+    ctx.font = 'bold 26px sans-serif';
     ctx.fillText(`${line.name_en}: ${line.clarityScore}% Clarity`, 540, y);
     ctx.fillStyle = '#94a3b8';
-    ctx.font = '22px sans-serif';
-    ctx.fillText(line.label_en, 540, y + 36);
-    y += 90;
+    ctx.font = '20px sans-serif';
+    ctx.fillText(line.label_en, 540, y + 32);
+    y += 85;
   });
 
   // Footer branding
   ctx.fillStyle = '#64748b';
-  ctx.font = '20px monospace';
-  ctx.fillText('Generated by Life-Timeline AI Palmistry Engine', 540, 1260);
+  ctx.font = '18px monospace';
+  ctx.fillText('Generated by Life-Timeline AI Palmistry Engine', 540, 1340);
 
   const link = document.createElement('a');
   link.download = `Palmistry-Passport-${Date.now()}.png`;
