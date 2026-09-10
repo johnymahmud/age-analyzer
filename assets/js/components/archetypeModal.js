@@ -1,55 +1,297 @@
-/**
- * Astro-Morphology & Royal Archetype Modal Controller
- * হাই-টেক বায়োমেট্রিক গ্রিড অ্যানিমেশন ও আর্কিটাইপ ইন্টারঅ্যাকশন
- */
 import { analyzeImageAura, calculateArchetypeProfile } from './morphologyEngine.js';
 import { SAMUDRIKA_FEATURES } from '../data/archetypes.js';
 import { toBnDigits } from '../calculator.js';
+import { setUnlockLevel, getState, saveProfile } from '../state.js';
+import { renderCompletionMeter } from './completionMeter.js';
+import { getLanguage, t, formatDigits } from '../i18n.js';
+import { mountModal, closeModal } from './modalManager.js';
 
 let currentArchetypeProfile = null;
 let currentModalUserData = null;
 let currentAvatar = null;
 
-export function initArchetypeModal() {
-  const modal = document.getElementById('archetypeModal');
-  const closeBtn = document.getElementById('closeArchetypeModalBtn');
-  const footerCloseBtn = document.getElementById('closeArchetypeModalFooterBtn');
-  const backdrop = document.getElementById('archetypeModalBackdrop');
-  const copyBtn = document.getElementById('copyArchetypeCardBtn');
-  const tuneFaceShape = document.getElementById('tuneFaceShape');
-  const tuneEyeAura = document.getElementById('tuneEyeAura');
+function getArchetypeModalTemplate() {
+  return `
+  <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+    <div id="archetypeModalBackdrop" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"></div>
+    <div class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-amber-500/30 dark:border-amber-500/20 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+      <!-- Modal Header with Holographic Biometric Scanner -->
+      <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/40 to-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+          <div id="archetypeAvatarUploadBox" class="relative w-16 h-16 rounded-2xl bg-slate-800 border-2 border-amber-500/50 overflow-hidden flex items-center justify-center shadow-lg cursor-pointer hover:border-amber-400 transition-all group"
+            title="ছবি পরিবর্তন বা নতুন সেলফি স্ক্যান করতে ক্লিক করুন 📸">
+            <img id="archetypeAvatarPreview" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+            <div id="archetypeAvatarFallback" class="text-3xl flex items-center justify-center text-amber-400">👑</div>
+            
+            <div id="archetypeScannerLaser" class="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_#f59e0b] animate-bounce hidden"></div>
+            <div id="archetypeScannerGrid" class="absolute inset-0 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:8px_8px] opacity-25 pointer-events-none hidden"></div>
+            
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-opacity">
+              📷
+            </div>
+            <input type="file" id="archetypePhotoInput" accept="image/jpeg,image/png,image/webp" class="hidden">
+          </div>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="archetypePrimaryIcon" class="text-2xl">👑</span>
+              <h2 id="archetypePrimaryTitle" class="text-xl sm:text-2xl font-extrabold text-amber-300">রাজকীয় অধিপতি (The Sovereign)</h2>
+            </div>
+            <p id="archetypeTagline" class="text-xs text-amber-200/80 font-medium mt-0.5">জন্মগত শাসক, মহিমান্বিত ব্যক্তিত্ব ও অটল প্রতিষ্ঠাতা</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <span id="archetypeScanStatus" class="text-[11px] font-mono text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full border border-amber-500/30">
+            স্ক্যানিং সম্পন্ন ✓
+          </span>
+          <button type="button" id="closeArchetypeModalBtn"
+            class="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-lg font-bold transition-all shadow-sm cursor-pointer"
+            title="বন্ধ করুন (Esc)">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Scrollable Body -->
+      <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+        <!-- Top Archetype Overview & Quote -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span id="archetypeSecondaryBadge" class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold border border-purple-500/30">
+              সহকারী প্রভাব
+            </span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              অরা বর্ণচ্ছটা: <strong id="archetypeAuraColorText" class="text-amber-600 dark:text-amber-400">গোল্ডেন অরা</strong>
+            </span>
+          </div>
+
+          <blockquote id="archetypeQuoteText" class="text-xs sm:text-sm font-serif italic text-slate-700 dark:text-slate-300 bg-white/60 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 leading-relaxed"></blockquote>
+          <p id="archetypeNatureText" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- 6 Core Dimensional Metrics -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+              <span>📊 মহাজাগতিক মেধার ৬টি ডাইমেনশন</span>
+            </h4>
+            <span class="text-[11px] text-slate-400">১০০% বায়োমেট্রিক ও অ্যাস্ট্রো স্কেল</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Leadership -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">👑 নেতৃত্ব ও রাজকীয় তেজ</span>
+                <span id="metricLeadershipText" class="font-mono font-bold text-amber-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricLeadershipBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Creativity -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🎨 সৃজনশীলতা ও শিল্পবোধ</span>
+                <span id="metricCreativityText" class="font-mono font-bold text-pink-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricCreativityBar" class="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Spirituality -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🔮 আধ্যাত্মিক অন্তর্দৃষ্টি</span>
+                <span id="metricSpiritualityText" class="font-mono font-bold text-purple-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricSpiritualityBar" class="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Magnetism -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">✨ বাচনভঙ্গি ও আকর্ষণ ক্ষমতা</span>
+                <span id="metricMagnetismText" class="font-mono font-bold text-cyan-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricMagnetismBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Willpower -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">⚔️ ইচ্ছাশক্তি ও মানসিক দৃঢ়তা</span>
+                <span id="metricWillpowerText" class="font-mono font-bold text-red-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricWillpowerBar" class="h-full rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Wisdom -->
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 dark:text-slate-200">🧠 দূরদর্শিতা ও প্রজ্ঞা</span>
+                <span id="metricWisdomText" class="font-mono font-bold text-emerald-500">০%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="metricWisdomBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-700" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Samudrika Shastra Facial Signatures -->
+        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+            <span>📜 সামুদ্রিক লক্ষণ বিচার (Facial Morpho-Signatures)</span>
+          </h4>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">মুখের গড়ন (Face Shape):</span>
+              <p id="samudrikaFaceShapeText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">দৃষ্টি ও চোখের অরা (Eyes):</span>
+              <p id="samudrikaEyeAuraText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+              <span class="text-slate-500 block font-semibold">কপাল ও প্রজ্ঞা প্যালেস:</span>
+              <p id="samudrikaForeheadText" class="font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Strengths vs Challenges -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              💎 রাজকীয় শক্তি ও দক্ষতা
+            </h4>
+            <ul id="archetypeStrengthsList" class="space-y-1.5"></ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              ⚠️ সচেতনতা ও ভারসাম্য রক্ষার দিক
+            </h4>
+            <ul id="archetypeChallengesList" class="space-y-1.5"></ul>
+          </div>
+        </div>
+
+        <!-- Career & Domain Guidance -->
+        <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs sm:text-sm text-indigo-900 dark:text-indigo-200">
+          <strong class="block mb-1">🏛️ সেরা কর্মক্ষেত্র ও সামাজিক ভূমিকা:</strong>
+          <p id="archetypeDomainsText"></p>
+        </div>
+
+        <!-- Interactive Manual Tuner Mode -->
+        <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">🎭 ম্যানুয়াল ফেসিয়াল টিউনিং (ঐচ্ছিক কাস্টমাইজার)</span>
+            <span class="text-[10px] text-slate-400">লাইভ টিউন করে দেখতে পারেন</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="tuneFaceShape" class="block text-[11px] text-slate-500 mb-1">মুখের আকৃতি পরিবর্তন করুন:</label>
+              <select id="tuneFaceShape" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200"></select>
+            </div>
+            <div>
+              <label for="tuneEyeAura" class="block text-[11px] text-slate-500 mb-1">চোখ ও দৃষ্টির ধরন পরিবর্তন করুন:</label>
+              <select id="tuneEyeAura" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/50 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+        <button type="button" id="copyArchetypeCardBtn"
+          class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+          <span>👑</span>
+          <span>রয়্যাল আর্কিটাইপ কার্ড কপি করুন</span>
+        </button>
+
+        <button type="button" id="closeArchetypeModalFooterBtn"
+          class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all cursor-pointer">
+          ${t('closeBtn') || 'বন্ধ করুন'}
+        </button>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+function initArchetypeModalListeners(modalEl) {
+  const closeBtn = modalEl.querySelector('#closeArchetypeModalBtn');
+  const footerCloseBtn = modalEl.querySelector('#closeArchetypeModalFooterBtn');
+  const backdrop = modalEl.querySelector('#archetypeModalBackdrop');
+  const copyBtn = modalEl.querySelector('#copyArchetypeCardBtn');
+  const tuneFaceShape = modalEl.querySelector('#tuneFaceShape');
+  const tuneEyeAura = modalEl.querySelector('#tuneEyeAura');
 
   if (closeBtn) closeBtn.addEventListener('click', closeArchetypeModal);
   if (footerCloseBtn) footerCloseBtn.addEventListener('click', closeArchetypeModal);
   if (backdrop) backdrop.addEventListener('click', closeArchetypeModal);
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-      closeArchetypeModal();
-    }
-  });
-
   if (copyBtn) copyBtn.addEventListener('click', handleCopyArchetypePersona);
 
-  if (tuneFaceShape) {
-    tuneFaceShape.addEventListener('change', handleManualTuning);
-  }
-  if (tuneEyeAura) {
-    tuneEyeAura.addEventListener('change', handleManualTuning);
+  if (tuneFaceShape) tuneFaceShape.addEventListener('change', handleManualTuning);
+  if (tuneEyeAura) tuneEyeAura.addEventListener('change', handleManualTuning);
+
+  const uploadBox = modalEl.querySelector('#archetypeAvatarUploadBox');
+  const photoInput = modalEl.querySelector('#archetypePhotoInput');
+  if (uploadBox && photoInput) {
+    uploadBox.addEventListener('click', () => photoInput.click());
+    photoInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const base64 = ev.target.result;
+          currentAvatar = base64;
+          const currentState = getState();
+          if (currentState.profile) {
+            currentState.profile.avatar = base64;
+            saveProfile(currentState.profile);
+            const avatarImg = document.getElementById('resultAvatarImg');
+            const avatarFallback = document.getElementById('resultAvatarFallback');
+            if (avatarImg) {
+              avatarImg.src = base64;
+              avatarImg.classList.remove('hidden');
+            }
+            if (avatarFallback) avatarFallback.classList.add('hidden');
+          }
+          openArchetypeModal(currentModalUserData, base64);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   }
 }
 
-export function openArchetypeModal(userData, avatarBase64) {
-  const modal = document.getElementById('archetypeModal');
-  if (!modal || !userData) return;
+export function initArchetypeModal() {
+  // Legacy support
+}
 
+export function openArchetypeModal(userData, avatarBase64) {
+  if (!userData) return;
+
+  const lang = getLanguage();
   currentModalUserData = userData;
   currentAvatar = avatarBase64;
 
-  // Reveal Modal
-  modal.classList.remove('hidden');
-  document.body.classList.add('overflow-hidden');
-
+  mountModal('archetypeModal', getArchetypeModalTemplate(), (modalEl) => {
+    initArchetypeModalListeners(modalEl);
   // Trigger Biometric Scan Animation
   const scannerLaser = document.getElementById('archetypeScannerLaser');
   const scannerGrid = document.getElementById('archetypeScannerGrid');
@@ -57,26 +299,42 @@ export function openArchetypeModal(userData, avatarBase64) {
 
   if (scannerLaser) scannerLaser.classList.remove('hidden');
   if (scannerGrid) scannerGrid.classList.remove('hidden');
-  if (scanStatus) scanStatus.textContent = "মহাজাগতিক ফেসিয়াল স্ক্যানিং চলছে...";
+  if (scanStatus) {
+    scanStatus.textContent = lang === 'bn' ? "মহাজাগতিক ফেসিয়াল স্ক্যানিং চলছে..." : "Biometric Aura Scanning in progress...";
+  }
 
   // Analyze image on canvas
   analyzeImageAura(avatarBase64, (visualFeatures) => {
     setTimeout(() => {
       if (scannerLaser) scannerLaser.classList.add('hidden');
-      if (scanStatus) scanStatus.textContent = "স্ক্যানিং সম্পন্ন ✓ মহাজাগতিক রূপরেখা প্রস্তুত";
+      if (scanStatus) {
+        scanStatus.textContent = lang === 'bn' ? "স্ক্যানিং সম্পন্ন ✓ মহাজাগতিক রূপরেখা প্রস্তুত" : "Scan Complete ✓ 100% Cosmic Blueprint Ready";
+      }
       
       const profile = calculateArchetypeProfile(userData, visualFeatures);
       currentArchetypeProfile = profile;
       renderArchetypeContent(profile, userData, avatarBase64);
+
+      // Unlock Level 100 in Gamification Meter
+      setUnlockLevel(100);
+      renderCompletionMeter(100);
+
+      // Update Card 4 Hook Badge & Button
+      const archBadge = document.getElementById('hookArchetypeBadge');
+      const archBtnText = document.getElementById('hookArchetypeBtnText');
+      if (archBadge) {
+        archBadge.textContent = t('hookArchetypeCardBadgeUnlocked');
+        archBadge.className = "text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20";
+      }
+      if (archBtnText) {
+        archBtnText.textContent = lang === 'bn' ? 'আর্কিটাইপ ড্যাশবোর্ড ↗' : 'View Archetype ↗';
+      }
     }, 800);
   });
 }
 
 export function closeArchetypeModal() {
-  const modal = document.getElementById('archetypeModal');
-  if (!modal) return;
-  modal.classList.add('hidden');
-  document.body.classList.remove('overflow-hidden');
+  closeModal('archetypeModal');
 }
 
 function renderArchetypeContent(profile, userData, avatarBase64) {

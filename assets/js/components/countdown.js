@@ -1,16 +1,16 @@
 /**
  * Birthday Countdown & Zodiac Details Component
+ * Supports Dual-Language and Progressive Locked/Unlocked States
  */
-import { calculateNextBirthday, getZodiac, getDecan, toBnDigits } from '../calculator.js';
-
-const BENGALI_MONTHS = [
-  "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
-  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
-];
+import { calculateNextBirthday, getZodiac, getDecan } from '../calculator.js';
+import { getLanguage, t, formatDigits } from '../i18n.js';
+import { LOCALES } from '../data/locales.js';
 
 export function updateBirthdayCountdown(birthDate) {
   if (!birthDate) return null;
 
+  const lang = getLanguage();
+  const dict = LOCALES[lang] || LOCALES.bn;
   const bday = calculateNextBirthday(birthDate);
 
   const cdDays = document.getElementById('cdDays');
@@ -20,43 +20,58 @@ export function updateBirthdayCountdown(birthDate) {
   const nextBdayDate = document.getElementById('nextBirthdayDate');
   const nextAgeLabel = document.getElementById('nextAgeLabel');
 
-  if (cdDays) cdDays.textContent = toBnDigits(bday.days);
-  if (cdHours) cdHours.textContent = toBnDigits(bday.hours.toString().padStart(2, '0'));
-  if (cdMinutes) cdMinutes.textContent = toBnDigits(bday.minutes.toString().padStart(2, '0'));
-  if (cdSeconds) cdSeconds.textContent = toBnDigits(bday.seconds.toString().padStart(2, '0'));
+  if (cdDays) cdDays.textContent = formatDigits(bday.days);
+  if (cdHours) cdHours.textContent = formatDigits(bday.hours.toString().padStart(2, '0'));
+  if (cdMinutes) cdMinutes.textContent = formatDigits(bday.minutes.toString().padStart(2, '0'));
+  if (cdSeconds) cdSeconds.textContent = formatDigits(bday.seconds.toString().padStart(2, '0'));
 
   if (nextBdayDate) {
     const d = bday.nextDate;
-    nextBdayDate.textContent = `${toBnDigits(d.getDate())} ${BENGALI_MONTHS[d.getMonth()]} ${toBnDigits(d.getFullYear())}`;
+    const mName = dict.months[d.getMonth()] || '';
+    nextBdayDate.textContent = `${formatDigits(d.getDate())} ${mName} ${formatDigits(d.getFullYear())}`;
   }
 
   if (nextAgeLabel) {
-    nextAgeLabel.textContent = `${toBnDigits(bday.nextAge)} বছর`;
+    const unit = lang === 'bn' ? 'বছর' : 'Years';
+    nextAgeLabel.textContent = `${formatDigits(bday.nextAge)} ${unit}`;
   }
 
   return bday;
 }
 
-export function renderZodiacCard(month, day) {
+export function renderZodiacCard(month, day, unlockLevel = 35) {
+  const lang = getLanguage();
   const z = getZodiac(month, day);
-  const decan = getDecan(z, month, day);
 
-  const zSymbol = document.getElementById('zodiacSymbol');
-  const zName = document.getElementById('zodiacNameBn');
-  const zElement = document.getElementById('zodiacElement');
-  const zTraits = document.getElementById('zodiacTraits');
-  const zDateSpan = document.getElementById('zodiacDateSpan');
-  const zDecanBadge = document.getElementById('zodiacDecanBadge');
+  const badge = document.getElementById('hookZodiacBadge');
+  const btnText = document.getElementById('hookZodiacBtnText');
+  const desc = document.getElementById('hookZodiacDesc');
 
-  if (zSymbol) zSymbol.textContent = z.sign;
-  if (zName) zName.textContent = z.nameBn;
-  if (zElement) zElement.textContent = `উপাদান: ${z.element} | শাসক গ্রহ: ${z.planet}`;
-  if (zTraits) zTraits.textContent = z.traits;
-  if (zDateSpan) {
-    zDateSpan.textContent = `তারিখ সীমা: ${toBnDigits(z.start[1])} ${BENGALI_MONTHS[z.start[0] - 1]} - ${toBnDigits(z.end[1])} ${BENGALI_MONTHS[z.end[0] - 1]}`;
-  }
-  if (zDecanBadge && decan) {
-    zDecanBadge.textContent = `${toBnDigits(decan.decanNumber)}ম দ্রেক্বাণ (উপ-গ্রহ: ${decan.subPlanet})`;
+  if (unlockLevel >= 70) {
+    if (badge) {
+      badge.textContent = t('hookZodiacCardBadgeUnlocked');
+      badge.className = "text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20";
+    }
+    if (btnText) {
+      btnText.textContent = t('hookZodiacBtnUnlocked');
+    }
+    if (desc) {
+      const signName = lang === 'bn' ? `${z.nameBn} (${z.sign})` : `${z.name} (${z.sign})`;
+      desc.textContent = lang === 'bn' 
+        ? `আপনার রাশি ${signName}। উপাদান: ${z.element}, শাসক গ্রহ: ${z.planet}। সম্পূর্ণ ৭-ট্যাব রাশিফল বিশ্লেষণ দেখতে ক্লিক করুন।`
+        : `Your sign is ${signName}. Element: ${z.element}, Planet: ${z.planet}. Click to view complete 7-tab horoscope dashboard.`;
+    }
+  } else {
+    if (badge) {
+      badge.textContent = t('hookZodiacCardBadgeLocked');
+      badge.className = "text-[11px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 animate-pulse";
+    }
+    if (btnText) {
+      btnText.textContent = t('hookZodiacBtnLocked');
+    }
+    if (desc) {
+      desc.textContent = t('hookZodiacCardDesc');
+    }
   }
 
   return z;

@@ -1,155 +1,237 @@
 /**
  * Main Application Controller (Entry Point)
+ * Progressive 3-Stage User Journey & Dual-Language (i18n) Engine
  */
 import { initTheme } from './theme.js';
-import { initAvatarUpload, getCurrentAvatar, setInitialAvatar } from './upload.js';
+import { initI18n, toggleLanguage, getLanguage, t, formatDigits, translateDOM } from './i18n.js';
 import { calculateExactAge, calculateNextBirthday, getZodiac, getDecan, toBnDigits } from './calculator.js';
-import { saveProfile, loadSavedProfile, clearProfile, getState, setBirthDate, setLiveTicker } from './state.js';
+import { 
+  saveProfile, 
+  loadSavedProfile, 
+  clearProfile, 
+  getState, 
+  setBirthDate, 
+  setLiveTicker, 
+  setUnlockLevel, 
+  getUnlockLevel 
+} from './state.js';
 import { renderBioCard } from './components/bioCard.js';
 import { updateAgeStats } from './components/ageStats.js';
 import { updateBirthdayCountdown, renderZodiacCard } from './components/countdown.js';
 import { renderHistoricalInsights } from './components/historicalView.js';
 import { renderBenchmarkTable } from './components/milestonesTable.js';
+import { renderCompletionMeter } from './components/completionMeter.js';
+import { openSocialStoryModal } from './components/socialStory.js';
 import { initAdSlots } from './components/adSlots.js';
-import { initZodiacModal, openZodiacModal } from './components/zodiacModal.js';
-import { initArchetypeModal, openArchetypeModal } from './components/archetypeModal.js';
+import { openZodiacModal } from './components/zodiacModal.js';
+import { openArchetypeModal } from './components/archetypeModal.js';
+import { openHistoricalModal, closeHistoricalModal } from './components/historicalModal.js';
+import { openMilestonesModal, closeMilestonesModal } from './components/milestonesModal.js';
+import { openAstroInputModal, closeAstroInputModal } from './components/astroInputModal.js';
+import { closeAllModals } from './components/modalManager.js';
 
 function initApp() {
   // 1. Initialize Theme (Light / Dark)
   initTheme();
 
-  // 2. Initialize Ad Slots (Multi-platform: AdSense, Media.net, etc.)
+  // 2. Initialize i18n & Localization
+  initI18n();
+
+  // 3. Initialize Ad Slots
   initAdSlots();
 
-  // 3. Initialize Zodiac Deep Insights Modal & Archetype Modal
-  initZodiacModal();
-  initArchetypeModal();
-
-  // 4. Populate Days (1 to 31)
+  // 5. Populate Days Dropdown (1 to 31)
   populateDaysDropdown();
 
-  // 5. Initialize Avatar Upload (click, drag-drop, canvas compression)
-  initAvatarUpload((newAvatarBase64) => {
+  // 6. Restore Saved Profile if available
+  const savedData = loadSavedProfile();
+  if (savedData && savedData.day && savedData.month && savedData.year) {
+    restoreSlimFormData(savedData);
+    executeAnalysis(savedData, false);
+  }
+
+  // 7. Setup Event Listeners
+  setupEventListeners();
+
+  // 8. Listen for language changes to re-render dynamic parts
+  window.addEventListener('languageChanged', () => {
+    populateDaysDropdown();
     const currentState = getState();
-    if (currentState.profile) {
-      currentState.profile.avatar = newAvatarBase64;
-      saveProfile(currentState.profile);
-      // Update result avatar if displayed
-      const resAvatarImg = document.getElementById('resultAvatarImg');
-      const resAvatarFallback = document.getElementById('resultAvatarFallback');
-      if (newAvatarBase64) {
-        if (resAvatarImg) {
-          resAvatarImg.src = newAvatarBase64;
-          resAvatarImg.classList.remove('hidden');
+    if (currentState.profile && currentState.birthDate) {
+      const bday = calculateNextBirthday(currentState.birthDate);
+      const level = getUnlockLevel();
+      renderBioCard(currentState.profile, formatDigits(bday.days));
+      renderZodiacCard(currentState.profile.month, currentState.profile.day, level);
+      renderCompletionMeter(level);
+      updateAgeStats(currentState.birthDate);
+      updateBirthdayCountdown(currentState.birthDate);
+      renderHistoricalInsights(currentState.profile.month, currentState.profile.day, currentState.profile.year);
+      renderBenchmarkTable(calculateExactAge(currentState.birthDate).years, false);
+      
+      const archBadge = document.getElementById('hookArchetypeBadge');
+      const archBtnText = document.getElementById('hookArchetypeBtnText');
+      if (level >= 100) {
+        if (archBadge) {
+          archBadge.textContent = t('hookArchetypeCardBadgeUnlocked');
+          archBadge.className = "text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20";
         }
-        if (resAvatarFallback) resAvatarFallback.classList.add('hidden');
+        if (archBtnText) {
+          archBtnText.textContent = getLanguage() === 'bn' ? 'আর্কিটাইপ ড্যাশবোর্ড ↗' : 'View Archetype ↗';
+        }
       } else {
-        if (resAvatarImg) resAvatarImg.classList.add('hidden');
-        if (resAvatarFallback) resAvatarFallback.classList.remove('hidden');
+        if (archBadge) {
+          archBadge.textContent = t('hookArchetypeCardBadgeLocked');
+          archBadge.className = "text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20";
+        }
+        if (archBtnText) {
+          archBtnText.textContent = t('hookArchetypeBtn');
+        }
       }
     }
   });
-
-  // 6. Restore Saved Data from localStorage
-  const savedData = loadSavedProfile();
-  if (savedData) {
-    restoreFormData(savedData);
-    if (savedData.day && savedData.month && savedData.year) {
-      executeAnalysis(savedData, false);
-    }
-  }
-
-  // 7. Bind Event Listeners
-  setupEventListeners();
 }
 
 function populateDaysDropdown() {
   const dobDaySelect = document.getElementById('dobDay');
   if (!dobDaySelect) return;
 
-  dobDaySelect.innerHTML = '<option value="" disabled selected>দিন নির্বাচন করুন</option>';
+  const currentVal = dobDaySelect.value;
+  const lang = getLanguage();
+  dobDaySelect.innerHTML = `<option value="" disabled selected>${t('dayPlaceholder')}</option>`;
+  
   for (let d = 1; d <= 31; d++) {
     const opt = document.createElement('option');
     opt.value = d;
-    opt.textContent = `${toBnDigits(d)} তারিখ`;
+    opt.textContent = lang === 'bn' ? `${formatDigits(d)} তারিখ` : `Day ${d}`;
+    if (currentVal && parseInt(currentVal, 10) === d) {
+      opt.selected = true;
+    }
     dobDaySelect.appendChild(opt);
   }
 }
 
-function restoreFormData(data) {
+function restoreSlimFormData(data) {
   const dobDaySelect = document.getElementById('dobDay');
   const dobMonthSelect = document.getElementById('dobMonth');
   const dobYearInput = document.getElementById('dobYear');
-  const userCountrySelect = document.getElementById('userCountry');
-  const userNameInput = document.getElementById('userName');
-  const userGenderSelect = document.getElementById('userGender');
-  const userRelationshipSelect = document.getElementById('userRelationship');
-  const userBloodGroupSelect = document.getElementById('userBloodGroup');
-  const birthTimeInput = document.getElementById('birthTime');
 
   if (data.day && dobDaySelect) dobDaySelect.value = data.day;
   if (data.month && dobMonthSelect) dobMonthSelect.value = data.month;
   if (data.year && dobYearInput) dobYearInput.value = data.year;
-  if (data.country && userCountrySelect) userCountrySelect.value = data.country;
-  if (data.name && userNameInput) userNameInput.value = data.name;
-  if (data.gender && userGenderSelect) userGenderSelect.value = data.gender;
-  if (data.relationship && userRelationshipSelect) userRelationshipSelect.value = data.relationship;
-  if (data.bloodGroup && userBloodGroupSelect) userBloodGroupSelect.value = data.bloodGroup;
-  if (data.time && birthTimeInput) birthTimeInput.value = data.time;
-
-  if (data.avatar) {
-    setInitialAvatar(data.avatar);
-  }
 }
 
 function setupEventListeners() {
   const form = document.getElementById('lifeTimelineForm');
   const resetBtn = document.getElementById('resetStorageBtn');
+  const langToggleBtn = document.getElementById('langToggleBtn');
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
   const copySummaryBtn = document.getElementById('copySummaryBtn');
+  const socialStoryBtn = document.getElementById('socialStoryBtn');
+  const editAstroBtn = document.getElementById('editAstroDetailsBtn');
   const filterAll = document.getElementById('filterAllMilestones');
   const filterNear = document.getElementById('filterNearMilestones');
 
-  const zodiacCard = document.getElementById('zodiacCardInteractive');
-  const openZodiacBtn = document.getElementById('openZodiacDetailBtn');
-  const zodiacPill = document.getElementById('resultZodiacPill');
+  // Language Switcher
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      toggleLanguage();
+    });
+  }
 
-  const openArchetypeBtn = document.getElementById('openArchetypeModalBtn');
-  const archetypeCard = document.getElementById('archetypeCardInteractive');
+  // Social Story Modal Trigger
+  if (socialStoryBtn) {
+    socialStoryBtn.addEventListener('click', openSocialStoryModal);
+  }
 
-  // Trigger Zodiac Modal
-  const triggerZodiacModal = () => {
+  // Edit Astro Details Trigger
+  if (editAstroBtn) {
+    editAstroBtn.addEventListener('click', openAstroInputModal);
+  }
+
+  // Card 1: Historical Insights Modal Trigger
+  const cardHist = document.getElementById('cardHookHistorical');
+  const openHistBtn = document.getElementById('openHistoricalModalBtn');
+  const triggerHistoricalFlow = () => {
     const currentState = getState();
     if (!currentState.profile) return;
-    const { month, day, year, relationship, gender, name, bloodGroup } = currentState.profile;
-    const zodiac = getZodiac(month, day);
-    openZodiacModal(zodiac, month, day, year, relationship, gender, name, bloodGroup, currentState.birthDate);
+    const { month, day, year } = currentState.profile;
+    openHistoricalModal(month, day, year);
+  };
+  if (openHistBtn) openHistBtn.addEventListener('click', (e) => { e.stopPropagation(); triggerHistoricalFlow(); });
+  if (cardHist) cardHist.addEventListener('click', triggerHistoricalFlow);
+
+  // Card 2: Milestones Benchmark Modal Trigger
+  const cardMile = document.getElementById('cardHookMilestones');
+  const openMileBtn = document.getElementById('openMilestonesModalBtn');
+  const triggerMilestonesFlow = () => {
+    const currentState = getState();
+    if (!currentState.birthDate) return;
+    const age = calculateExactAge(currentState.birthDate);
+    openMilestonesModal(age.years);
+  };
+  if (openMileBtn) openMileBtn.addEventListener('click', (e) => { e.stopPropagation(); triggerMilestonesFlow(); });
+  if (cardMile) cardMile.addEventListener('click', triggerMilestonesFlow);
+
+  // Card 3: Trigger Zodiac Flow (Checks if locked or unlocked)
+  const cardZodiac = document.getElementById('cardHookZodiac');
+  const hookZodiacBtn = document.getElementById('hookZodiacBtn');
+  const zodiacPill = document.getElementById('resultZodiacPill');
+  const badgeMeterZodiac = document.getElementById('badgeMeterZodiac');
+
+  const triggerZodiacFlow = () => {
+    const currentState = getState();
+    if (!currentState.profile) return;
+
+    const level = getUnlockLevel();
+    if (level < 70) {
+      // Prompt user with Stage 2 coordinates modal
+      openAstroInputModal();
+    } else {
+      // Already unlocked, open full 7-tab modal directly
+      const { month, day, year, relationship, gender, name, bloodGroup } = currentState.profile;
+      const zodiac = getZodiac(month, day);
+      openZodiacModal(zodiac, month, day, year, relationship, gender, name, bloodGroup, currentState.birthDate);
+    }
   };
 
-  // Trigger Archetype Modal
-  const triggerArchetypeModal = () => {
+  if (cardZodiac) cardZodiac.addEventListener('click', triggerZodiacFlow);
+  if (hookZodiacBtn) hookZodiacBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerZodiacFlow();
+  });
+  if (zodiacPill) zodiacPill.addEventListener('click', triggerZodiacFlow);
+  if (badgeMeterZodiac) badgeMeterZodiac.addEventListener('click', triggerZodiacFlow);
+
+  // Card 4: Trigger Archetype Flow
+  const cardArchetype = document.getElementById('cardHookArchetype');
+  const hookArchetypeBtn = document.getElementById('hookArchetypeBtn');
+  const badgeMeterArchetype = document.getElementById('badgeMeterArchetype');
+
+  const triggerArchetypeFlow = () => {
     const currentState = getState();
     if (!currentState.profile) return;
     const { month, day, year, relationship, gender, name, bloodGroup, avatar } = currentState.profile;
     const zodiac = getZodiac(month, day);
     const userData = { month, day, year, relationship, gender, name, bloodGroup, zodiac, birthDate: currentState.birthDate };
-    openArchetypeModal(userData, avatar || getCurrentAvatar());
+    openArchetypeModal(userData, avatar || '');
   };
 
-  if (zodiacCard) zodiacCard.addEventListener('click', triggerZodiacModal);
-  if (openZodiacBtn) openZodiacBtn.addEventListener('click', (e) => {
+  if (hookArchetypeBtn) hookArchetypeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    triggerZodiacModal();
+    triggerArchetypeFlow();
   });
-  if (zodiacPill) zodiacPill.addEventListener('click', triggerZodiacModal);
+  if (cardArchetype) cardArchetype.addEventListener('click', triggerArchetypeFlow);
+  if (badgeMeterArchetype) badgeMeterArchetype.addEventListener('click', triggerArchetypeFlow);
 
-  if (openArchetypeBtn) openArchetypeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    triggerArchetypeModal();
+  // Escape key global listener for all modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeHistoricalModal();
+      closeMilestonesModal();
+    }
   });
-  if (archetypeCard) archetypeCard.addEventListener('click', triggerArchetypeModal);
 
-  // Form Submit
+  // Stage 1: Ultra-Slim Form Submit (Day, Month, Year only)
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -157,20 +239,29 @@ function setupEventListeners() {
       const day = parseInt(document.getElementById('dobDay').value, 10);
       const month = parseInt(document.getElementById('dobMonth').value, 10);
       const year = parseInt(document.getElementById('dobYear').value, 10);
-      const country = document.getElementById('userCountry').value;
-      const name = document.getElementById('userName').value.trim();
-      const gender = document.getElementById('userGender').value;
-      const relationship = document.getElementById('userRelationship')?.value || 'single';
-      const bloodGroup = document.getElementById('userBloodGroup')?.value || 'unknown';
-      const time = document.getElementById('birthTime').value || '00:00';
-      const avatar = getCurrentAvatar();
 
       if (!day || !month || !year) {
-        alert('অনুগ্রহ করে দিন, মাস ও বছর সঠিকভাবে নির্বাচন করুন।');
+        alert(t('validationError'));
         return;
       }
 
-      const userData = { day, month, year, country, name, gender, relationship, bloodGroup, time, avatar };
+      // Preserve existing profile details if user previously filled them
+      const existing = getState().profile || {};
+      const userData = {
+        ...existing,
+        day,
+        month,
+        year,
+        country: existing.country || 'BD',
+        name: existing.name || '',
+        gender: existing.gender || 'male',
+        relationship: existing.relationship || 'single',
+        bloodGroup: existing.bloodGroup || 'unknown',
+        time: existing.time || '00:00',
+        avatar: existing.avatar || '',
+        unlockLevel: existing.unlockLevel || 35
+      };
+
       executeAnalysis(userData, true);
     });
   }
@@ -178,13 +269,12 @@ function setupEventListeners() {
   // Reset Storage Button
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      if (confirm('সংরক্ষিত সব তথ্য ও ছবি মুছে ফেলতে চান?')) {
+      if (confirm(t('resetConfirm'))) {
         clearProfile();
         if (form) form.reset();
-        setInitialAvatar('');
         const results = document.getElementById('resultsContainer');
         if (results) results.classList.add('hidden');
-        showToast('সব লোকাল ডেটা রিসেট করা হয়েছে।');
+        showToast(t('resetSuccess'));
       }
     });
   }
@@ -196,46 +286,7 @@ function setupEventListeners() {
 
   // Copy Summary to Clipboard
   if (copySummaryBtn) {
-    copySummaryBtn.addEventListener('click', () => {
-      const currentState = getState();
-      if (!currentState.birthDate || !currentState.profile) return;
-
-      const profile = currentState.profile;
-      const age = calculateExactAge(currentState.birthDate);
-      const zodiac = getZodiac(profile.month, profile.day);
-      const decan = getDecan(zodiac, profile.month, profile.day);
-      const bday = calculateNextBirthday(currentState.birthDate);
-      const genderLabel = profile.gender === 'female' ? 'মহিলা' : (profile.gender === 'other' ? 'অন্যান্য' : 'পুরুষ');
-      
-      const relMap = {
-        single: "সিঙ্গেল",
-        relationship: "সম্পর্কে আছেন",
-        married: "বিবাহিত",
-        living_together: "লিভিং টুগেদার",
-        divorced: "বিচ্ছেদপ্রাপ্ত",
-        widowed: "সঙ্গীহারা"
-      };
-      const relText = relMap[profile.relationship] || "সিঙ্গেল";
-      const bloodText = profile.bloodGroup && profile.bloodGroup !== 'unknown' ? ` • রক্তের গ্রুপ: ${profile.bloodGroup}` : '';
-
-      const bdaysOfWeek = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
-      const bDayOfWeek = bdaysOfWeek[currentState.birthDate.getDay()] || '';
-      const bDayOfWeekText = bDayOfWeek ? ` (${bDayOfWeek})` : '';
-
-      const summary = `🌟 লাইফ-টাইমলাইন ও এজ অ্যানালাইসিস 🌟\n` +
-        `👤 নাম: ${profile.name || 'ইউজার'} (${genderLabel} • ${relText}${bloodText})\n` +
-        `📅 জন্মতারিখ: ${toBnDigits(profile.day)}/${toBnDigits(profile.month)}/${toBnDigits(profile.year)}${bDayOfWeekText}\n` +
-        `⏳ বর্তমান বয়স: ${toBnDigits(age.years)} বছর, ${toBnDigits(age.months)} মাস, ${toBnDigits(age.days)} দিন\n` +
-        `⏱️ অতিবাহিত সময়: ${toBnDigits(age.totalDays.toLocaleString('en-US'))} দিন (${toBnDigits(age.totalHours.toLocaleString('en-US'))} ঘণ্টা)\n` +
-        `✨ রাশিচক্র: ${zodiac.nameBn} (${zodiac.sign}) • দ্রেক্বাণ: ${toBnDigits(decan?.decanNumber || 1)}ম ভাগ\n` +
-        `🪐 শাসক গ্রহ: ${zodiac.planet} (উপ-গ্রহ: ${decan?.subPlanet || zodiac.planet})\n` +
-        `🎂 পরবর্তী জন্মদিন: আর ${toBnDigits(bday.days)} দিন বাকি (হবে ${toBnDigits(bday.nextAge)} বছর)\n\n` +
-        `🌐 লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার দ্বারা বিশ্লেষিত`;
-
-      navigator.clipboard.writeText(summary)
-        .then(() => showToast('সারাংশ ক্লিপবোর্ডে কপি করা হয়েছে!'))
-        .catch(() => showToast('কপি করতে ব্যর্থ হয়েছে।'));
-    });
+    copySummaryBtn.addEventListener('click', handleCopySummary);
   }
 
   // Milestone Filters
@@ -257,7 +308,6 @@ function setupEventListeners() {
 }
 
 function executeAnalysis(data, shouldScroll = true) {
-  // Parse time
   const [h, m] = (data.time || '00:00').split(':').map(Number);
   const birthDate = new Date(data.year, data.month - 1, data.day, h || 0, m || 0, 0);
 
@@ -267,18 +317,43 @@ function executeAnalysis(data, shouldScroll = true) {
   const resultsContainer = document.getElementById('resultsContainer');
   if (resultsContainer) resultsContainer.classList.remove('hidden');
 
-  // 1. Calculate next birthday & render Bio Card
+  // 1. Render Completion Meter
+  const level = getUnlockLevel();
+  renderCompletionMeter(level);
+
+  // 2. Calculate next birthday & render Bio Card
   const bday = calculateNextBirthday(birthDate);
-  renderBioCard(data, toBnDigits(bday.days));
+  renderBioCard(data, formatDigits(bday.days));
 
-  // 2. Render Zodiac details
-  renderZodiacCard(data.month, data.day);
+  // 3. Render Zodiac Card (with teaser/locked state if level < 70)
+  renderZodiacCard(data.month, data.day, level);
 
-  // 3. Render Historical Insights & Milestones
+  // 4. Render Historical Insights & Milestones
   renderHistoricalInsights(data.month, data.day, data.year);
   renderBenchmarkTable(calculateExactAge(birthDate).years, false);
 
-  // 4. Update Live Stats & Start Live Ticker
+  // Sync Card 4 Archetype Hook Badge
+  const archBadge = document.getElementById('hookArchetypeBadge');
+  const archBtnText = document.getElementById('hookArchetypeBtnText');
+  if (level >= 100) {
+    if (archBadge) {
+      archBadge.textContent = t('hookArchetypeCardBadgeUnlocked');
+      archBadge.className = "text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20";
+    }
+    if (archBtnText) {
+      archBtnText.textContent = getLanguage() === 'bn' ? 'আর্কিটাইপ ড্যাশবোর্ড ↗' : 'View Archetype ↗';
+    }
+  } else {
+    if (archBadge) {
+      archBadge.textContent = t('hookArchetypeCardBadgeLocked');
+      archBadge.className = "text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20";
+    }
+    if (archBtnText) {
+      archBtnText.textContent = t('hookArchetypeBtn');
+    }
+  }
+
+  // 5. Update Live Stats & Start Live Ticker
   const tick = () => {
     const bDate = getState().birthDate;
     if (!bDate) return;
@@ -289,10 +364,57 @@ function executeAnalysis(data, shouldScroll = true) {
   const intervalId = setInterval(tick, 1000);
   setLiveTicker(intervalId);
 
-  // 5. Scroll smoothly to results
+  // 6. Scroll smoothly to results
   if (shouldScroll && resultsContainer) {
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+/**
+ * Stage 2: Astrological Coordinates Modal Management
+
+
+function handleCopySummary() {
+  const currentState = getState();
+  if (!currentState.birthDate || !currentState.profile) return;
+
+  const lang = getLanguage();
+  const profile = currentState.profile;
+  const age = calculateExactAge(currentState.birthDate);
+  const zodiac = getZodiac(profile.month, profile.day);
+  const decan = getDecan(zodiac, profile.month, profile.day);
+  const bday = calculateNextBirthday(currentState.birthDate);
+
+  const daysOfWeekBn = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+  const daysOfWeekEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const bDayOfWeek = lang === 'bn' ? daysOfWeekBn[currentState.birthDate.getDay()] : daysOfWeekEn[currentState.birthDate.getDay()];
+
+  let summary = '';
+  if (lang === 'bn') {
+    summary = `🌟 লাইফ-টাইমলাইন ও এজ অ্যানালাইসিস 🌟\n` +
+      `👤 নাম: ${profile.name || 'ইউজার'}\n` +
+      `📅 জন্মতারিখ: ${formatDigits(profile.day)}/${formatDigits(profile.month)}/${formatDigits(profile.year)} (${bDayOfWeek})\n` +
+      `⏳ বর্তমান বয়স: ${formatDigits(age.years)} বছর, ${formatDigits(age.months)} মাস, ${formatDigits(age.days)} দিন\n` +
+      `⏱️ অতিবাহিত সময়: ${formatDigits(age.totalDays.toLocaleString('en-US'))} দিন (${formatDigits(age.totalHours.toLocaleString('en-US'))} ঘণ্টা)\n` +
+      `✨ রাশিচক্র: ${zodiac.nameBn} (${zodiac.sign}) • দ্রেক্বাণ: ${formatDigits(decan?.decanNumber || 1)}ম ভাগ\n` +
+      `🪐 শাসক গ্রহ: ${zodiac.planet} (উপ-গ্রহ: ${decan?.subPlanet || zodiac.planet})\n` +
+      `🎂 পরবর্তী জন্মদিন: আর ${formatDigits(bday.days)} দিন বাকি (হবে ${formatDigits(bday.nextAge)} বছর)\n\n` +
+      `🌐 লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার দ্বারা বিশ্লেষিত`;
+  } else {
+    summary = `🌟 Life Timeline & Age Analysis 🌟\n` +
+      `👤 Name: ${profile.name || 'Explorer'}\n` +
+      `📅 Date of Birth: ${profile.day}/${profile.month}/${profile.year} (${bDayOfWeek})\n` +
+      `⏳ Current Age: ${age.years} Years, ${age.months} Months, ${age.days} Days\n` +
+      `⏱️ Total Elapsed: ${age.totalDays.toLocaleString('en-US')} Days (${age.totalHours.toLocaleString('en-US')} Hours)\n` +
+      `✨ Zodiac Sign: ${zodiac.name} (${zodiac.sign}) • Decanate: ${decan?.decanNumber || 1}\n` +
+      `🪐 Ruling Planet: ${zodiac.planet} (Sub-planet: ${decan?.subPlanet || zodiac.planet})\n` +
+      `🎂 Next Birthday: in ${bday.days} Days (Turning ${bday.nextAge})\n\n` +
+      `🌐 Analyzed by Life Timeline Pro`;
+  }
+
+  navigator.clipboard.writeText(summary)
+    .then(() => showToast(t('summaryCopied')))
+    .catch(() => showToast(t('summaryCopyFailed')));
 }
 
 function showToast(msg) {

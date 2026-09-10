@@ -4,11 +4,13 @@
  */
 import { MILESTONE_BENCHMARKS } from '../data/milestones.js';
 import { toBnDigits } from '../calculator.js';
+import { getLanguage } from '../i18n.js';
 
 export function renderBenchmarkTable(userAgeYears, filterNearOnly = false) {
   const tbody = document.getElementById('benchmarkTableBody');
   if (!tbody) return;
 
+  const lang = getLanguage();
   tbody.innerHTML = '';
 
   let list = [...MILESTONE_BENCHMARKS];
@@ -25,13 +27,19 @@ export function renderBenchmarkTable(userAgeYears, filterNearOnly = false) {
       ? "bg-indigo-50/80 dark:bg-indigo-950/50 border-l-4 border-indigo-500 font-medium"
       : "hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors";
 
+    const ageUnit = lang === 'bn' ? 'বছর' : 'Years';
+    const yourAgeBadge = lang === 'bn' ? 'আপনার বয়স!' : 'Your Age!';
+    const statusText = isPast 
+      ? (lang === 'bn' ? '✓ অর্জিত বয়স' : '✓ Surpassed') 
+      : (lang === 'bn' ? '⏳ আসন্ন মাইলফলক' : '⏳ Ahead');
+
     tr.innerHTML = `
       <td class="py-3.5 px-4 font-mono font-bold ${isCurrentAge ? 'text-indigo-600 dark:text-indigo-300' : 'text-slate-700 dark:text-slate-300'}">
-        ${toBnDigits(item.age)} বছর
+        ${toBnDigits(item.age)} ${ageUnit}
       </td>
       <td class="py-3.5 px-4 font-semibold text-slate-800 dark:text-slate-200">
         ${item.name}
-        ${isCurrentAge ? '<span class="ml-1.5 text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded-full font-bold">আপনার বয়স!</span>' : ''}
+        ${isCurrentAge ? `<span class="ml-1.5 text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded-full font-bold">${yourAgeBadge}</span>` : ''}
       </td>
       <td class="py-3.5 px-4 text-xs text-slate-500 dark:text-slate-400">
         <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-medium">${item.field}</span>
@@ -45,7 +53,7 @@ export function renderBenchmarkTable(userAgeYears, filterNearOnly = false) {
             ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
             : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
         }">
-          ${isPast ? '✓ অর্জিত বয়স' : '⏳ আসন্ন মাইলফলক'}
+          ${statusText}
         </span>
       </td>
     `;

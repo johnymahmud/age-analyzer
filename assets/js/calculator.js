@@ -259,11 +259,12 @@ export function getGoldenHours() {
   };
 }
 
+import { formatDigits } from './i18n.js';
+
 /**
- * Bengali Number Formatter
+ * Locale-Aware Number Formatter (backward-compatible with toBnDigits)
  */
-const BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 export function toBnDigits(num) {
-  if (num === null || num === undefined) return '';
-  return num.toString().replace(/\d/g, (d) => BN_DIGITS[parseInt(d, 10)]);
+  return formatDigits(num);
 }
+
