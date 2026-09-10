@@ -28,6 +28,7 @@ import { openArchetypeModal } from './components/archetypeModal.js';
 import { openHistoricalModal, closeHistoricalModal } from './components/historicalModal.js';
 import { openMilestonesModal, closeMilestonesModal } from './components/milestonesModal.js';
 import { openAstroInputModal, closeAstroInputModal } from './components/astroInputModal.js';
+import { openPalmistryModal, closePalmistryModal } from './components/palmistryModal.js';
 import { closeAllModals } from './components/modalManager.js';
 
 function initApp() {
@@ -223,11 +224,26 @@ function setupEventListeners() {
   if (cardArchetype) cardArchetype.addEventListener('click', triggerArchetypeFlow);
   if (badgeMeterArchetype) badgeMeterArchetype.addEventListener('click', triggerArchetypeFlow);
 
+  // Card 5: Trigger Palmistry Flow
+  const cardPalmistry = document.getElementById('cardHookPalmistry');
+  const hookPalmistryBtn = document.getElementById('hookPalmistryBtn');
+
+  const triggerPalmistryFlow = () => {
+    openPalmistryModal();
+  };
+
+  if (hookPalmistryBtn) hookPalmistryBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerPalmistryFlow();
+  });
+  if (cardPalmistry) cardPalmistry.addEventListener('click', triggerPalmistryFlow);
+
   // Escape key global listener for all modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeHistoricalModal();
       closeMilestonesModal();
+      closePalmistryModal();
     }
   });
 

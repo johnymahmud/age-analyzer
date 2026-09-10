@@ -106,6 +106,14 @@ export const LOCALES = {
     archetypeDesc: "চেহারার গড়ন, চোখ ও অভিব্যক্তি বিশ্লেষণ করে আপনি অধিপতি, সেনাপতি নাকি দ্রষ্টা তা উন্মোচন করুন।",
     openArchetypeBtn: "আর্কিটাইপ স্ক্যানার 📸",
 
+    palmistryCardHeader: "✋ হস্তরেখা ও সামুদ্রিক বিচার",
+    palmistryTeaserBadge: "AI হস্তরেখা স্ক্যানার",
+    palmistryTitle: "হস্তরেখা, গ্রহ পর্বত ও কার্মিক সম্ভাবনা",
+    palmistrySub: "দ্বৈত হাত ও ক্লাসিক্যাল সামুদ্রিক বিচার",
+    palmistryDesc: "হাতের রেখা, গ্রহ পর্বত এবং উভয় হাতের তুলনামূলক বিশ্লেষণ করে আপনার লুক্কায়িত সম্ভাবনা ও কর্মফল উন্মোচন করুন।",
+    openPalmistryBtn: "হস্তরেখা স্ক্যানার ✋",
+    palmistryUnlockedBadge: "হস্তরেখা ও কার্মিক রিপোর্ট প্রস্তুত ✓",
+
     // Historical Insights
     historicalSectionTitle: "২. ঐতিহাসিক মেলবন্ধন (Historical Insights)",
     historicalSectionSub: "আপনার জন্মদিনের তারিখে বিশ্ব ইতিহাসের বিশিষ্ট ব্যক্তিত্ব ও যুগান্তকারী ঘটনা",
@@ -304,6 +312,14 @@ export const LOCALES = {
     archetypeSub: "7 Cosmic Archetypes & 6 Radar Dimensions",
     archetypeDesc: "Discover if you are born to be a Sovereign, Commander, or Mystic Seer through facial geometry.",
     openArchetypeBtn: "Scan Archetype 📸",
+
+    palmistryCardHeader: "✋ Palmistry & Chiromancy",
+    palmistryTeaserBadge: "AI Palm & Crease Scanner",
+    palmistryTitle: "Palmar Creases, Mounts & Destiny",
+    palmistrySub: "Dual-Hand & Classical Chirology",
+    palmistryDesc: "Analyze palm lines, planetary mounts, and comparative dual-hand matrix to unlock your actualized destiny.",
+    openPalmistryBtn: "Scan Palm ✋",
+    palmistryUnlockedBadge: "Palmistry & Karmic Report Ready ✓",
 
     // Historical Insights
     historicalSectionTitle: "2. Historical Insights & Connections",

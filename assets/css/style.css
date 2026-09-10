@@ -298,6 +298,22 @@ html.dark {
   scrollbar-width: none;
 }
 
+/* Palmistry Sweeping Laser Keyframes */
+@keyframes laserSweep {
+  0% {
+    top: 0%;
+    opacity: 0.9;
+  }
+  50% {
+    top: 98%;
+    opacity: 1;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.9;
+  }
+}
 
-
-
+.animate-laserSweep {
+  animation: laserSweep 1.8s ease-in-out infinite;
+}
