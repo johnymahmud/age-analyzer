@@ -414,7 +414,29 @@
               </div>
             </div>
 
-            <!-- ⚡ HYBRID MASTER LIVE CHRONO-PULSE ENGINE BAR (2 Wide Panoramic Cards) -->
+            <!-- Sub-Metrics 3-Column Row: Weeks, Days, Hours (Middle Row) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div
+                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+                <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট সপ্তাহ</span>
+                <span id="statTotalWeeks"
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+              </div>
+              <div
+                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+                <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট দিন</span>
+                <span id="statTotalDays"
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+              </div>
+              <div
+                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+                <span data-i18n="elapsedHours" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">অতিবাহিত ঘণ্টা</span>
+                <span id="statTotalHours"
+                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+              </div>
+            </div>
+
+            <!-- ⚡ HYBRID MASTER LIVE CHRONO-PULSE ENGINE BAR (Bottom Feature Row - 2 Wide Panoramic Cards) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               
               <!-- Card A: Total Elapsed Minutes Matrix -->
@@ -478,28 +500,6 @@
                 </div>
               </div>
 
-            </div>
-
-            <!-- Sub-Metrics 3-Column Row: Weeks, Days, Hours -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট সপ্তাহ</span>
-                <span id="statTotalWeeks"
-                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
-              </div>
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">মোট দিন</span>
-                <span id="statTotalDays"
-                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
-              </div>
-              <div
-                class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
-                <span data-i18n="elapsedHours" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1">অতিবাহিত ঘণ্টা</span>
-                <span id="statTotalHours"
-                  class="text-2xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
-              </div>
             </div>
           </section>
 
@@ -756,7 +756,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.17"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.18"></script>
 </body>
 
 </html>
