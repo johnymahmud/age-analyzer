@@ -42,7 +42,7 @@
   </script>
 
   <!-- Modular Stylesheets (Cache Busted) -->
-  <link rel="stylesheet" href="./assets/css/style.css?v=1.4.5">
+  <link rel="stylesheet" href="./assets/css/style.css?v=1.4.6">
   <link rel="stylesheet" href="./assets/css/ads.css?v=1.4.4">
 </head>
 
@@ -288,37 +288,6 @@
         </div>
       </div>
 
-      <!-- Completion Meter (Progressive Gamification) -->
-      <section id="completionMeterContainer"
-        class="bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-lg dark:shadow-xl no-print">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">⚡</span>
-            <div>
-              <h3 data-i18n="meterTitle" class="text-sm font-bold text-slate-900 dark:text-slate-100">প্রোফাইল কমপ্লিশন ও ইনসাইট ট্র্যাকার</h3>
-              <p id="completionMeterStatusMsg" class="text-xs text-slate-500 dark:text-slate-400"></p>
-            </div>
-          </div>
-          <div class="flex items-center space-x-2">
-            <div id="badgeMeterZodiac"
-              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-cyan-500/50">
-              <span>🔒 রাশিচক্র (৭০%)</span>
-            </div>
-            <div id="badgeMeterArchetype"
-              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-amber-500/50">
-              <span>🔒 আর্কিটাইপ (১০০%)</span>
-            </div>
-            <span id="completionMeterPercent"
-              class="text-sm font-extrabold font-mono text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-lg bg-indigo-500/10">35%</span>
-          </div>
-        </div>
-        <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-          <div id="completionMeterBar"
-            class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 transition-all duration-1000 shadow-md"
-            style="width: 35%"></div>
-        </div>
-      </section>
-
       <!-- Personalized User Bio Card (Appears in UI and Print) -->
       <section
         class="bg-white/90 dark:bg-gradient-to-r dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-lg dark:shadow-xl print-card">
@@ -331,7 +300,7 @@
               👤
             </div>
             <span id="resultGenderBadge"
-              class="absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-indigo-600 text-white border border-white dark:border-slate-900">
+              class="absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-indigo-600 text-white border border-white dark:border-slate-900 hidden">
               👨 পুরুষ
             </span>
           </div>
@@ -346,18 +315,14 @@
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
               <span id="activeBirthDayOfWeekText"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold"></span>
-              <span id="resultZodiacPill"
-                class="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-semibold cursor-pointer hover:bg-cyan-500/20 transition-all"></span>
               <span id="resultNextBdayPill"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold"></span>
+              <span id="resultZodiacPill"
+                class="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-semibold cursor-pointer hover:bg-cyan-500/20 transition-all hidden"></span>
               <span id="resultRelationshipPill"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/30 font-semibold hidden"></span>
               <span id="resultBloodGroupPill"
                 class="text-[11px] px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/30 font-semibold hidden"></span>
-              <button id="editAstroDetailsBtn" type="button"
-                class="text-[11px] px-2.5 py-0.5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 font-semibold transition-all flex items-center gap-1 cursor-pointer">
-                <span data-i18n="editProfileBtn">তথ্য পরিবর্তন ✏️</span>
-              </button>
             </div>
           </div>
         </div>
@@ -710,7 +675,7 @@
   </div>
 
   <!-- Modular JavaScript Entry Point (Cache Busted) -->
-  <script type="module" src="./assets/js/app.js?v=1.4.5"></script>
+  <script type="module" src="./assets/js/app.js?v=1.4.6"></script>
 </body>
 
 </html>
