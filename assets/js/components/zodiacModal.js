@@ -401,17 +401,10 @@ export function openZodiacModal(zodiac, month, day, year, relationshipStatus, ge
   currentModalZodiac = zodiac;
   currentModalUserData = { zodiac, month, day, year, relationshipStatus, gender, name, bloodGroup, birthDate };
 
-  mountModal('zodiacModal', getZodiacModalTemplate(), (modalEl) => {
+  const modal = mountModal('zodiacModal', getZodiacModalTemplate(), (modalEl) => {
     initZodiacModalListeners(modalEl);
-  });l');
+  });
   if (!modal || !zodiac) return;
-
-  if (typeof window !== 'undefined' && typeof window.closeAllModals === 'function') {
-    window.closeAllModals();
-  }
-
-  currentModalZodiac = zodiac;
-  currentModalUserData = { zodiac, month, day, year, relationshipStatus, gender, name, bloodGroup, birthDate };
 
   const decan = getDecan(zodiac, month, day);
   const travelScore = calculateTravelIndex(zodiac, decan, year);

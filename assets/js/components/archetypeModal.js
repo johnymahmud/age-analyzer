@@ -292,6 +292,8 @@ export function openArchetypeModal(userData, avatarBase64) {
 
   mountModal('archetypeModal', getArchetypeModalTemplate(), (modalEl) => {
     initArchetypeModalListeners(modalEl);
+  });
+
   // Trigger Biometric Scan Animation
   const scannerLaser = document.getElementById('archetypeScannerLaser');
   const scannerGrid = document.getElementById('archetypeScannerGrid');

@@ -82,7 +82,14 @@
       </div>
 
       <!-- Controls: Theme Toggle & Reset -->
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Language Switcher -->
+        <button id="langToggleBtn" type="button" title="ভাষা পরিবর্তন করুন / Switch Language"
+          class="px-2.5 sm:px-3 py-2 text-xs font-bold rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 transition-all flex items-center space-x-1 shadow-sm cursor-pointer">
+          <span class="text-sm">🌐</span>
+          <span id="langToggleText">English</span>
+        </button>
+
         <button id="themeToggleBtn" type="button" title="থিম পরিবর্তন করুন (Light / Dark)"
           class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all border border-slate-200 dark:border-slate-700/60 flex items-center justify-center shadow-sm">
           <!-- Sun Icon (Shown in Dark mode) -->
@@ -208,6 +215,37 @@
             <select id="dobDay" required
               class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
               <option value="" disabled selected>দিন নির্বাচন করুন</option>
+              <option value="1">১ তারিখ (Day 1)</option>
+              <option value="2">২ তারিখ (Day 2)</option>
+              <option value="3">৩ তারিখ (Day 3)</option>
+              <option value="4">৪ তারিখ (Day 4)</option>
+              <option value="5">৫ তারিখ (Day 5)</option>
+              <option value="6">৬ তারিখ (Day 6)</option>
+              <option value="7">৭ তারিখ (Day 7)</option>
+              <option value="8">৮ তারিখ (Day 8)</option>
+              <option value="9">৯ তারিখ (Day 9)</option>
+              <option value="10">১০ তারিখ (Day 10)</option>
+              <option value="11">১১ তারিখ (Day 11)</option>
+              <option value="12">১২ তারিখ (Day 12)</option>
+              <option value="13">১৩ তারিখ (Day 13)</option>
+              <option value="14">১৪ তারিখ (Day 14)</option>
+              <option value="15">১৫ তারিখ (Day 15)</option>
+              <option value="16">১৬ তারিখ (Day 16)</option>
+              <option value="17">১৭ তারিখ (Day 17)</option>
+              <option value="18">১৮ তারিখ (Day 18)</option>
+              <option value="19">১৯ তারিখ (Day 19)</option>
+              <option value="20">২০ তারিখ (Day 20)</option>
+              <option value="21">২১ তারিখ (Day 21)</option>
+              <option value="22">২২ তারিখ (Day 22)</option>
+              <option value="23">২৩ তারিখ (Day 23)</option>
+              <option value="24">২৪ তারিখ (Day 24)</option>
+              <option value="25">২৫ তারিখ (Day 25)</option>
+              <option value="26">২৬ তারিখ (Day 26)</option>
+              <option value="27">২৭ তারিখ (Day 27)</option>
+              <option value="28">২৮ তারিখ (Day 28)</option>
+              <option value="29">২৯ তারিখ (Day 29)</option>
+              <option value="30">৩০ তারিখ (Day 30)</option>
+              <option value="31">৩১ তারিখ (Day 31)</option>
             </select>
           </div>
 
@@ -690,8 +728,8 @@
     <span id="toastMessage">ক্লিপবোর্ডে কপি করা হয়েছে!</span>
   </div>
 
-  <!-- Modular JavaScript Entry Point -->
-  <script type="module" src="./assets/js/app.js"></script>
+  <!-- Modular JavaScript Entry Point (Cache Busted) -->
+  <script type="module" src="./assets/js/app.js?v=1.4.1"></script>
 </body>
 
 </html>

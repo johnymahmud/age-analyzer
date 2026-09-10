@@ -372,7 +372,7 @@ function executeAnalysis(data, shouldScroll = true) {
 
 /**
  * Stage 2: Astrological Coordinates Modal Management
-
+ */
 
 function handleCopySummary() {
   const currentState = getState();
@@ -391,12 +391,12 @@ function handleCopySummary() {
 
   let summary = '';
   if (lang === 'bn') {
-    summary = `🌟 লাইফ-টাইমলাইন ও এজ অ্যানালাইসিস 🌟\n` +
-      `👤 নাম: ${profile.name || 'ইউজার'}\n` +
+    summary = `🌟 লাইফ-টাইমলাইন ও বয়স বিশ্লেষণ 🌟\n` +
+      `👤 নাম: ${profile.name || 'অনুসন্ধানী'}\n` +
       `📅 জন্মতারিখ: ${formatDigits(profile.day)}/${formatDigits(profile.month)}/${formatDigits(profile.year)} (${bDayOfWeek})\n` +
-      `⏳ বর্তমান বয়স: ${formatDigits(age.years)} বছর, ${formatDigits(age.months)} মাস, ${formatDigits(age.days)} দিন\n` +
-      `⏱️ অতিবাহিত সময়: ${formatDigits(age.totalDays.toLocaleString('en-US'))} দিন (${formatDigits(age.totalHours.toLocaleString('en-US'))} ঘণ্টা)\n` +
-      `✨ রাশিচক্র: ${zodiac.nameBn} (${zodiac.sign}) • দ্রেক্বাণ: ${formatDigits(decan?.decanNumber || 1)}ম ভাগ\n` +
+      `⏳ বর্তমান বয়স: ${formatDigits(age.years)} বছর, ${formatDigits(age.months)} মাস, ${formatDigits(age.days)} দিন\n` +
+      `⏱️ মোট অতিক্রান্ত: ${toBnDigits(age.totalDays.toLocaleString('bn-BD'))} দিন (${toBnDigits(age.totalHours.toLocaleString('bn-BD'))} ঘণ্টা)\n` +
+      `✨ রাশি: ${zodiac.nameBn} (${zodiac.sign}) • দ্রেক্বাণ: ${formatDigits(decan?.decanNumber || 1)}\n` +
       `🪐 শাসক গ্রহ: ${zodiac.planet} (উপ-গ্রহ: ${decan?.subPlanet || zodiac.planet})\n` +
       `🎂 পরবর্তী জন্মদিন: আর ${formatDigits(bday.days)} দিন বাকি (হবে ${formatDigits(bday.nextAge)} বছর)\n\n` +
       `🌐 লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার দ্বারা বিশ্লেষিত`;
@@ -434,5 +434,9 @@ function showToast(msg) {
 
 // Start application when DOM is ready in browser
 if (typeof window !== 'undefined') {
-  window.addEventListener('DOMContentLoaded', initApp);
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
 }
