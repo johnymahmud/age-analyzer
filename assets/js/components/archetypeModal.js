@@ -1,6 +1,6 @@
 /**
  * Royal Archetype & Samudrika Shastra Modal Component
- * Stage 3: Biometric Canvas Scanner, Laser HUD Animation & 2-Column Split Hero Persona Showcase
+ * Stage 3: Biometric Canvas Scanner, Laser HUD Animation & VIP 2-Column Split Hero Showcase
  */
 import { analyzeImageAura, calculateArchetypeProfile } from './morphologyEngine.js';
 import { SAMUDRIKA_FEATURES } from '../data/archetypes.js';
@@ -15,6 +15,66 @@ let currentArchetypeProfile = null;
 let currentModalUserData = null;
 let currentAvatar = null;
 let stagedScanImage = null;
+
+// Royal Archetype VIP Theme Presets
+const ARCHETYPE_THEMES = {
+  sovereign: {
+    frameClass: 'vip-frame-sovereign',
+    bgGradient: 'from-amber-950/50 via-slate-950 to-stone-950',
+    cornerClass: 'border-amber-400',
+    gemstone: 'চুনি (Ruby) ও খাঁটি স্বর্ণ',
+    element: 'অগ্নি ও পৃথিবী (Fire & Earth)',
+    colorTheme: 'রাজকীয় স্বর্ণালী ও রুবি'
+  },
+  commander: {
+    frameClass: 'vip-frame-commander',
+    bgGradient: 'from-rose-950/50 via-slate-950 to-stone-950',
+    cornerClass: 'border-rose-400',
+    gemstone: 'রক্তপ্রবাল (Coral) ও রক্তমণি',
+    element: 'অগ্নি ও বায়ু (Fire & Air)',
+    colorTheme: 'ক্রিমসন রেড ও আয়রন ব্ল্যাক'
+  },
+  mystic: {
+    frameClass: 'vip-frame-mystic',
+    bgGradient: 'from-purple-950/50 via-slate-950 to-slate-950',
+    cornerClass: 'border-purple-400',
+    gemstone: 'অ্যামেথিস্ট ও নীলকান্তমণি (Sapphire)',
+    element: 'জল ও মহাজাগতিক ইথার (Water & Ether)',
+    colorTheme: 'কসমিক ভায়োলেট ও ডিপ ইন্ডিগো'
+  },
+  creator: {
+    frameClass: 'vip-frame-creator',
+    bgGradient: 'from-pink-950/50 via-slate-950 to-purple-950',
+    cornerClass: 'border-pink-400',
+    gemstone: 'হীরা (Diamond) ও রোজ কোয়ার্টজ',
+    element: 'জল ও পৃথিবী (Water & Earth)',
+    colorTheme: 'রোজ গোল্ড ও অরোরা পিংক'
+  },
+  charismatic: {
+    frameClass: 'vip-frame-charismatic',
+    bgGradient: 'from-cyan-950/50 via-slate-950 to-blue-950',
+    cornerClass: 'border-cyan-400',
+    gemstone: 'পোখরাজ (Topaz) ও অ্যাকোয়ামেরিন',
+    element: 'অগ্নি ও বায়ু (Fire & Air)',
+    colorTheme: 'ইলেকট্রিক সায়ান ও স্টার সিলভার'
+  },
+  strategist: {
+    frameClass: 'vip-frame-strategist',
+    bgGradient: 'from-emerald-950/50 via-slate-950 to-teal-950',
+    cornerClass: 'border-emerald-400',
+    gemstone: 'পান্না (Emerald) ও নিয়ন জেড (Jade)',
+    element: 'বায়ু ও পৃথিবী (Air & Earth)',
+    colorTheme: 'পান্না সবুজ ও সাইবার টিল'
+  },
+  guardian: {
+    frameClass: 'vip-frame-guardian',
+    bgGradient: 'from-teal-950/50 via-slate-950 to-slate-900',
+    cornerClass: 'border-teal-400',
+    gemstone: 'চন্দ্রকান্ত মণি (Moonstone) ও মুক্তা',
+    element: 'জল ও পৃথিবী (Water & Earth)',
+    colorTheme: 'প্রশান্ত ফিরোজা ও রূপালী শুভ্র'
+  }
+};
 
 function getArchetypeModalTemplate() {
   const lang = getLanguage();
@@ -129,10 +189,10 @@ function getArchetypeModalTemplate() {
       </div>
 
       <!-- ==========================================
-           VIEW 2: FULL REVEALED 2-COLUMN HERO SHOWCASE
+           VIEW 2: FULL REVEALED 2-COLUMN VIP HERO SHOWCASE
            ========================================== -->
       <div id="archetypeDashboardView" class="flex-1 flex flex-col overflow-hidden hidden">
-        <!-- Top Compact Modal Navigation Header -->
+        <!-- Top Compact Navigation Header -->
         <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-900 text-white flex items-center justify-between">
           <div class="flex items-center space-x-2.5">
             <span class="text-xl">👑</span>
@@ -151,46 +211,48 @@ function getArchetypeModalTemplate() {
         <!-- 2-Column Split Body Layout -->
         <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
           
-          <!-- LEFT HERO PANEL (Fixed Persona Showcase, 40% Width) -->
-          <aside class="w-full lg:w-[380px] xl:w-[410px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b from-slate-900 via-amber-950/20 to-slate-950 p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5">
+          <!-- LEFT HERO PANEL (VIP Persona Showcase, 40% Width) -->
+          <aside id="archetypeHeroPanel"
+            class="w-full lg:w-[380px] xl:w-[420px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b from-amber-950/40 via-slate-950 to-stone-950 p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5 transition-colors duration-500">
             
             <div class="w-full flex flex-col items-center text-center space-y-4">
-              <!-- Large Portrait Photo Frame with Hologram Aura -->
+              
+              <!-- Large VIP 3:4 Portrait Photo Frame with Royal Hologram Aura -->
               <div id="archetypeDashboardAvatarBox"
-                class="hero-photo-glow relative w-48 h-48 sm:w-56 sm:h-56 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-2xl bg-slate-800 flex items-center justify-center group cursor-pointer transition-all hover:scale-[1.02]"
+                class="hero-photo-glow relative w-full max-w-[260px] sm:max-w-[300px] aspect-[3/4] max-h-[360px] sm:max-h-[380px] rounded-3xl overflow-hidden border-2 border-amber-400 shadow-2xl bg-slate-900 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:scale-[1.01] vip-photo-shimmer"
                 title="নতুন ছবি দিয়ে পুনরায় স্ক্যান করতে ক্লিক করুন 📸">
                 
-                <!-- Corner HUD Brackets -->
-                <div class="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-amber-300 pointer-events-none z-20"></div>
-                <div class="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-amber-300 pointer-events-none z-20"></div>
-                <div class="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-amber-300 pointer-events-none z-20"></div>
-                <div class="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-amber-300 pointer-events-none z-20"></div>
+                <!-- Dynamic Corner HUD Brackets -->
+                <div class="archetype-corner absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-amber-400 pointer-events-none z-20"></div>
+                <div class="archetype-corner absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-amber-400 pointer-events-none z-20"></div>
+                <div class="archetype-corner absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-amber-400 pointer-events-none z-20"></div>
+                <div class="archetype-corner absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-amber-400 pointer-events-none z-20"></div>
 
                 <!-- Verified Hologram Stamp Badge -->
-                <div class="absolute top-3 left-3 bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-md z-20 flex items-center gap-1 backdrop-blur-sm">
-                  <span>👑 ROYAL ID</span>
+                <div class="absolute top-3.5 left-3.5 bg-slate-950/85 border border-amber-400/60 text-amber-300 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-lg z-20 flex items-center gap-1 backdrop-blur-md">
+                  <span>👑 ROYAL VIP PERSONA</span>
                 </div>
 
                 <!-- User Photo -->
                 <img id="archetypeAvatarPreview" src="" alt="Avatar" class="w-full h-full object-cover z-10 hidden">
-                <div id="archetypeAvatarFallback" class="text-6xl flex items-center justify-center text-amber-400 z-10">👑</div>
+                <div id="archetypeAvatarFallback" class="text-7xl flex items-center justify-center text-amber-400 z-10">👑</div>
 
                 <!-- Hover Rescan Overlay -->
-                <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white text-xs font-bold transition-opacity z-30 space-y-1">
-                  <span class="text-2xl">📸</span>
-                  <span>নতুন ছবি দিন</span>
+                <div class="absolute inset-0 bg-slate-950/85 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white text-xs font-bold transition-opacity z-30 space-y-1.5 backdrop-blur-xs">
+                  <span class="text-3xl">📸</span>
+                  <span>নতুন ছবি দিন (Rescan)</span>
                 </div>
               </div>
 
               <!-- Primary Title & Cosmic Identity -->
               <div class="space-y-1.5 w-full">
                 <div class="flex items-center justify-center gap-2">
-                  <span id="archetypePrimaryIcon" class="text-2xl">👑</span>
-                  <h2 id="archetypePrimaryTitle" class="text-xl sm:text-2xl font-black text-amber-300 tracking-tight">
+                  <span id="archetypePrimaryIcon" class="text-2xl sm:text-3xl">👑</span>
+                  <h2 id="archetypePrimaryTitle" class="text-lg sm:text-xl font-black text-amber-300 tracking-tight">
                     রাজকীয় অধিপতি
                   </h2>
                 </div>
-                <p id="archetypeTagline" class="text-xs text-amber-200/80 font-medium leading-relaxed px-2">
+                <p id="archetypeTagline" class="text-xs text-amber-200/90 font-medium leading-relaxed px-2">
                   জন্মগত শাসক, মহিমান্বিত ব্যক্তিত্ব ও অটল প্রতিষ্ঠাতা
                 </p>
                 <div class="pt-1 flex flex-wrap items-center justify-center gap-1.5">
@@ -200,13 +262,29 @@ function getArchetypeModalTemplate() {
                 </div>
               </div>
 
+              <!-- Power Elements & Auspicious Gemstone Bar -->
+              <div class="w-full p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-left text-xs space-y-1.5 backdrop-blur-sm">
+                <div class="flex items-center justify-between text-slate-300">
+                  <span class="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+                    <span>💎</span> <span>শুভ রত্ন:</span>
+                  </span>
+                  <span id="archetypeGemText" class="font-bold text-amber-300 text-right truncate">চুনি ও খাঁটি স্বর্ণ</span>
+                </div>
+                <div class="flex items-center justify-between text-slate-300 border-t border-slate-800/80 pt-1.5">
+                  <span class="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+                    <span>⚡</span> <span>শক্তি উপাদান:</span>
+                  </span>
+                  <span id="archetypeElementText" class="font-bold text-emerald-300 text-right truncate">অগ্নি ও পৃথিবী</span>
+                </div>
+              </div>
+
               <!-- Mini Biometric Summary Cards -->
-              <div class="grid grid-cols-2 gap-2 w-full pt-1 text-left text-xs">
-                <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+              <div class="grid grid-cols-2 gap-2 w-full text-left text-xs">
+                <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                   <span class="text-[10px] text-slate-400 block font-semibold">মুখের গঠন:</span>
                   <span id="samudrikaHeroShape" class="text-slate-100 font-bold truncate block">বর্গাকার</span>
                 </div>
-                <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+                <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
                   <span class="text-[10px] text-slate-400 block font-semibold">দৃষ্টি ও অরা:</span>
                   <span id="samudrikaHeroEye" class="text-slate-100 font-bold truncate block">তীক্ষ্ণ ও প্রখর</span>
                 </div>
@@ -412,30 +490,6 @@ function getArchetypeModalTemplate() {
               </span>
             </div>
 
-            <!-- Interactive Manual Fine-Tuner Mode -->
-            <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <span>🎛️</span> ম্যানুয়াল ফেসিয়াল টিউনিং (ঐচ্ছিক কাস্টমাইজেশন)
-                </span>
-                <span class="text-[10px] text-slate-500">লাইভ টিউন করে দেখতে পারেন</span>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">মুখের আকৃতি পরিবর্তন করুন:</label>
-                  <select id="tuneFaceShape" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                  </select>
-                </div>
-
-                <div>
-                  <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">চোখ ও দৃষ্টির ধরন পরিবর্তন করুন:</label>
-                  <select id="tuneEyeAura" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                  </select>
-                </div>
-              </div>
-            </div>
-
           </main>
         </div>
 
@@ -520,8 +574,6 @@ function initArchetypeModalListeners(modalEl) {
   const footerCloseBtn = modalEl.querySelector('#closeArchetypeModalFooterBtn');
   const backdrop = modalEl.querySelector('#archetypeModalBackdrop');
   const copyBtn = modalEl.querySelector('#copyArchetypeCardBtn');
-  const tuneFaceShape = modalEl.querySelector('#tuneFaceShape');
-  const tuneEyeAura = modalEl.querySelector('#tuneEyeAura');
   const rescanBtn = modalEl.querySelector('#rescanPhotoBtn');
   const dashboardAvatarBox = modalEl.querySelector('#archetypeDashboardAvatarBox');
 
@@ -535,8 +587,6 @@ function initArchetypeModalListeners(modalEl) {
   if (dashboardAvatarBox) dashboardAvatarBox.addEventListener('click', () => showScannerIntakeView(modalEl));
 
   if (copyBtn) copyBtn.addEventListener('click', handleCopyArchetypePersona);
-  if (tuneFaceShape) tuneFaceShape.addEventListener('change', handleManualTuning);
-  if (tuneEyeAura) tuneEyeAura.addEventListener('change', handleManualTuning);
 
   // File Upload Handling on Dropzone
   const dropzone = modalEl.querySelector('#scannerDropzoneContainer');
@@ -750,8 +800,33 @@ export function closeArchetypeModal() {
 
 function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   const { primaryArchetype, secondaryArchetype, metrics, samudrika } = profile;
+  const theme = ARCHETYPE_THEMES[primaryArchetype.id] || ARCHETYPE_THEMES.sovereign;
 
-  // 1. Avatar View inside the Left Hero Showcase:
+  // 1. Dynamic VIP Theme & Hero Background
+  const heroPanel = (modalEl ? modalEl.querySelector('#archetypeHeroPanel') : null) || document.getElementById('archetypeHeroPanel');
+  const avatarBox = (modalEl ? modalEl.querySelector('#archetypeDashboardAvatarBox') : null) || document.getElementById('archetypeDashboardAvatarBox');
+
+  if (heroPanel) {
+    // Reset background gradients and apply luxury jewel-tone gradient
+    heroPanel.className = `w-full lg:w-[380px] xl:w-[420px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b ${theme.bgGradient} p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5 transition-colors duration-500`;
+  }
+
+  if (avatarBox) {
+    // Remove previous VIP frame classes and apply current archetype frame
+    avatarBox.classList.remove(
+      'vip-frame-sovereign', 'vip-frame-commander', 'vip-frame-mystic',
+      'vip-frame-creator', 'vip-frame-charismatic', 'vip-frame-strategist', 'vip-frame-guardian'
+    );
+    avatarBox.classList.add(theme.frameClass);
+
+    // Update corner HUD brackets color
+    const corners = avatarBox.querySelectorAll('.archetype-corner');
+    corners.forEach(c => {
+      c.className = `archetype-corner absolute ${c.classList.contains('top-3') ? 'top-3' : 'bottom-3'} ${c.classList.contains('left-3') ? 'left-3' : 'right-3'} w-5 h-5 ${c.classList.contains('border-t-2') ? 'border-t-2' : 'border-b-2'} ${c.classList.contains('border-l-2') ? 'border-l-2' : 'border-r-2'} ${theme.cornerClass} pointer-events-none z-20`;
+    });
+  }
+
+  // 2. Avatar View inside the Left Hero Showcase
   const avatarImg = (modalEl ? modalEl.querySelector('#archetypeAvatarPreview') : null) || document.getElementById('archetypeAvatarPreview');
   const avatarFallback = (modalEl ? modalEl.querySelector('#archetypeAvatarFallback') : null) || document.getElementById('archetypeAvatarFallback');
   
@@ -767,13 +842,15 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
     }
   }
 
-  // 2. Left Hero Panel Information
+  // 3. Left Hero Panel Information
   const titleEl = document.getElementById('archetypePrimaryTitle');
   const iconEl = document.getElementById('archetypePrimaryIcon');
   const taglineEl = document.getElementById('archetypeTagline');
   const auraText = document.getElementById('archetypeAuraColorText');
   const heroShape = document.getElementById('samudrikaHeroShape');
   const heroEye = document.getElementById('samudrikaHeroEye');
+  const gemText = document.getElementById('archetypeGemText');
+  const elementText = document.getElementById('archetypeElementText');
 
   if (titleEl) titleEl.textContent = primaryArchetype.nameBn;
   if (iconEl) iconEl.textContent = primaryArchetype.icon;
@@ -781,8 +858,10 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (auraText) auraText.textContent = primaryArchetype.auraColor;
   if (heroShape) heroShape.textContent = samudrika.faceShape.nameBn;
   if (heroEye) heroEye.textContent = samudrika.eyeAura.nameBn;
+  if (gemText) gemText.textContent = theme.gemstone;
+  if (elementText) elementText.textContent = theme.element;
 
-  // 3. Right Panel Header and Quotes
+  // 4. Right Panel Header and Quotes
   const secondaryEl = document.getElementById('archetypeSecondaryBadge');
   const quoteEl = document.getElementById('archetypeQuoteText');
   const natureEl = document.getElementById('archetypeNatureText');
@@ -795,7 +874,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (natureEl) natureEl.textContent = primaryArchetype.nature;
   if (domainsEl) domainsEl.textContent = primaryArchetype.domains;
 
-  // 4. 6 Metric Dimension Bars
+  // 5. 6 Metric Dimension Bars
   setMetricBar('metricCreativity', metrics.creativity);
   setMetricBar('metricLeadership', metrics.leadership);
   setMetricBar('metricSpirituality', metrics.spirituality);
@@ -803,7 +882,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   setMetricBar('metricWillpower', metrics.willpower);
   setMetricBar('metricWisdom', metrics.wisdom);
 
-  // 5. Samudrika Shastra Facial Features
+  // 6. Samudrika Shastra Facial Features
   const fShape = document.getElementById('samudrikaFaceShapeText');
   const fEye = document.getElementById('samudrikaEyeAuraText');
   const fForehead = document.getElementById('samudrikaForeheadText');
@@ -812,7 +891,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (fEye) fEye.textContent = `${samudrika.eyeAura.nameBn} — ${samudrika.eyeAura.traitBn}`;
   if (fForehead) fForehead.textContent = `${samudrika.foreheadAura.nameBn} — ${samudrika.foreheadAura.traitBn}`;
 
-  // 6. Strengths, Challenges & Careers
+  // 7. Strengths, Challenges & Careers
   const sList = document.getElementById('archetypeStrengthsList');
   const cList = document.getElementById('archetypeChallengesList');
   const careerAdv = document.getElementById('archetypeCareerAdvice');
@@ -826,58 +905,20 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (careerAdv) {
     careerAdv.textContent = `${primaryArchetype.careers.join(', ')} এবং অন্যান্য কৌশলগত ক্ষেত্র।`;
   }
-
-  // 7. Populate manual tuning dropdowns
-  populateTuningDropdowns(samudrika);
-}
-
-function populateTuningDropdowns(samudrika) {
-  const shapeSelect = document.getElementById('tuneFaceShape');
-  const eyeSelect = document.getElementById('tuneEyeAura');
-
-  if (shapeSelect && shapeSelect.children.length === 0) {
-    shapeSelect.innerHTML = SAMUDRIKA_FEATURES.faceShapes.map(f => `
-      <option value="${f.id}" ${f.id === samudrika.faceShape.id ? 'selected' : ''}>${f.nameBn}</option>
-    `).join('');
-  }
-
-  if (eyeSelect && eyeSelect.children.length === 0) {
-    eyeSelect.innerHTML = SAMUDRIKA_FEATURES.eyeAuras.map(e => `
-      <option value="${e.id}" ${e.id === samudrika.eyeAura.id ? 'selected' : ''}>${e.nameBn}</option>
-    `).join('');
-  }
-}
-
-function handleManualTuning() {
-  if (!currentModalUserData) return;
-  const shapeVal = document.getElementById('tuneFaceShape')?.value;
-  const eyeVal = document.getElementById('tuneEyeAura')?.value;
-
-  const shapeObj = SAMUDRIKA_FEATURES.faceShapes.find(s => s.id === shapeVal) || SAMUDRIKA_FEATURES.faceShapes[0];
-  const eyeObj = SAMUDRIKA_FEATURES.eyeAuras.find(e => e.id === eyeVal) || SAMUDRIKA_FEATURES.eyeAuras[0];
-
-  const profile = calculateArchetypeProfile(currentModalUserData, {
-    brightness: 140,
-    warmth: shapeVal === 'square' || shapeVal === 'oblong' ? 1.3 : 0.9,
-    symmetry: 92
-  });
-
-  profile.samudrika.faceShape = shapeObj;
-  profile.samudrika.eyeAura = eyeObj;
-  currentArchetypeProfile = profile;
-
-  renderArchetypeContent(profile, currentModalUserData, currentAvatar);
 }
 
 function handleCopyArchetypePersona() {
   if (!currentArchetypeProfile || !currentModalUserData) return;
-  const { primaryArchetype, secondaryArchetype, metrics } = currentArchetypeProfile;
+  const { primaryArchetype, metrics } = currentArchetypeProfile;
+  const theme = ARCHETYPE_THEMES[primaryArchetype.id] || ARCHETYPE_THEMES.sovereign;
   const name = currentModalUserData.name || 'ইউজার';
 
-  const text = `👑 রয়্যাল অ্যাস্ট্রো-মরফোলজি ও আর্কিটাইপ কার্ড 👑\n` +
+  const text = `👑 রয়্যাল অ্যাস্ট্রো-মরফোলজি ও আর্কিটাইপ ভিআইপি কার্ড 👑\n` +
     `👤 নাম: ${name}\n` +
     `✨ প্রধান আর্কিটাইপ: ${primaryArchetype.icon} ${primaryArchetype.nameBn}\n` +
     `🔮 অরা বর্ণচ্ছটা: ${primaryArchetype.auraColor}\n` +
+    `💎 শুভ রত্ন: ${theme.gemstone}\n` +
+    `⚡ শক্তি উপাদান: ${theme.element}\n` +
     `📜 মহাজাগতিক পরিচয়: ${primaryArchetype.tagline}\n` +
     `📊 মেধার মাত্রা:\n` +
     ` • নেতৃত্ব ও তেজ: ${toBnDigits(metrics.leadership)}%\n` +
@@ -889,6 +930,12 @@ function handleCopyArchetypePersona() {
     `🌐 লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার`;
 
   navigator.clipboard.writeText(text)
-    .then(() => alert('রয়্যাল আর্কিটাইপ কার্ড সফলভাবে কপি করা হয়েছে!'))
-    .catch(() => alert('কপি করতে ব্যর্থ হয়েছে।'));
+    .then(() => {
+      if (typeof window.showToast === 'function') {
+        window.showToast('👑 রয়্যাল আর্কিটাইপ কার্ড সফলভাবে কপি হয়েছে!');
+      } else {
+        alert('রয়্যাল আর্কিটাইপ কার্ড সফলভাবে কপি করা হয়েছে!');
+      }
+    })
+    .catch(() => alert('কপি করতে ব্যর্থ হয়েছে।'));
 }

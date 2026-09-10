@@ -220,14 +220,73 @@ html.dark {
   animation: pulseRings 2s infinite ease-in-out;
 }
 
-/* Hero Portrait Photo Glowing Aura */
+/* Hero Portrait Photo Glowing Aura & Dynamic VIP Frames */
 .hero-photo-glow {
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.45), 0 0 50px -10px rgba(99, 102, 241, 0.25);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero-photo-glow:hover {
-  box-shadow: 0 0 35px 0px rgba(245, 158, 11, 0.65), 0 0 65px -5px rgba(99, 102, 241, 0.4);
+.vip-frame-sovereign {
+  border-color: rgba(251, 191, 36, 0.9);
+  box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.6), inset 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.vip-frame-commander {
+  border-color: rgba(244, 63, 94, 0.9);
+  box-shadow: 0 0 30px -5px rgba(225, 29, 72, 0.6), inset 0 0 20px rgba(225, 29, 72, 0.2);
+}
+
+.vip-frame-mystic {
+  border-color: rgba(192, 132, 252, 0.9);
+  box-shadow: 0 0 30px -5px rgba(147, 51, 234, 0.6), inset 0 0 20px rgba(147, 51, 234, 0.2);
+}
+
+.vip-frame-creator {
+  border-color: rgba(244, 114, 182, 0.9);
+  box-shadow: 0 0 30px -5px rgba(236, 72, 153, 0.6), inset 0 0 20px rgba(236, 72, 153, 0.2);
+}
+
+.vip-frame-charismatic {
+  border-color: rgba(34, 211, 238, 0.9);
+  box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.6), inset 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.vip-frame-strategist {
+  border-color: rgba(52, 211, 153, 0.9);
+  box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.6), inset 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.vip-frame-guardian {
+  border-color: rgba(45, 212, 191, 0.9);
+  box-shadow: 0 0 30px -5px rgba(20, 184, 166, 0.6), inset 0 0 20px rgba(20, 184, 166, 0.2);
+}
+
+/* Subtle portrait light shimmer overlay */
+.vip-photo-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.vip-photo-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 60%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+  animation: vipPhotoShine 6s infinite ease-in-out;
+}
+
+@keyframes vipPhotoShine {
+  0% { transform: translateY(-100%) rotate(30deg); }
+  20%, 100% { transform: translateY(100%) rotate(30deg); }
 }
 
 /* Hide Scrollbar helper utility */
@@ -238,6 +297,7 @@ html.dark {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 
 
 
