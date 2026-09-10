@@ -274,6 +274,11 @@ function setupEventListeners() {
         if (form) form.reset();
         const results = document.getElementById('resultsContainer');
         if (results) results.classList.add('hidden');
+        const navLive = document.getElementById('navLiveIndicator');
+        if (navLive) {
+          navLive.classList.add('hidden');
+          navLive.classList.remove('inline-flex', 'flex');
+        }
         showToast(t('resetSuccess'));
       }
     });
@@ -316,6 +321,13 @@ function executeAnalysis(data, shouldScroll = true) {
 
   const resultsContainer = document.getElementById('resultsContainer');
   if (resultsContainer) resultsContainer.classList.remove('hidden');
+
+  // Toggle Navbar Live Pulse Indicator
+  const navLive = document.getElementById('navLiveIndicator');
+  if (navLive) {
+    navLive.classList.remove('hidden');
+    navLive.classList.add('inline-flex');
+  }
 
   // 1. Render Completion Meter
   const level = getUnlockLevel();

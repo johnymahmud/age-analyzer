@@ -1,7 +1,7 @@
 # 📌 Current State: Life Timeline & Historical Age Analyzer
 
 *সর্বশেষ হালনাগাদ: ১১ সেপ্টেম্বর, ২০২৬*  
-*আর্কিটেকচার সংস্করণ: v1.4.12 (Center-Aligned Single-Line Calculate Action & VIP Archetype)*
+*আর্কিটেকচার সংস্করণ: v1.4.15 (Hero Master Identity Row, Top Navbar Live Pulse & Bottom Export Hub)*
 
 ---
 
