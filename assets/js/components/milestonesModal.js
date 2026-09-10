@@ -11,9 +11,9 @@ let currentFilterNearOnly = false;
 
 function getTemplate() {
   return `
-  <div id="milestonesModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="milestonesModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 hidden">
     <div id="milestonesModalBackdrop" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"></div>
-    <div class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-purple-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+    <div class="relative w-full max-w-6xl max-h-[94vh] bg-white dark:bg-slate-900 border border-purple-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
       <!-- Modal Header -->
       <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 flex items-center justify-between">
         <div class="flex items-center space-x-3.5">

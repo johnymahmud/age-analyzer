@@ -18,9 +18,9 @@ let stagedScanImage = null;
 function getArchetypeModalTemplate() {
   const lang = getLanguage();
   return `
-  <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 hidden">
     <div id="archetypeModalBackdrop" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity"></div>
-    <div class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+    <div class="relative w-full max-w-6xl max-h-[94vh] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
       
       <!-- ==========================================
            VIEW 1: BIOMETRIC SCANNER & UPLOAD INTAKE
