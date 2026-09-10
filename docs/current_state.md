@@ -1,7 +1,7 @@
 # 📌 Current State: Life Timeline & Historical Age Analyzer
 
 *সর্বশেষ হালনাগাদ: ১১ সেপ্টেম্বর, ২০২৬*  
-*আর্কিটেকচার সংস্করণ: v1.4.8 (Minimal Clean UI, 4-Column Discovery Row & Auto-Compressed Avatar Sync)*
+*আর্কিটেকচার সংস্করণ: v1.4.10 (2-Column Split Hero Archetype Showcase & Constant-Size Layout)*
 
 ---
 

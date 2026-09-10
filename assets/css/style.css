@@ -220,4 +220,24 @@ html.dark {
   animation: pulseRings 2s infinite ease-in-out;
 }
 
+/* Hero Portrait Photo Glowing Aura */
+.hero-photo-glow {
+  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.45), 0 0 50px -10px rgba(99, 102, 241, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-photo-glow:hover {
+  box-shadow: 0 0 35px 0px rgba(245, 158, 11, 0.65), 0 0 65px -5px rgba(99, 102, 241, 0.4);
+}
+
+/* Hide Scrollbar helper utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
 

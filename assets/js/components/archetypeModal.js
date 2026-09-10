@@ -1,6 +1,6 @@
 /**
  * Royal Archetype & Samudrika Shastra Modal Component
- * Stage 3: Biometric Canvas Scanner, Laser HUD Animation & 7 Royal Archetypes Dashboard
+ * Stage 3: Biometric Canvas Scanner, Laser HUD Animation & 2-Column Split Hero Persona Showcase
  */
 import { analyzeImageAura, calculateArchetypeProfile } from './morphologyEngine.js';
 import { SAMUDRIKA_FEATURES } from '../data/archetypes.js';
@@ -21,14 +21,14 @@ function getArchetypeModalTemplate() {
   return `
   <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 hidden">
     <div id="archetypeModalBackdrop" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity"></div>
-    <div class="relative w-full max-w-6xl max-h-[94vh] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+    <div class="relative w-full max-w-6xl h-[92vh] max-h-[860px] min-h-[550px] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
       
       <!-- ==========================================
            VIEW 1: BIOMETRIC SCANNER & UPLOAD INTAKE
            ========================================== -->
       <div id="archetypeScannerIntakeView" class="flex-1 flex flex-col overflow-y-auto">
         <!-- Scanner Header -->
-        <div class="p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/50 to-slate-900 text-white flex items-center justify-between">
+        <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/50 to-slate-900 text-white flex items-center justify-between">
           <div class="flex items-center space-x-3.5">
             <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl text-amber-400 shadow-inner">
               👑
@@ -129,261 +129,325 @@ function getArchetypeModalTemplate() {
       </div>
 
       <!-- ==========================================
-           VIEW 2: FULL REVEALED ARCHETYPE DASHBOARD
+           VIEW 2: FULL REVEALED 2-COLUMN HERO SHOWCASE
            ========================================== -->
       <div id="archetypeDashboardView" class="flex-1 flex flex-col overflow-hidden hidden">
-        <!-- Dashboard Header -->
-        <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/40 to-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-4">
-            <div id="archetypeDashboardAvatarBox" class="relative w-16 h-16 rounded-2xl bg-slate-800 border-2 border-amber-500/50 overflow-hidden flex items-center justify-center shadow-lg cursor-pointer hover:border-amber-400 transition-all group"
-              title="নতুন ছবি দিয়ে পুনরায় স্ক্যান করতে ক্লিক করুন 📸">
-              <img id="archetypeAvatarPreview" src="" alt="Avatar" class="w-full h-full object-cover hidden">
-              <div id="archetypeAvatarFallback" class="text-3xl flex items-center justify-center text-amber-400">👑</div>
-              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-opacity">
-                🔄
-              </div>
-            </div>
-
-            <div>
-              <div class="flex flex-wrap items-center gap-2">
-                <span id="archetypePrimaryIcon" class="text-2xl">👑</span>
-                <h2 id="archetypePrimaryTitle" class="text-xl sm:text-2xl font-extrabold text-amber-300">রাজকীয় অধিপতি (The Sovereign)</h2>
-              </div>
-              <p id="archetypeTagline" class="text-xs text-amber-200/80 font-medium mt-0.5">জন্মগত শাসক, মহিমান্বিত ব্যক্তিত্ব ও অটল প্রতিষ্ঠাতা</p>
-            </div>
-          </div>
-
-          <div class="flex items-center space-x-3">
-            <button type="button" id="rescanPhotoBtn"
-              class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-500/30 transition-all flex items-center gap-1.5 cursor-pointer">
-              <span>🔄</span>
-              <span>${lang === 'bn' ? 'পুনরায় স্ক্যান' : 'Rescan'}</span>
-            </button>
-            <button type="button" id="closeArchetypeDashboardBtn"
-              class="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-lg font-bold transition-all shadow-sm cursor-pointer"
-              title="বন্ধ করুন (Esc)">
-              ✕
-            </button>
-          </div>
-        </div>
-
-        <!-- Dashboard Scrollable Body -->
-        <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
-          <!-- Top Archetype Overview & Quote -->
-          <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <span id="archetypeSecondaryBadge" class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold border border-purple-500/30">
-                সহকারী প্রভাব
-              </span>
-              <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                অরা বর্ণচ্ছটা: <strong id="archetypeAuraColorText" class="text-amber-500">স্বর্ণালী-পীতাভ (Golden Amber)</strong>
-              </span>
-            </div>
-            <p id="archetypeQuoteText" class="text-sm sm:text-base italic text-slate-700 dark:text-slate-200 font-serif leading-relaxed border-l-4 border-amber-500 pl-4 py-1">
-              "যাঁরা আদেশ দেন না, বরং উপস্থিতি দিয়েই বিশ্বকে রূপান্তর করেন।"
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
-              <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
-                <span class="text-slate-500 dark:text-slate-400 font-semibold block mb-1">স্বভাব ও উপাদানগত প্রকৃতি:</span>
-                <span id="archetypeNatureText" class="text-slate-800 dark:text-slate-200 font-bold">দৃঢ় ও সার্বভৌম</span>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
-                <span class="text-slate-500 dark:text-slate-400 font-semibold block mb-1">আধিপত্য ও প্রভাব ক্ষেত্র:</span>
-                <span id="archetypeDomainsText" class="text-slate-800 dark:text-slate-200 font-bold">শাসন, সাম্রাজ্য নির্মাণ ও দূরদর্শী নেতৃত্ব</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 6 Core Dimension Bars Grid -->
-          <div class="space-y-3">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
-              <span>📊</span>
-              <span>মহাজাগতিক মেধা ও চারিত্রিক মাত্রা (৬টি ডাইমেনশন)</span>
-            </h3>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- Leadership -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>👑</span> নেতৃত্ব ও তেজ
-                  </span>
-                  <span id="metricLeadershipVal" class="font-mono font-bold text-amber-500">৯০%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricLeadershipBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-700" style="width: 90%"></div>
-                </div>
-              </div>
-
-              <!-- Creativity -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>🎨</span> সৃজনশীলতা ও শিল্পবোধ
-                  </span>
-                  <span id="metricCreativityVal" class="font-mono font-bold text-pink-500">৭৫%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricCreativityBar" class="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-400 transition-all duration-700" style="width: 75%"></div>
-                </div>
-              </div>
-
-              <!-- Spirituality -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>🔮</span> আধ্যাত্মিক অন্তর্দৃষ্টি
-                  </span>
-                  <span id="metricSpiritualityVal" class="font-mono font-bold text-indigo-500">৮৫%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricSpiritualityBar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-400 transition-all duration-700" style="width: 85%"></div>
-                </div>
-              </div>
-
-              <!-- Magnetism / Speech -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>🎙️</span> বাচনভঙ্গি ও আকর্ষণ
-                  </span>
-                  <span id="metricMagnetismVal" class="font-mono font-bold text-cyan-500">৮০%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricMagnetismBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 transition-all duration-700" style="width: 80%"></div>
-                </div>
-              </div>
-
-              <!-- Willpower -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>⚔️</span> ইচ্ছাশক্তি ও মানসিক দৃঢ়তা
-                  </span>
-                  <span id="metricWillpowerVal" class="font-mono font-bold text-orange-500">৯৫%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricWillpowerBar" class="h-full rounded-full bg-gradient-to-r from-orange-500 to-red-400 transition-all duration-700" style="width: 95%"></div>
-                </div>
-              </div>
-
-              <!-- Wisdom -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
-                <div class="flex justify-between items-center text-xs font-semibold">
-                  <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                    <span>🦉</span> দূরদর্শিতা ও প্রজ্ঞা
-                  </span>
-                  <span id="metricWisdomVal" class="font-mono font-bold text-emerald-500">৯০%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
-                  <div id="metricWisdomBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-400 transition-all duration-700" style="width: 90%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Samudrika Shastra Facial Signatures -->
-          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
-              <span>👁️</span>
-              <span>সামুদ্রিক লক্ষণ বিচার (Facial Morpho-Signatures)</span>
-            </h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span class="text-slate-500 dark:text-slate-400 font-bold block">মুখের গঠন (Face Shape):</span>
-                <p id="samudrikaFaceShapeText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
-                  বর্গাকার (Square) — নেতৃত্ব, প্রশাসনিক দৃঢ়তা ও বাস্তববাদী লক্ষ্য।
-                </p>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span class="text-slate-500 dark:text-slate-400 font-bold block">দৃষ্টি ও চোখের অরা (Eyes):</span>
-                <p id="samudrikaEyeAuraText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
-                  তীক্ষ্ণ ও প্রখর দৃষ্টি — অন্যকে প্রভাবিত করার ও দূরদর্শী দৃষ্টিভঙ্গির লক্ষণ।
-                </p>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span class="text-slate-500 dark:text-slate-400 font-bold block">কপাল ও প্রজ্ঞা প্যালেস:</span>
-                <p id="samudrikaForeheadText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
-                  প্রশস্ত ও রাজকীয় কপাল — উচ্চাকাঙ্ক্ষা, সামাজিক প্রতিষ্ঠা ও প্রজ্ঞার উজ্জ্বল ধারা।
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Strengths, Challenges & Ideal Domains -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Strengths -->
-            <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
-              <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                <span>💎</span> রাজকীয় শক্তি ও দক্ষতা
-              </h4>
-              <ul id="archetypeStrengthsList" class="text-xs text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
-                <li>যেকোনো সংকটে শান্ত ও সুদৃঢ় সিদ্ধান্ত গ্রহণের অসাধারণ ক্ষমতা।</li>
-                <li>মানুষকে একত্রিত করে বড় লক্ষ্য অর্জনের নেতৃত্ব দক্ষতা।</li>
-                <li>দীর্ঘস্থায়ী প্রভাব ও ইতিহাস সৃষ্টিকারী দূরদর্শিতা।</li>
-              </ul>
-            </div>
-
-            <!-- Challenges / Shadow Traits -->
-            <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-2">
-              <h4 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                <span>⚠️</span> সচেতনতা ও ভারসাম্য রক্ষার দিক
-              </h4>
-              <ul id="archetypeChallengesList" class="text-xs text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
-                <li>অতিরিক্ত দায়িত্ব নিজের কাঁধে তুলে নিয়ে মানসিক চাপ বৃদ্ধি।</li>
-                <li>অন্যের ধীরগতি বা শিথিলতায় সহজে অধৈর্য হয়ে পড়া।</li>
-                <li>সমালোচনার প্রতি সংবেদনশীলতা কাটিয়ে খোলামনের চর্চা জরুরি।</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Ideal Careers / Life Domain -->
-          <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-slate-700 dark:text-slate-300">
-            <strong class="text-indigo-600 dark:text-indigo-400 block mb-1">🏛️ সেরা কর্মক্ষেত্র ও সামাজিক ভূমিকা:</strong>
-            <span id="archetypeCareerAdvice">
-              রাষ্ট্রপরিচালনা, সিইও/উদ্যোক্তা, নীতিনির্ধারণ, সামরিক ও মহাকাশ প্রযুক্তি, বিচার বিভাগ ও আন্তর্জাতিক নেতৃত্ব।
+        <!-- Top Compact Modal Navigation Header -->
+        <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-900 text-white flex items-center justify-between">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xl">👑</span>
+            <span class="text-sm font-extrabold tracking-wide text-amber-300 uppercase">
+              ${lang === 'bn' ? 'রয়্যাল আর্কিটাইপ ও সামুদ্রিক ব্লুপ্রিন্ট' : 'Royal Archetype & Samudrika Blueprint'}
             </span>
           </div>
 
-          <!-- Interactive Manual Fine-Tuner Mode -->
-          <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <span>🎛️</span> ম্যানুয়াল ফেসিয়াল টিউনিং (ঐচ্ছিক কাস্টমাইজেশন)
+          <button type="button" id="closeArchetypeDashboardBtn"
+            class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-base font-bold transition-all shadow-sm cursor-pointer"
+            title="বন্ধ করুন (Esc)">
+            ✕
+          </button>
+        </div>
+
+        <!-- 2-Column Split Body Layout -->
+        <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
+          
+          <!-- LEFT HERO PANEL (Fixed Persona Showcase, 40% Width) -->
+          <aside class="w-full lg:w-[380px] xl:w-[410px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b from-slate-900 via-amber-950/20 to-slate-950 p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5">
+            
+            <div class="w-full flex flex-col items-center text-center space-y-4">
+              <!-- Large Portrait Photo Frame with Hologram Aura -->
+              <div id="archetypeDashboardAvatarBox"
+                class="hero-photo-glow relative w-48 h-48 sm:w-56 sm:h-56 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-2xl bg-slate-800 flex items-center justify-center group cursor-pointer transition-all hover:scale-[1.02]"
+                title="নতুন ছবি দিয়ে পুনরায় স্ক্যান করতে ক্লিক করুন 📸">
+                
+                <!-- Corner HUD Brackets -->
+                <div class="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-amber-300 pointer-events-none z-20"></div>
+                <div class="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-amber-300 pointer-events-none z-20"></div>
+                <div class="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-amber-300 pointer-events-none z-20"></div>
+                <div class="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-amber-300 pointer-events-none z-20"></div>
+
+                <!-- Verified Hologram Stamp Badge -->
+                <div class="absolute top-3 left-3 bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-md z-20 flex items-center gap-1 backdrop-blur-sm">
+                  <span>👑 ROYAL ID</span>
+                </div>
+
+                <!-- User Photo -->
+                <img id="archetypeAvatarPreview" src="" alt="Avatar" class="w-full h-full object-cover z-10 hidden">
+                <div id="archetypeAvatarFallback" class="text-6xl flex items-center justify-center text-amber-400 z-10">👑</div>
+
+                <!-- Hover Rescan Overlay -->
+                <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white text-xs font-bold transition-opacity z-30 space-y-1">
+                  <span class="text-2xl">📸</span>
+                  <span>নতুন ছবি দিন</span>
+                </div>
+              </div>
+
+              <!-- Primary Title & Cosmic Identity -->
+              <div class="space-y-1.5 w-full">
+                <div class="flex items-center justify-center gap-2">
+                  <span id="archetypePrimaryIcon" class="text-2xl">👑</span>
+                  <h2 id="archetypePrimaryTitle" class="text-xl sm:text-2xl font-black text-amber-300 tracking-tight">
+                    রাজকীয় অধিপতি
+                  </h2>
+                </div>
+                <p id="archetypeTagline" class="text-xs text-amber-200/80 font-medium leading-relaxed px-2">
+                  জন্মগত শাসক, মহিমান্বিত ব্যক্তিত্ব ও অটল প্রতিষ্ঠাতা
+                </p>
+                <div class="pt-1 flex flex-wrap items-center justify-center gap-1.5">
+                  <span id="archetypeAuraBadge" class="text-[11px] px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
+                    অরা: <span id="archetypeAuraColorText">স্বর্ণালী-পীতাভ</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Mini Biometric Summary Cards -->
+              <div class="grid grid-cols-2 gap-2 w-full pt-1 text-left text-xs">
+                <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+                  <span class="text-[10px] text-slate-400 block font-semibold">মুখের গঠন:</span>
+                  <span id="samudrikaHeroShape" class="text-slate-100 font-bold truncate block">বর্গাকার</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+                  <span class="text-[10px] text-slate-400 block font-semibold">দৃষ্টি ও অরা:</span>
+                  <span id="samudrikaHeroEye" class="text-slate-100 font-bold truncate block">তীক্ষ্ণ ও প্রখর</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Left Panel CTA Buttons -->
+            <div class="w-full space-y-2.5 pt-2">
+              <button type="button" id="copyArchetypeCardBtn"
+                class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer">
+                <span>👑</span>
+                <span>রয়্যাল আর্কিটাইপ কার্ড কপি</span>
+              </button>
+
+              <button type="button" id="rescanPhotoBtn"
+                class="w-full py-2.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-amber-300 font-semibold text-xs border border-amber-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                <span>🔄</span>
+                <span>অন্য ছবি দিয়ে পুনরায় স্ক্যান</span>
+              </button>
+            </div>
+
+          </aside>
+
+          <!-- RIGHT METRICS & INTELLIGENCE DASHBOARD (Scrollable Panel, 60% Width) -->
+          <main class="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 min-h-0 bg-white dark:bg-slate-900">
+            
+            <!-- Top Philosophical Quote & Secondary Impact -->
+            <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span id="archetypeSecondaryBadge" class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold border border-purple-500/30">
+                  সহকারী প্রভাব
+                </span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  মহাজাগতিক সংযোগ ব্লুপ্রিন্ট
+                </span>
+              </div>
+              <p id="archetypeQuoteText" class="text-sm sm:text-base italic text-slate-700 dark:text-slate-200 font-serif leading-relaxed border-l-4 border-amber-500 pl-4 py-1">
+                "যাঁরা আদেশ দেন না, বরং উপস্থিতি দিয়েই বিশ্বকে রূপান্তর করেন।"
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+                <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
+                  <span class="text-slate-500 dark:text-slate-400 font-semibold block mb-1">স্বভাব ও উপাদানগত প্রকৃতি:</span>
+                  <span id="archetypeNatureText" class="text-slate-800 dark:text-slate-200 font-bold">দৃঢ় ও সার্বভৌম</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
+                  <span class="text-slate-500 dark:text-slate-400 font-semibold block mb-1">আধিপত্য ও প্রভাব ক্ষেত্র:</span>
+                  <span id="archetypeDomainsText" class="text-slate-800 dark:text-slate-200 font-bold">শাসন, সাম্রাজ্য নির্মাণ ও নেতৃত্ব</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 Core Dimension Bars Grid -->
+            <div class="space-y-3">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <span>📊</span>
+                <span>মহাজাগতিক মেধা ও চারিত্রিক মাত্রা (৬টি ডাইমেনশন)</span>
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Leadership -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>👑</span> নেতৃত্ব ও তেজ
+                    </span>
+                    <span id="metricLeadershipVal" class="font-mono font-bold text-amber-500">৯০%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricLeadershipBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-700" style="width: 90%"></div>
+                  </div>
+                </div>
+
+                <!-- Creativity -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>🎨</span> সৃজনশীলতা ও শিল্পবোধ
+                    </span>
+                    <span id="metricCreativityVal" class="font-mono font-bold text-pink-500">৭৫%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricCreativityBar" class="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-400 transition-all duration-700" style="width: 75%"></div>
+                  </div>
+                </div>
+
+                <!-- Spirituality -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>🔮</span> আধ্যাত্মিক অন্তর্দৃষ্টি
+                    </span>
+                    <span id="metricSpiritualityVal" class="font-mono font-bold text-indigo-500">৮৫%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricSpiritualityBar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-400 transition-all duration-700" style="width: 85%"></div>
+                  </div>
+                </div>
+
+                <!-- Magnetism / Speech -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>🎙️</span> বাচনভঙ্গি ও আকর্ষণ
+                    </span>
+                    <span id="metricMagnetismVal" class="font-mono font-bold text-cyan-500">৮০%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricMagnetismBar" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 transition-all duration-700" style="width: 80%"></div>
+                  </div>
+                </div>
+
+                <!-- Willpower -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>⚔️</span> ইচ্ছাশক্তি ও মানসিক দৃঢ়তা
+                    </span>
+                    <span id="metricWillpowerVal" class="font-mono font-bold text-orange-500">৯৫%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricWillpowerBar" class="h-full rounded-full bg-gradient-to-r from-orange-500 to-red-400 transition-all duration-700" style="width: 95%"></div>
+                  </div>
+                </div>
+
+                <!-- Wisdom -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                  <div class="flex justify-between items-center text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                      <span>🦉</span> দূরদর্শিতা ও প্রজ্ঞা
+                    </span>
+                    <span id="metricWisdomVal" class="font-mono font-bold text-emerald-500">৯০%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                    <div id="metricWisdomBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-400 transition-all duration-700" style="width: 90%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Samudrika Shastra Facial Signatures -->
+            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <span>👁️</span>
+                <span>সামুদ্রিক লক্ষণ বিচার (Facial Morpho-Signatures)</span>
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <span class="text-slate-500 dark:text-slate-400 font-bold block">মুখের গঠন (Face Shape):</span>
+                  <p id="samudrikaFaceShapeText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
+                    বর্গাকার (Square) — নেতৃত্ব, প্রশাসনিক দৃঢ়তা ও বাস্তববাদী লক্ষ্য।
+                  </p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <span class="text-slate-500 dark:text-slate-400 font-bold block">দৃষ্টি ও চোখের অরা (Eyes):</span>
+                  <p id="samudrikaEyeAuraText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
+                    তীক্ষ্ণ ও প্রখর দৃষ্টি — অন্যকে প্রভাবিত করার ও দূরদর্শী দৃষ্টিভঙ্গির লক্ষণ।
+                  </p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <span class="text-slate-500 dark:text-slate-400 font-bold block">কপাল ও প্রজ্ঞা প্যালেস:</span>
+                  <p id="samudrikaForeheadText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
+                    প্রশস্ত ও রাজকীয় কপাল — উচ্চাকাঙ্ক্ষা, সামাজিক প্রতিষ্ঠা ও প্রজ্ঞার উজ্জ্বল ধারা।
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Strengths, Challenges & Ideal Domains -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Strengths -->
+              <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+                <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>💎</span> রাজকীয় শক্তি ও দক্ষতা
+                </h4>
+                <ul id="archetypeStrengthsList" class="text-xs text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
+                  <li>যেকোনো সংকটে শান্ত ও সুদৃঢ় সিদ্ধান্ত গ্রহণের অসাধারণ ক্ষমতা।</li>
+                  <li>মানুষকে একত্রিত করে বড় লক্ষ্য অর্জনের নেতৃত্ব দক্ষতা।</li>
+                  <li>দীর্ঘস্থায়ী প্রভাব ও ইতিহাস সৃষ্টিকারী দূরদর্শিতা।</li>
+                </ul>
+              </div>
+
+              <!-- Challenges / Shadow Traits -->
+              <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-2">
+                <h4 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>⚠️</span> সচেতনতা ও ভারসাম্য রক্ষার দিক
+                </h4>
+                <ul id="archetypeChallengesList" class="text-xs text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
+                  <li>অতিরিক্ত দায়িত্ব নিজের কাঁধে তুলে নিয়ে মানসিক চাপ বৃদ্ধি।</li>
+                  <li>অন্যের ধীরগতি বা শিথিলতায় সহজে অধৈর্য হয়ে পড়া।</li>
+                  <li>সমালোচনার প্রতি সংবেদনশীলতা কাটিয়ে খোলামনের চর্চা জরুরি।</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Ideal Careers / Life Domain -->
+            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-slate-700 dark:text-slate-300">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1">🏛️ সেরা কর্মক্ষেত্র ও সামাজিক ভূমিকা:</strong>
+              <span id="archetypeCareerAdvice">
+                রাষ্ট্রপরিচালনা, সিইও/উদ্যোক্তা, নীতিনির্ধারণ, সামরিক ও মহাকাশ প্রযুক্তি, বিচার বিভাগ ও আন্তর্জাতিক নেতৃত্ব।
               </span>
-              <span class="text-[10px] text-slate-500">লাইভ টিউন করে দেখতে পারেন</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">মুখের আকৃতি পরিবর্তন করুন:</label>
-                <select id="tuneFaceShape" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                </select>
+            <!-- Interactive Manual Fine-Tuner Mode -->
+            <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span>🎛️</span> ম্যানুয়াল ফেসিয়াল টিউনিং (ঐচ্ছিক কাস্টমাইজেশন)
+                </span>
+                <span class="text-[10px] text-slate-500">লাইভ টিউন করে দেখতে পারেন</span>
               </div>
 
-              <div>
-                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">চোখ ও দৃষ্টির ধরন পরিবর্তন করুন:</label>
-                <select id="tuneEyeAura" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                </select>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">মুখের আকৃতি পরিবর্তন করুন:</label>
+                  <select id="tuneFaceShape" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">চোখ ও দৃষ্টির ধরন পরিবর্তন করুন:</label>
+                  <select id="tuneEyeAura" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
 
+          </main>
         </div>
 
         <!-- Dashboard Footer -->
-        <div class="p-4 sm:p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80 flex flex-wrap items-center justify-between gap-3">
-          <button type="button" id="copyArchetypeCardBtn"
-            class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer">
-            <span>👑</span>
-            <span>রয়্যাল আর্কিটাইপ কার্ড কপি করুন</span>
-          </button>
+        <div class="p-3.5 sm:p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80 flex items-center justify-between text-xs text-slate-500">
+          <div class="flex items-center space-x-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            <span>১০০% ক্লায়েন্ট-সাইড অফস্ক্রিন ক্যানভাস ও সামুদ্রিক শাস্ত্রীয় অ্যালগরিদম</span>
+          </div>
 
           <button type="button" id="closeArchetypeModalFooterBtn"
-            class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all cursor-pointer">
+            class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all cursor-pointer">
             বন্ধ করুন
           </button>
         </div>
@@ -413,7 +477,7 @@ export function openArchetypeModal(userData, avatarBase64) {
     initArchetypeModalListeners(modalEl);
 
     const unlockLevel = getState().unlockLevel || 35;
-    // If user is already level 100 and has avatar or profile, go to dashboard; otherwise show scanner intake
+    // If user is already level 100, go straight to hero dashboard; otherwise show scanner intake
     if (unlockLevel >= 100) {
       showDashboardView(modalEl);
     } else {
@@ -687,7 +751,7 @@ export function closeArchetypeModal() {
 function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   const { primaryArchetype, secondaryArchetype, metrics, samudrika } = profile;
 
-  // Avatar View inside the dashboard header:
+  // 1. Avatar View inside the Left Hero Showcase:
   const avatarImg = (modalEl ? modalEl.querySelector('#archetypeAvatarPreview') : null) || document.getElementById('archetypeAvatarPreview');
   const avatarFallback = (modalEl ? modalEl.querySelector('#archetypeAvatarFallback') : null) || document.getElementById('archetypeAvatarFallback');
   
@@ -703,20 +767,27 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
     }
   }
 
-  // Header and Archetype Badge
+  // 2. Left Hero Panel Information
   const titleEl = document.getElementById('archetypePrimaryTitle');
   const iconEl = document.getElementById('archetypePrimaryIcon');
   const taglineEl = document.getElementById('archetypeTagline');
   const auraText = document.getElementById('archetypeAuraColorText');
-  const secondaryEl = document.getElementById('archetypeSecondaryBadge');
-  const quoteEl = document.getElementById('archetypeQuoteText');
-  const natureEl = document.getElementById('archetypeNatureText');
-  const domainsEl = document.getElementById('archetypeDomainsText');
+  const heroShape = document.getElementById('samudrikaHeroShape');
+  const heroEye = document.getElementById('samudrikaHeroEye');
 
   if (titleEl) titleEl.textContent = primaryArchetype.nameBn;
   if (iconEl) iconEl.textContent = primaryArchetype.icon;
   if (taglineEl) taglineEl.textContent = primaryArchetype.tagline;
   if (auraText) auraText.textContent = primaryArchetype.auraColor;
+  if (heroShape) heroShape.textContent = samudrika.faceShape.nameBn;
+  if (heroEye) heroEye.textContent = samudrika.eyeAura.nameBn;
+
+  // 3. Right Panel Header and Quotes
+  const secondaryEl = document.getElementById('archetypeSecondaryBadge');
+  const quoteEl = document.getElementById('archetypeQuoteText');
+  const natureEl = document.getElementById('archetypeNatureText');
+  const domainsEl = document.getElementById('archetypeDomainsText');
+
   if (secondaryEl) {
     secondaryEl.textContent = `সহকারী প্রভাব: ${secondaryArchetype.icon} ${secondaryArchetype.nameBn}`;
   }
@@ -724,7 +795,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (natureEl) natureEl.textContent = primaryArchetype.nature;
   if (domainsEl) domainsEl.textContent = primaryArchetype.domains;
 
-  // 6 Metric Bars
+  // 4. 6 Metric Dimension Bars
   setMetricBar('metricCreativity', metrics.creativity);
   setMetricBar('metricLeadership', metrics.leadership);
   setMetricBar('metricSpirituality', metrics.spirituality);
@@ -732,7 +803,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   setMetricBar('metricWillpower', metrics.willpower);
   setMetricBar('metricWisdom', metrics.wisdom);
 
-  // Samudrika Shastra Facial Features
+  // 5. Samudrika Shastra Facial Features
   const fShape = document.getElementById('samudrikaFaceShapeText');
   const fEye = document.getElementById('samudrikaEyeAuraText');
   const fForehead = document.getElementById('samudrikaForeheadText');
@@ -741,7 +812,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   if (fEye) fEye.textContent = `${samudrika.eyeAura.nameBn} — ${samudrika.eyeAura.traitBn}`;
   if (fForehead) fForehead.textContent = `${samudrika.foreheadAura.nameBn} — ${samudrika.foreheadAura.traitBn}`;
 
-  // Strengths & Challenges List
+  // 6. Strengths, Challenges & Careers
   const sList = document.getElementById('archetypeStrengthsList');
   const cList = document.getElementById('archetypeChallengesList');
   const careerAdv = document.getElementById('archetypeCareerAdvice');
@@ -756,7 +827,7 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
     careerAdv.textContent = `${primaryArchetype.careers.join(', ')} এবং অন্যান্য কৌশলগত ক্ষেত্র।`;
   }
 
-  // Populate manual tuning dropdowns
+  // 7. Populate manual tuning dropdowns
   populateTuningDropdowns(samudrika);
 }
 
