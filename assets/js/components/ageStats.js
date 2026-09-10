@@ -50,6 +50,7 @@ export function updateAgeStats(birthDate) {
   // Cosmic / Biological Metrics
   const elDistance = document.getElementById('statDistanceTraveled');
   const elBreaths = document.getElementById('statBreaths');
+  const elBlinks = document.getElementById('statBlinks');
   const elSleep = document.getElementById('statSleepYears');
 
   if (elDistance) {
@@ -67,6 +68,17 @@ export function updateAgeStats(birthDate) {
       elBreaths.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? 'মিলিয়ন' : 'Million'}`;
     } else {
       elBreaths.textContent = formatNumberWithCommas(breaths);
+    }
+  }
+
+  if (elBlinks) {
+    // ~20 blinks per minute = 28,800 blinks per day
+    const blinks = Math.floor(stats.totalDays * 28800);
+    if (blinks > 1000000) {
+      const numStr = (blinks / 1000000).toFixed(2);
+      elBlinks.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? 'মিলিয়ন' : 'Million'}`;
+    } else {
+      elBlinks.textContent = formatNumberWithCommas(blinks);
     }
   }
 

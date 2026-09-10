@@ -81,6 +81,7 @@ export const LOCALES = {
     totalMinutes: "মোট মিনিট",
     liveSeconds: "লাইভ সেকেন্ড ⏱️",
     heartbeats: "আনুমানিক হৃদস্পন্দন ❤️",
+    minuteBreaths: "আনুমানিক নিঃশ্বাস:",
 
     // Next Birthday Countdown
     birthdayCardTitle: "🎂 পরবর্তী জন্মদিন কাউন্টডাউন",
@@ -123,12 +124,13 @@ export const LOCALES = {
     thStatus: "স্ট্যাটাস",
 
     // Cosmic Stats
-    cosmicTitle: "🚀 আপনার মহাজাগতিক যাত্রা (Cosmic Statistics)",
-    cosmicDist: "সূর্যকে প্রদক্ষিণ করে মহাকাশে পাড়ি দিয়েছেন",
+    cosmicTitle: "🚀 ২. মহাজাগতিক ও বায়োলজিক্যাল পরিসংখ্যান",
+    cosmicDist: "মহাকাশে ভ্রমণ",
     cosmicDistUnit: "কিলোমিটার (আনুমানিক)",
+    cosmicBlinks: "চোখের পলক",
     cosmicBreaths: "মোট গৃহীত আনুমানিক নিঃশ্বাস",
     cosmicBreathsUnit: "বার (প্রতি মিনিটে গড়ে ১৬টি)",
-    cosmicSleep: "ঘুমের মধ্যে কাটিয়েছেন প্রায়",
+    cosmicSleep: "ঘুমের সময়কাল",
     cosmicSleepUnit: "বছর (দৈনিক গড়ে ৮ ঘণ্টা হিসাব)",
 
     // Stage 2: Astrological Input Modal
@@ -278,6 +280,7 @@ export const LOCALES = {
     totalMinutes: "Total Minutes",
     liveSeconds: "Live Seconds ⏱️",
     heartbeats: "Estimated Heartbeats ❤️",
+    minuteBreaths: "Estimated Breaths:",
 
     // Next Birthday Countdown
     birthdayCardTitle: "🎂 Next Birthday Countdown",
@@ -320,12 +323,13 @@ export const LOCALES = {
     thStatus: "Status",
 
     // Cosmic Stats
-    cosmicTitle: "🚀 Your Cosmic Journey (Cosmic Statistics)",
-    cosmicDist: "Distance traveled orbiting the Sun",
+    cosmicTitle: "🚀 2. Cosmic & Biological Statistics",
+    cosmicDist: "Traveled in Space",
     cosmicDistUnit: "Kilometers (Estimated)",
+    cosmicBlinks: "Eye Blinks",
     cosmicBreaths: "Estimated total breaths taken",
     cosmicBreathsUnit: "Times (~16 breaths / min)",
-    cosmicSleep: "Approximate time spent sleeping",
+    cosmicSleep: "Time in Sleep",
     cosmicSleepUnit: "Years (Based on 8h/day)",
 
     // Stage 2: Astrological Input Modal
