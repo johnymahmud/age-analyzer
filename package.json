@@ -1,0 +1,20 @@
+{
+  "name": "life-timeline-age-analyzer",
+  "version": "3.2.0",
+  "description": "Life Timeline & Historical Age Analyzer Web Application",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "keywords": [
+    "age-analyzer",
+    "timeline",
+    "zodiac",
+    "palmistry",
+    "javascript"
+  ],
+  "author": "Shah Mahmud",
+  "license": "ISC"
+}

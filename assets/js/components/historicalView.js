@@ -5,6 +5,7 @@
 import { FAMOUS_PERSONALITIES } from '../data/personalities.js';
 import { HISTORICAL_EVENTS, YEAR_ERA_EVENTS } from '../data/events.js';
 import { toBnDigits } from '../calculator.js';
+import { getLanguage, formatDigits } from '../i18n.js';
 
 export function renderHistoricalInsights(month, day, year) {
   renderPersonalities(month, day);
@@ -16,6 +17,7 @@ function renderPersonalities(month, day) {
   if (!pGrid) return;
 
   pGrid.innerHTML = '';
+  const lang = getLanguage();
 
   // 1. Exact match on same month and day
   let matched = FAMOUS_PERSONALITIES.filter(p => p.month === month && p.day === day);
@@ -32,16 +34,19 @@ function renderPersonalities(month, day) {
     const card = document.createElement('div');
     card.className = "bg-white/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 flex items-start space-x-3.5 shadow-sm dark:shadow-none print-card";
     
+    const yearLabel = lang === 'bn' ? `${formatDigits(p.year)} খ্রি.` : `${p.year} AD`;
+    const exactBadge = lang === 'bn' ? '🎯 একই দিনে জন্ম' : '🎯 Born on same day';
+
     card.innerHTML = `
       <img src="${p.avatar}" alt="${p.name}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-sm" loading="lazy">
       <div class="space-y-1 flex-1 min-w-0">
         <div class="flex items-center justify-between gap-1">
           <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${p.name}</h4>
-          <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800 whitespace-nowrap">${toBnDigits(p.year)} খ্রি.</span>
+          <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800 whitespace-nowrap">${yearLabel}</span>
         </div>
         <p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium">${p.title}</p>
         <p class="text-[12px] text-slate-600 dark:text-slate-400 leading-snug line-clamp-2">${p.bio}</p>
-        ${isExact ? '<span class="inline-block text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">🎯 একই দিনে জন্ম</span>' : ''}
+        ${isExact ? `<span class="inline-block text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">${exactBadge}</span>` : ''}
       </div>
     `;
     pGrid.appendChild(card);
@@ -52,23 +57,30 @@ function renderEvents(month, day, year) {
   const evCont = document.getElementById('historicalEventsContainer');
   if (!evCont) return;
 
+  const lang = getLanguage();
   const dayEvent = HISTORICAL_EVENTS.find(e => e.month === month && e.day === day) || HISTORICAL_EVENTS[0];
   const eraEvent = YEAR_ERA_EVENTS.find(e => year >= e.min && year <= e.max) || YEAR_ERA_EVENTS[YEAR_ERA_EVENTS.length - 1];
+
+  const calHeader = lang === 'bn' ? '📅 ক্যালেন্ডার মেলবন্ধন' : '📅 Calendar Connection';
+  const dayYearStr = lang === 'bn' ? `${formatDigits(dayEvent.year)} খ্রি.` : `${dayEvent.year} AD`;
+  const eraHeader = lang === 'bn' 
+    ? `🌍 জন্মকালের বিশ্ব পটভূমি (${formatDigits(year)} খ্রি.)` 
+    : `🌍 World Era at Birth (${year} AD)`;
 
   evCont.innerHTML = `
     <div class="bg-white/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm dark:shadow-none print-card">
       <div class="flex items-center space-x-2 mb-2">
         <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-        <span class="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider">📅 ক্যালেন্ডার মেলবন্ধন</span>
+        <span class="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider">${calHeader}</span>
       </div>
-      <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">${dayEvent.title} (${toBnDigits(dayEvent.year)} খ্রি.)</h4>
+      <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">${dayEvent.title} (${dayYearStr})</h4>
       <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${dayEvent.summary}</p>
     </div>
 
     <div class="bg-white/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm dark:shadow-none print-card">
       <div class="flex items-center space-x-2 mb-2">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-        <span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">🌍 জন্মকালের বিশ্ব পটভূমি (${toBnDigits(year)} খ্রি.)</span>
+        <span class="text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">${eraHeader}</span>
       </div>
       <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">${eraEvent.title}</h4>
       <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${eraEvent.summary}</p>

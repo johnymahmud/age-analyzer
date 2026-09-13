@@ -1,49 +1,60 @@
 # 🏛️ Master Blueprint: Life Timeline & Historical Age Analyzer
 
 ## 1. প্রজেক্টের পরিচিতি ও রূপকল্প (Vision & Overview)
-**Life Timeline & Historical Age Analyzer** হলো একটি ক্লায়েন্ট-সাইড ইন্টারঅ্যাক্টিভ ওয়েব অ্যাপ্লিকেশন। ব্যবহারকারী তার জন্মতারিখ, সময়, রক্তের গ্রুপ ও রিলেশনশিপ স্ট্যাটাস প্রদান করলে সিস্টেমটি তার সঠিক বয়স (বছর, মাস, দিন, ঘণ্টা, মিনিট, সেকেন্ড) নিরূপণ করার পাশাপাশি মহাজাগতিক দূরত্ব, হৃদস্পন্দন, শ্বাস-প্রশ্বাসের পরিসংখ্যান, দ্রেক্বাণ ও গ্রহচর সহ রাশিচক্রের বিশ্লেষণ, বায়ো-অ্যাস্ট্রো নিউট্রিশন ব্লুপ্রিন্ট, ফেসিয়াল মরফোলজি ও ৭টি রয়্যাল আর্কিটাইপ স্ক্যানার, সমসাময়িক ঐতিহাসিক পটভূমি এবং বিশ্ববরেণ্য মনীষীদের বয়সভিত্তিক কৃতিত্বের সাথে একটি অনন্য মেলবন্ধন তৈরি করে।
+**Life Timeline & Historical Age Analyzer** হলো একটি অত্যন্ত আধুনিক, দ্রুতগতির এবং ক্লায়েন্ট-সাইড ইন্টারঅ্যাক্টিভ ওয়েব অ্যাপ্লিকেশন। ব্যবহারকারী তার জন্মতারিখ দিলে সিস্টেমটি প্রগ্রেসিভ মাল্টি-স্টেজ ডিসক্লোজার (Progressive Disclosure) পদ্ধতির মাধ্যমে তার সঠিক বয়স, মহাজাগতিক পরিভ্রমণ, ঐতিহাসিক মেলবন্ধন, গভীর রাশিচক্র, বায়োমেট্রিক ফেসিয়াল আর্কিটাইপ এবং সর্বাধুনিক **এআই পামিস্ট্রি ও অ্যাস্ট্রো-পামার কসমিক ফিউশন** উন্মোচন করে। সম্পূর্ণ প্রজেক্টটি ডুয়েল ল্যাঙ্গুয়েজ (বাংলা ও ইংরেজি) সাপোর্টেড এবং হাই-রেজোলিউশন ক্যানভাস এক্সপোর্টার সমৃদ্ধ।
 
 ---
 
 ## 2. সিস্টেম আর্কিটেকচার (System Architecture)
-প্রজেক্টটি **Modular ES6 Architecture** এবং **Separation of Concerns (SoC)** নীতিতে প্রতিষ্ঠিত। কোনো বান্ডলার (Webpack/Vite) ছাড়াই এটি সরাসরি আধুনিক ব্রাউজারে নেটিভ ES Modules দিয়ে চলে।
+প্রজেক্টটি **Modular ES6 Architecture** এবং **Separation of Concerns (SoC)** নীতিতে প্রতিষ্ঠিত। কোনো ভারী ফ্রেমওয়ার্ক বা বান্ডলার ছাড়াই এটি ব্রাউজারের নেটিভ ES Modules ব্যবহার করে চলে।
 
 ```mermaid
 graph TD
     A[index.html] --> B[assets/js/app.js - Controller]
     B --> C[assets/js/theme.js - Dark/Light Theme]
-    B --> D[assets/js/upload.js - Canvas Image Compressor]
+    B --> D[assets/js/i18n.js - Dual Language Engine]
     B --> E[assets/js/state.js - LocalStorage & Central State]
     B --> F[assets/js/calculator.js - Pure Calculation Engine]
+    B --> H[assets/js/upload.js - Photo Processing & Memory Reset]
     B --> G[Components Layer]
     
     subgraph Components [assets/js/components/]
+        G0[completionMeter.js - Progress Tracker]
         G1[bioCard.js - Profile & Day of Week]
-        G2[ageStats.js - Counters & Biology]
+        G2[ageStats.js - Counters & Cosmic Biology]
         G3[countdown.js - Birthday Countdown]
-        G4[historicalView.js - Personalities & Events]
-        G5[milestonesTable.js - Benchmark Table]
-        G6[adSlots.js - Multi-platform Ads]
-        G7[zodiacModal.js - 7-Tab Deep Astrology Modal]
-        G8[morphologyEngine.js - Client Canvas Image Scanner]
-        G9[archetypeModal.js - Royal Archetype & Samudrika Shastra]
+        G4[historicalModal.js - Card 1 Personalities & Events]
+        G5[milestonesModal.js - Card 2 Benchmark Milestones]
+        G6[zodiacModal.js - Card 3 Deep Astro & Intake Modal]
+        G7[morphologyEngine.js - Client Canvas Image Scanner]
+        G8[archetypeModal.js - Card 4 Biometric Laser Scanner]
+        G9[palmistryEngine.js - Computer Vision, 2D:4D & AR Splines]
+        G10[palmistryModal.js - 5-Tab Palmistry & Cosmic Fusion]
+        G11[modalManager.js - Dynamic Modal & Scroll Lock Manager]
+        G12[socialStory.js - 9:16 Canvas Story Generator]
+        G13[adSlots.js - Multi-platform Ads]
     end
 
     subgraph Data [assets/js/data/]
+        D1[locales.js - BN & EN Translations]
         F1[zodiac.js - 12 Signs, 36 Decans, Blood Group, Travel]
         F2[personalities.js - Historical Figures]
         F3[events.js - Historical Events]
         F4[milestones.js - Benchmark Milestones]
         F5[archetypes.js - 7 Royal Archetypes & Samudrika]
+        F6[palmistry.js - 4 Hand Types, 7 Mounts, 2D:4D, Cosmic Synergy]
     end
 
+    D --> D1
     F --> F1
     G4 --> F2
     G4 --> F3
     G5 --> F4
-    G7 --> F1
+    G6 --> F1
+    G7 --> F5
     G8 --> F5
-    G9 --> F5
+    G9 --> F6
+    G10 --> F6
 ```
 
 ---
@@ -52,107 +63,49 @@ graph TD
 1. **Core Language:** HTML5, Modern ECMAScript 6+ (Vanilla JS Modules).
 2. **Styling & Design System:**
    - Tailwind CSS (via CDN)
-   - Custom Glassmorphism, Holographic Scanners & Animations: `assets/css/style.css`
+   - Custom Glassmorphism, Biometric Laser Scanners, AR Palmistry Splines, Progress HUD & Animations: `assets/css/style.css`
    - Ad Optimization & Anti-CLS Rules: `assets/css/ads.css`
 3. **Typography:**
    - Bengali: `Hind Siliguri` (Google Fonts)
    - Numbers & Accents: `Outfit` (Google Fonts)
-4. **Backend / Server:** **ZERO Backend** (১০০% ক্লায়েন্ট-সাইড, কোনো Node.js, Express, Python বা PHP প্রয়োজন নেই)।
-5. **Database:** **ZERO Database** (ব্রাউজারের `localStorage` ব্যবহার করে সম্পূর্ণ অফলাইন ও সুরক্ষিত)।
-6. **Privacy & Security:** ছবি বা বায়োমেট্রিক ডেটা কোনো দূরবর্তী সার্ভারে আপলোড হয় না; ক্লায়েন্ট ক্যানভাসে প্রসেস হয়।
+4. **Backend / Server:** **ZERO Backend** (১০০% ক্লায়েন্ট-সাইড অফলাইন-রেডি অ্যাপ্লিকেশন)।
+5. **Database / Storage:** **ZERO Database** (ব্রাউজারের `localStorage` ব্যবহার করে সম্পূর্ণ অফলাইন ও সুরক্ষিত)।
+6. **Privacy & Security:** ছবি বা বায়োমেট্রিক ডেটা কোনো দূরবর্তী সার্ভারে পাঠানো হয় না; ব্রাউজার ক্যানভাসে সুরক্ষিতভাবে প্রসেস হয়।
 7. **Hosting / Deployment:** GitHub Pages (Root directory `/`).
 
 ---
 
 ## 4. প্রধান ফিচার ও কার্যপরিধি (Scope & Feature Breakdown)
 
-### ক. প্রিফেক্ট এজ ও টাইম ক্যালকুলেটর (Precision Engine)
-- **ফাংশন:** `calculateExactAge(birthDate, targetDate)`
-- **ফিচার:**
-  - বছর, মাস ও দিনের নিখুঁত হিসাব।
-  - মোট দিন, মোট সপ্তাহ, মোট ঘণ্টা, মোট মিনিট এবং লাইভ টিকিং সেকেন্ড।
-  - ইউজার বায়ো কার্ডে স্বয়ংক্রিয়ভাবে নির্ণীত **প্রমিনেন্ট জন্মবার (Day of the Week)** ব্যাজ।
+### ক. প্রগ্রেসিভ ডিসক্লোজার জার্নি (Multi-Stage Workflow)
+- **ধাপ ১ (কোর বয়স ও মহাজাগতিক স্ট্যাটস):** শুধুমাত্র দিন, মাস ও বছর ইনপুট নিয়ে তাৎক্ষণিক বয়স, মহাজাগতিক ভ্রমণ, পরবর্তী জন্মদিনের টাইমার ও জন্মবার প্রদর্শন।
+- **ধাপ ২ (অ্যাস্ট্রো ইন্টেলিজেন্স):** রাশিচক্র কার্ড বা ব্যাজে ক্লিক করে লিঙ্গ, দেশ, জন্মসময়, রক্তের গ্রুপ প্রদান করলে গভীর ৭-ট্যাব রাশিফল উন্মুক্ত হয়।
+- **ধাপ ৩ (বায়োমেট্রিক আর্কিটাইপ):** ফেসিয়াল ড্রপজোনে ছবি আপলোড করে হলোগ্রাফিক লেজার স্ক্যানিংয়ের মাধ্যমে ৭টি রয়্যাল আর্কিটাইপ ও সামুদ্রিক ব্লুপ্রিন্ট আনলক হয়।
+- **ধাপ ৪ (AI পামিস্ট্রি ও অ্যাস্ট্রো-পামার কসমিক ফিউশন):** হাতের ছবি আপলোড করে ৫-ট্যাব প্যানোরামিক পামিস্ট্রি ড্যাশবোর্ডে রেখা ট্রেসিং, মাউন্ট অ্যানালাইসিস, ২D:৪D অনুপাত ও লাইফ-টাইমলাইন পর্যবেক্ষণ।
 
-### খ. বায়োলজিক্যাল ও মহাজাগতিক পরিসংখ্যান (Cosmic & Biology Stats)
-- **ফাংশন:** `updateAgeStats(birthDate)`
-- **ফিচার:**
-  - **অতিক্রান্ত মহাজাগতিক দূরত্ব:** পৃথিবী সূর্যের চারদিকে প্রদক্ষিণের গড় গতিতে ভ্রমণকৃত মোট দূরত্ব (কিমি)।
-  - **আনুমানিক হৃদস্পন্দন ও শ্বাস-প্রশ্বাস:** মোট জীবদ্দশার স্পন্দন ও শ্বাস গ্রহণ।
-  - **ঘুমের সময়কাল:** মোট জীবদ্দশার আনুমানিক ১/৩ অংশ ঘুমের বছর।
+### খ. AI পামিস্ট্রি ও চিরোম্যান্সি সিস্টেম (AI Palmistry Engine)
+- **কম্পিউটার ভিশন স্কিন অ্যানালাইসিস:** অফস্ক্রিন ক্যানভাসে স্কিন কনট্যুর এক্সট্রাকশন ও পাম বাউন্ডারি ডিটেকশন।
+- **এআর লাইন স্প্লাইন ট্রেসিং:** কিউবিক বেজিয়ার কার্ভের সাহায্যে জীবন রেখা, শিরোরেখা, হৃদয় রেখা, ভাগ্য রেখা ও সূর্য রেখা লাইভ ট্রেসিং।
+- **লাইফ-টাইমলাইন ডায়নামিক এজ মার্কার:** ব্যবহারকারীর সঠিক বয়স অনুযায়ী জীবন রেখার ওপর ডায়নামিক গোল্ডেন মার্কার পিন ($B(t)$) স্থাপন ও তাৎক্ষণিক যুগভিত্তিক মাইলস্টোন প্রেডিকশন।
+- **২D:৪D ডিজিট রেশিও বায়োমেট্রিক্স:** তর্জনী ও অনামিকার অনুপাত থেকে স্বভাবজাত গুণাগুণ ও ঝুঁকি গ্রহণের ক্ষমতা পরিমাপ।
+- **দ্বৈত কর্মফল ম্যাট্রিক্স:** বাম হাত (জন্মগত সম্ভাবনা / প্রারব্ধ) বনাম ডান হাত (বর্তমান কর্মফল / ক্রিয়াশীল শক্তি)।
 
-### গ. অ্যাডভান্সড জোডিয়াক ও অ্যাস্ট্রোলজি ইন্টেলিজেন্স (Deep Zodiac Engine)
-- **মডিউল:** `assets/js/components/zodiacModal.js`, `assets/js/data/zodiac.js`
-- **ফিচার:**
-  - **৩৬টি দ্রেক্বাণ (Decanates):** প্রতিটি রাশির ১০° উপ-বিভাগ ও উপ-শাসক গ্রহ (Sub-planet) অ্যানালাইসিস।
-  - **বিদেশ ভ্রমণ ও আন্তর্জাতিক ভাগ্য সূচক (Foreign Travel Index):** চর/স্থির/দ্বৈত রাশি ও ৯ম-১২শ ভাব ভিত্তিক ০-১০০% স্কোর ও অনুকূল দেশ।
-  - **বারভিত্তিক শাসক গ্রহ ও গোল্ডেন আওয়ার (Cosmic Day Ruler & Golden Hours):** জন্মবারের মহাজাগতিক সংযোগ ও দৈনিক শুভ সময়।
-  - **পার্টনার কম্প্যাটিবিলিটি সিমুলেটর:** ১২টি রাশির সাথে উপাদানগত (Fire, Earth, Air, Water) রসায়ন ও সতর্কতা।
-  - **রিলেশনশিপ স্ট্যাটাস গাইড:** সিঙ্গেল, প্রেম, বিবাহিত ইত্যাদির জন্য নির্দিষ্ট উপদেশ।
+### গ. অ্যাস্ট্রো-পামার কসমিক ফিউশন (Astro-Palmar Cosmic Fusion)
+- **রাশি ও গ্রহীয় পর্বত সিনার্জি:** রাশিচক্রের অধিপতি গ্রহের সাথে হাতের নির্দিষ্ট পর্বতের (যেমন: সিংহ $\to$ রবির পর্বত, ধনু/মীন $\to$ বৃহস্পতির পর্বত) এনার্জি ফ্লো গণনা।
+- **ব্লাড গ্রুপ ও আয়ুর্বেদিক দোষা সংযোগ:** রক্তের গ্রুপ (O, A, B, AB) অনুযায়ী আয়ুর্বেদিক দোষা (বাত, পিত্ত, কফ) এবং রেখার গভীরতা ও স্থিতিস্থাপকতার আন্তঃসম্পর্ক।
+- **সম্পর্কের অবস্থা ও হৃদয় রেখা:** বৈবাহিক অবস্থার সাথে হৃদয় রেখার বক্রতা ও শুক্র/বুধ পর্বতের সামঞ্জস্য বিশ্লেষণ।
 
-### ঘ. বায়ো-অ্যাস্ট্রো হেলথ ও নিউট্রিশন ব্লুপ্রিন্ট (Ketsueki-gata Blueprint)
-- **ফিচার:**
-  - রক্তের গ্রুপ (`A+`, `A-`, `B+`, `B-`, `O+`, `O-`, `AB+`, `AB-`) ইনপুট।
-  - জাপানি কেতসুয়েকি-গাতা ও আয়ুর্বেদিক এলিমেন্টাল মেটাবলিজম ও ডায়েট গাইড।
-  - রাশিভিত্তিক অঙ্গ-প্রত্যঙ্গের সংবেদনশীলতা ও প্রতিরোধমূলক যত্ন।
+### ঘ. ডিপ মেমোরি ও স্টেট পার্জ লাইফসাইকেল (Deep State Purge on Reset)
+- 'রিসেট' বাটনে ক্লিক করার সাথে সাথে `localStorage` মুছে ফেলার পাশাপাশি মডিউলের অভ্যন্তরীণ সমস্ত মেমোরি ভ্যারিয়েবল (`currentAvatar`, `stagedScanImage`, `currentAvatarBase64`) ক্লিন করা হয়।
+- `resetArchetypeModalState()`, `resetAvatarUpload()`, এবং `resetPalmistryModalState()` কল করে সমস্ত মডাল ভিউ ও প্রিভিউ ডিওএম স্ক্র্যাচ থেকে রিস্টোর করা হয়।
 
-### ঙ. অ্যাস্ট্রো-মরফোলজি ও রয়্যাল আর্কিটাইপ স্ক্যানার (Astro-Morphology & Royal Archetype)
-- **মডিউল:** `assets/js/components/archetypeModal.js`, `assets/js/components/morphologyEngine.js`, `assets/js/data/archetypes.js`
-- **ফিচার:**
-  - **১০০% ক্লায়েন্ট-সাইড ক্যানভাস পিক্সেল স্ক্যানার:** আপলোড করা ছবির কালার হিস্টোগ্রাম ও ভাইব্রেন্সি বিশ্লেষণ।
-  - **৭টি রাজকীয় আর্কিটাইপ:**
-    1. 👑 সম্রাট / অধিপতি (The Sovereign)
-    2. ⚔️ অপরাজেয় সেনাপতি (The Commander)
-    3. 🔮 রহস্যময় দ্রষ্টা / দার্শনিক (The Mystic Sage)
-    4. 🎨 যুগান্তকারী রূপকার (The Visionary Creator)
-    5. 🎭 সম্মোহনী দূত (The Charismatic Diplomat)
-    6. ♟️ মহাজাগতিক কুশলী (The Master Strategist)
-    7. 🛡️ মহিমান্বিত রক্ষক (The Noble Guardian)
-  - **৬টি ডাইমেনশনাল মেট্রিক বার:** নেতৃত্ব, সৃজনশীলতা, আধ্যাত্মিকতা, বাচনভঙ্গি, ইচ্ছাশক্তি, দূরদর্শিতা।
-  - **সামুদ্রিক লক্ষণ বিচার (Samudrika Shastra):** মুখের গড়ন, চোখের অরা, কপালের প্রজ্ঞা প্যালেস।
-  - **লাইভ ম্যানুয়াল টিউনিং মোড:** ড্রপডাউন পরিবর্তন করে লাইভ মেট্রিক আপডেট।
-  - **রয়্যাল কার্ড কপি:** এক ক্লিকে দৃষ্টিনন্দন রয়্যাল আর্কিটাইপ কার্ড ক্লিপবোর্ডে কপি।
-
-### চ. ঐতিহাসিক মেলবন্ধন ও মাইলস্টোন বেঞ্চমার্ক
-- একই দিনে জন্ম নেওয়া ৩ জন মনীষীর প্রোফাইল ও ক্যালেন্ডার ইভেন্ট।
-- মনীষীদের বয়সের সাথে অর্জিত ও আসন্ন মাইলস্টোন ছক (ফিল্টার সহ)।
+### ঙ. আন্তর্জাতিক ডুয়েল ল্যাঙ্গুয়েজ ইঞ্জিন (Dual-Language i18n)
+- বাংলা 🇧🇩 এবং English 🇬🇧 এর মধ্যে তাৎক্ষণিক টগল।
+- সমস্ত সংখ্যা, তারিখ ও চার্ট ভ্যালু স্বয়ংক্রিয়ভাবে সংশ্লিষ্ট লিপিতে রূপান্তর (`০-৯` বনাম `0-9`)।
 
 ---
 
-## 5. ডেটা কন্ট্রাক্ট ও স্কিমা (Data Contracts)
-
-### ১. Profile State Schema (`state.js`)
-```typescript
-interface UserProfile {
-  day: number;          // 1 - 31
-  month: number;        // 1 - 12
-  year: number;         // e.g. 1998
-  country: string;      // 'BD' | 'IN' | 'GLOBAL'
-  name: string;         // User full name
-  gender: string;       // 'male' | 'female' | 'other'
-  relationship: string; // 'single' | 'relationship' | 'married' | 'living_together' | 'divorced' | 'widowed'
-  bloodGroup: string;   // 'A+' | 'A-' | 'B+' | 'B-' | 'O+' | 'O-' | 'AB+' | 'AB-' | 'unknown'
-  time: string;         // 'HH:MM'
-  avatar: string;       // Base64 JPEG data URL or empty
-}
-```
-
-### ২. Archetype Profile Schema (`morphologyEngine.js`)
-```typescript
-interface ArchetypeProfile {
-  primaryArchetype: ArchetypeDefinition;
-  secondaryArchetype: ArchetypeDefinition;
-  metrics: {
-    leadership: number;    // 0 - 100
-    creativity: number;    // 0 - 100
-    spirituality: number;  // 0 - 100
-    magnetism: number;     // 0 - 100
-    willpower: number;     // 0 - 100
-    wisdom: number;        // 0 - 100
-  };
-  samudrika: {
-    faceShape: FeatureDetail;
-    eyeAura: FeatureDetail;
-    forehead: FeatureDetail;
-  };
-}
-```
+## 5. গিট ও ব্রাঞ্চিং পলিসি (Git Guidelines)
+- `main` ব্রাঞ্চ সর্বদা প্রোডাকশন-রেডি থাকবে।
+- নতুন কোনো এক্সপেরিমেন্ট বা পরিবর্তন আইসোলেটেড ফিচার ব্রাঞ্চে (যেমন: `feature/palmistry-engine`) সম্পন্ন হবে।
+- প্রতিটি কাজের শেষে ডকুমেন্টেশন সিংক ও পরিষ্কার কমিট মেসেজ নিশ্চিত করা বাধ্যতামূলক।

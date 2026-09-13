@@ -2,11 +2,13 @@
  * Age Statistics Component
  * Live counters for exact elapsed time, astronomical distance & human biological metrics
  */
-import { calculateExactAge, toBnDigits } from '../calculator.js';
+import { calculateExactAge } from '../calculator.js';
+import { getLanguage, formatDigits, formatNumberWithCommas } from '../i18n.js';
 
 export function updateAgeStats(birthDate) {
   if (!birthDate) return;
 
+  const lang = getLanguage();
   const stats = calculateExactAge(birthDate);
 
   // Big 3 Counters
@@ -14,9 +16,9 @@ export function updateAgeStats(birthDate) {
   const elMonths = document.getElementById('statMonths');
   const elDays = document.getElementById('statDays');
 
-  if (elYears) elYears.textContent = toBnDigits(stats.years);
-  if (elMonths) elMonths.textContent = toBnDigits(stats.months);
-  if (elDays) elDays.textContent = toBnDigits(stats.days);
+  if (elYears) elYears.textContent = formatDigits(stats.years);
+  if (elMonths) elMonths.textContent = formatDigits(stats.months);
+  if (elDays) elDays.textContent = formatDigits(stats.days);
 
   // Micro time blocks
   const elWeeks = document.getElementById('statTotalWeeks');
@@ -26,45 +28,63 @@ export function updateAgeStats(birthDate) {
   const elSeconds = document.getElementById('statTotalSeconds');
   const elHeartbeats = document.getElementById('statHeartbeats');
 
-  if (elWeeks) elWeeks.textContent = toBnDigits(stats.totalWeeks.toLocaleString('en-US'));
-  if (elTotalDays) elTotalDays.textContent = toBnDigits(stats.totalDays.toLocaleString('en-US'));
-  if (elHours) elHours.textContent = toBnDigits(stats.totalHours.toLocaleString('en-US'));
-  if (elMinutes) elMinutes.textContent = toBnDigits(stats.totalMinutes.toLocaleString('en-US'));
-  if (elSeconds) elSeconds.textContent = toBnDigits(stats.totalSeconds.toLocaleString('en-US'));
+  if (elWeeks) elWeeks.textContent = formatNumberWithCommas(stats.totalWeeks);
+  if (elTotalDays) elTotalDays.textContent = formatNumberWithCommas(stats.totalDays);
+  if (elHours) elHours.textContent = formatNumberWithCommas(stats.totalHours);
+  if (elMinutes) elMinutes.textContent = formatNumberWithCommas(stats.totalMinutes);
+  if (elSeconds) elSeconds.textContent = formatNumberWithCommas(stats.totalSeconds);
 
   // Approximate Heartbeats (~75 bpm -> 108,000 per day)
   if (elHeartbeats) {
     const estBeats = Math.floor(stats.totalDays * 108000);
     if (estBeats > 1000000000) {
-      elHeartbeats.textContent = `${toBnDigits((estBeats / 1000000000).toFixed(2))} বিলিয়ন+`;
+      const bnUnit = 'বিলিয়ন+';
+      const enUnit = 'Billion+';
+      const numStr = (estBeats / 1000000000).toFixed(2);
+      elHeartbeats.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? bnUnit : enUnit}`;
     } else {
-      elHeartbeats.textContent = toBnDigits(estBeats.toLocaleString('en-US'));
+      elHeartbeats.textContent = formatNumberWithCommas(estBeats);
     }
   }
 
   // Cosmic / Biological Metrics
   const elDistance = document.getElementById('statDistanceTraveled');
   const elBreaths = document.getElementById('statBreaths');
+  const elBlinks = document.getElementById('statBlinks');
   const elSleep = document.getElementById('statSleepYears');
 
   if (elDistance) {
     // Earth travels ~940 million km per year around the Sun
     const km = Math.floor(stats.totalDays * (940000000 / 365.25));
-    elDistance.textContent = `${toBnDigits((km / 1000000).toFixed(1))}M কি.মি.`;
+    const numStr = (km / 1000000).toFixed(1);
+    elDistance.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? 'M কি.মি.' : 'M km'}`;
   }
 
   if (elBreaths) {
     // ~16 breaths per minute = 23,040 breaths per day
     const breaths = Math.floor(stats.totalDays * 23040);
     if (breaths > 1000000) {
-      elBreaths.textContent = `${toBnDigits((breaths / 1000000).toFixed(2))} মিলিয়ন`;
+      const numStr = (breaths / 1000000).toFixed(2);
+      elBreaths.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? 'মিলিয়ন' : 'Million'}`;
     } else {
-      elBreaths.textContent = toBnDigits(breaths.toLocaleString('en-US'));
+      elBreaths.textContent = formatNumberWithCommas(breaths);
+    }
+  }
+
+  if (elBlinks) {
+    // ~20 blinks per minute = 28,800 blinks per day
+    const blinks = Math.floor(stats.totalDays * 28800);
+    if (blinks > 1000000) {
+      const numStr = (blinks / 1000000).toFixed(2);
+      elBlinks.textContent = `${formatDigits(numStr)} ${lang === 'bn' ? 'মিলিয়ন' : 'Million'}`;
+    } else {
+      elBlinks.textContent = formatNumberWithCommas(blinks);
     }
   }
 
   if (elSleep) {
     // ~8 hours per day = 1/3 of life spent sleeping
-    elSleep.textContent = `${toBnDigits((stats.years / 3).toFixed(1))} বছর`;
+    const sleepYrs = (stats.years / 3).toFixed(1);
+    elSleep.textContent = `${formatDigits(sleepYrs)} ${lang === 'bn' ? 'বছর' : 'Years'}`;
   }
 }

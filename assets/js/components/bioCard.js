@@ -1,35 +1,32 @@
 /**
  * Bio Card Component
- * Renders user avatar, name, birthdate, gender badge, region, relationship pill, blood group pill, and quick summary pills
+ * Renders user avatar, name, birthdate, day of week, next birthday, and unlocked deep traits
  */
 import { getZodiac } from '../calculator.js';
-
-const BENGALI_MONTHS = [
-  "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
-  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
-];
+import { getLanguage, t, formatDigits } from '../i18n.js';
+import { LOCALES } from '../data/locales.js';
 
 const RELATIONSHIP_LABELS_SHORT = {
-  single: "💎 সিঙ্গেল",
-  relationship: "❤️ সম্পর্কে আছেন",
-  married: "💍 বিবাহিত",
-  living_together: "🤝 লিভিং টুগেদার",
-  divorced: "🕊️ বিচ্ছেদপ্রাপ্ত",
-  widowed: "🥀 সঙ্গীহারা"
+  single: { bn: "💎 সিঙ্গেল", en: "💎 Single" },
+  relationship: { bn: "❤️ সম্পর্কে আছেন", en: "❤️ In a Relationship" },
+  married: { bn: "💍 বিবাহিত", en: "💍 Married" },
+  living_together: { bn: "🤝 লিভিং টুগেদার", en: "🤝 Living Together" },
+  divorced: { bn: "🕊️ বিচ্ছেদপ্রাপ্ত", en: "🕊️ Divorced" },
+  widowed: { bn: "🥀 সঙ্গীহারা", en: "🥀 Widowed" }
 };
 
-const BENGALI_DAYS = [
-  "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"
-];
-
 export function renderBioCard(data, nextBdayDays) {
-  const userDisplayName = data.name || "অজ্ঞাত পরিব্রাজক";
-  const formattedDate = `${data.day} ${BENGALI_MONTHS[data.month - 1]} ${data.year}`;
+  const lang = getLanguage();
+  const dict = LOCALES[lang] || LOCALES.bn;
+
+  const userDisplayName = data.name ? data.name : (lang === 'bn' ? 'আপনার বয়স প্রোফাইল' : 'Your Age Profile');
+  const monthName = dict.months[data.month - 1] || '';
+  const formattedDate = `${formatDigits(data.day)} ${monthName} ${formatDigits(data.year)}`;
 
   // Calculate Day of Week
   const birthDateObj = new Date(data.year, data.month - 1, data.day);
   const dayOfWeekIndex = birthDateObj.getDay();
-  const dayOfWeekBn = BENGALI_DAYS[dayOfWeekIndex] || "অজ্ঞাত বার";
+  const dayOfWeekName = dict.daysOfWeek[dayOfWeekIndex] || '';
 
   // DOM Elements
   const nameEl = document.getElementById('resultUserName');
@@ -46,19 +43,24 @@ export function renderBioCard(data, nextBdayDays) {
 
   if (nameEl) nameEl.textContent = userDisplayName;
   if (dateTagEl) dateTagEl.textContent = formattedDate;
-  if (dayOfWeekTextEl) dayOfWeekTextEl.textContent = `জন্মবার: ${dayOfWeekBn}`;
+  if (dayOfWeekTextEl) dayOfWeekTextEl.textContent = `${dict.bornOnDay}: ${dayOfWeekName}`;
 
-  // Gender Badge styling
+  // Gender Badge styling (Only show when explicitly set)
   if (genderBadge) {
-    if (data.gender === 'female') {
-      genderBadge.textContent = '👩 মহিলা';
+    if (data.name && data.gender === 'female') {
+      genderBadge.textContent = lang === 'bn' ? '👩 মহিলা' : '👩 Female';
       genderBadge.className = 'absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-rose-600 text-white border border-white dark:border-slate-900';
-    } else if (data.gender === 'other') {
-      genderBadge.textContent = '✨ অন্যান্য';
+      genderBadge.classList.remove('hidden');
+    } else if (data.name && data.gender === 'other') {
+      genderBadge.textContent = lang === 'bn' ? '✨ অন্যান্য' : '✨ Other';
       genderBadge.className = 'absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-purple-600 text-white border border-white dark:border-slate-900';
-    } else {
-      genderBadge.textContent = '👨 পুরুষ';
+      genderBadge.classList.remove('hidden');
+    } else if (data.name && data.gender === 'male') {
+      genderBadge.textContent = lang === 'bn' ? '👨 পুরুষ' : '👨 Male';
       genderBadge.className = 'absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-indigo-600 text-white border border-white dark:border-slate-900';
+      genderBadge.classList.remove('hidden');
+    } else {
+      genderBadge.classList.add('hidden');
     }
   }
 
@@ -73,39 +75,60 @@ export function renderBioCard(data, nextBdayDays) {
     if (avatarImg) avatarImg.classList.add('hidden');
     if (avatarFallback) {
       avatarFallback.classList.remove('hidden');
-      avatarFallback.textContent = data.gender === 'female' ? '👩' : (data.gender === 'other' ? '✨' : '👨');
+      avatarFallback.textContent = data.name ? (data.gender === 'female' ? '👩' : (data.gender === 'other' ? '✨' : '👨')) : '👤';
     }
   }
 
   // Region & Meta
-  const regionName = data.country === 'BD' ? 'বাংলাদেশ 🇧🇩' : (data.country === 'IN' ? 'ভারত 🇮🇳' : 'আন্তর্জাতিক 🌐');
-  const timeInfo = data.time ? ` • সময়: ${data.time}` : '';
-  if (metaEl) {
-    metaEl.textContent = `${regionName} • জন্ম: ${formattedDate} (${dayOfWeekBn})${timeInfo}`;
-  }
+  let regionName = '';
+  if (data.country === 'BD') regionName = lang === 'bn' ? 'বাংলাদেশ 🇧🇩' : 'Bangladesh 🇧🇩';
+  else if (data.country === 'IN') regionName = lang === 'bn' ? 'ভারত 🇮🇳' : 'India 🇮🇳';
+  else if (data.country === 'GLOBAL') regionName = lang === 'bn' ? 'আন্তর্জাতিক 🌐' : 'Global 🌐';
+  else regionName = '';
 
-  // Zodiac Pill (Interactive link)
-  const z = getZodiac(data.month, data.day);
-  if (zodiacPill) {
-    zodiacPill.innerHTML = `✨ রাশি: ${z.nameBn} ${z.sign} <span class="text-[10px] text-cyan-500 font-bold underline ml-1">বিস্তারিত ↗</span>`;
-    zodiacPill.classList.add('cursor-pointer', 'hover:bg-cyan-500/20', 'transition-all');
+  const regionPrefix = regionName ? `${regionName} • ` : '';
+  const timeInfo = data.time && data.time !== '00:00' 
+    ? (lang === 'bn' ? ` • সময়: ${data.time}` : ` • Time: ${data.time}`) 
+    : '';
+
+  if (metaEl) {
+    metaEl.textContent = `${regionPrefix}${formattedDate} (${dayOfWeekName})${timeInfo}`;
   }
 
   // Next Birthday Pill
   if (nextBdayPill) {
-    nextBdayPill.textContent = `পরবর্তী জন্মদিন: আর ${nextBdayDays} দিন বাকি`;
+    nextBdayPill.textContent = lang === 'bn' 
+      ? `পরবর্তী জন্মদিন: আর ${formatDigits(nextBdayDays)} দিন বাকি` 
+      : `Next Birthday: In ${nextBdayDays} Days`;
   }
 
-  // Relationship Pill
+  // Zodiac Pill (Only show when Unlocked >= 70%)
+  const z = getZodiac(data.month, data.day);
+  if (zodiacPill) {
+    const isUnlocked = data.unlockLevel >= 70;
+    if (isUnlocked) {
+      const zTitle = lang === 'bn' ? `${z.nameBn} ${z.sign}` : `${z.name} ${z.sign}`;
+      const moreText = lang === 'bn' ? 'বিস্তারিত ↗' : 'Details ↗';
+      zodiacPill.innerHTML = `✨ ${zTitle} <span class="text-[10px] text-cyan-500 font-bold underline ml-1">${moreText}</span>`;
+      zodiacPill.classList.remove('hidden');
+    } else {
+      zodiacPill.classList.add('hidden');
+    }
+  }
+
+  // Relationship Pill (Only show if explicitly provided in stage 2)
   if (relationshipPill) {
-    const relKey = data.relationship || 'single';
-    relationshipPill.textContent = RELATIONSHIP_LABELS_SHORT[relKey] || RELATIONSHIP_LABELS_SHORT.single;
-    relationshipPill.classList.remove('hidden');
+    if (data.name && data.relationship && RELATIONSHIP_LABELS_SHORT[data.relationship]) {
+      relationshipPill.textContent = RELATIONSHIP_LABELS_SHORT[data.relationship][lang] || RELATIONSHIP_LABELS_SHORT[data.relationship].bn;
+      relationshipPill.classList.remove('hidden');
+    } else {
+      relationshipPill.classList.add('hidden');
+    }
   }
 
-  // Blood Group Pill
+  // Blood Group Pill (Only show if explicitly provided)
   if (bloodGroupPill) {
-    if (data.bloodGroup && data.bloodGroup !== 'unknown' && data.bloodGroup !== '') {
+    if (data.bloodGroup && data.bloodGroup !== 'unknown') {
       bloodGroupPill.textContent = `🩸 ${data.bloodGroup}`;
       bloodGroupPill.classList.remove('hidden');
     } else {
