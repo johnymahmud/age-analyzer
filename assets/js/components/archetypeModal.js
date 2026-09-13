@@ -81,36 +81,36 @@ function getArchetypeModalTemplate() {
   return `
   <div id="archetypeModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 hidden">
     <div id="archetypeModalBackdrop" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity"></div>
-    <div class="relative w-full max-w-6xl h-[92vh] max-h-[860px] min-h-[550px] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10">
+    <div class="relative w-full max-w-6xl h-[85vh] sm:h-[90vh] max-h-[860px] bg-white dark:bg-slate-900 border border-amber-500/30 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col z-10 overscroll-contain">
       
       <!-- ==========================================
            VIEW 1: BIOMETRIC SCANNER & UPLOAD INTAKE
            ========================================== -->
-      <div id="archetypeScannerIntakeView" class="flex-1 flex flex-col overflow-y-auto">
+      <div id="archetypeScannerIntakeView" class="flex-1 flex flex-col overflow-y-auto overscroll-contain">
         <!-- Scanner Header -->
-        <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/50 to-slate-900 text-white flex items-center justify-between">
-          <div class="flex items-center space-x-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl text-amber-400 shadow-inner">
+        <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-900 via-amber-950/50 to-slate-900 text-white flex items-center justify-between shrink-0">
+          <div class="flex items-center space-x-3 sm:space-x-3.5 min-w-0">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-xl sm:text-2xl text-amber-400 shadow-inner shrink-0">
               👑
             </div>
-            <div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-amber-300">
+            <div class="min-w-0">
+              <h2 class="text-base sm:text-xl font-extrabold text-amber-300 truncate">
                 ${lang === 'bn' ? 'AI ফেসিয়াল অরা ও সামুদ্রিক আর্কিটাইপ স্ক্যানার' : 'AI Facial Aura & Archetype Scanner'}
               </h2>
-              <p class="text-xs text-amber-200/80 mt-0.5">
+              <p class="text-[11px] sm:text-xs text-amber-200/80 mt-0.5 truncate">
                 ${lang === 'bn' ? 'প্রাচীন সামুদ্রিক শাস্ত্রীয় লক্ষণ ও মহাজাগতিক ৭টি রাজকীয় আর্কিটাইপ স্ক্যান' : 'Scan ancient Samudrika traits and discover your Royal Persona'}
               </p>
             </div>
           </div>
           <button type="button" id="closeScannerIntakeBtn"
-            class="w-10 h-10 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-base font-bold transition-all cursor-pointer shadow-sm"
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm sm:text-base font-bold transition-all cursor-pointer shadow-sm shrink-0 ml-2"
             title="বন্ধ করুন (Esc)">
             ✕
           </button>
         </div>
 
         <!-- Scanner Body -->
-        <div class="p-6 sm:p-8 space-y-6 flex-1 flex flex-col items-center justify-center">
+        <div class="p-4 sm:p-8 space-y-4 sm:space-y-6 flex-1 flex flex-col items-center justify-start sm:justify-center overflow-y-auto pt-4 sm:pt-8">
           
           <!-- Central Interactive Dropzone / Laser Target Box -->
           <div id="scannerDropzoneContainer"
@@ -191,35 +191,35 @@ function getArchetypeModalTemplate() {
       <!-- ==========================================
            VIEW 2: FULL REVEALED 2-COLUMN VIP HERO SHOWCASE
            ========================================== -->
-      <div id="archetypeDashboardView" class="flex-1 flex flex-col overflow-hidden hidden">
+      <div id="archetypeDashboardView" class="flex-1 flex flex-col overflow-hidden min-h-0 hidden">
         <!-- Top Compact Navigation Header -->
-        <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-900 text-white flex items-center justify-between">
-          <div class="flex items-center space-x-2.5">
-            <span class="text-xl">👑</span>
-            <span class="text-sm font-extrabold tracking-wide text-amber-300 uppercase">
+        <div class="px-4 sm:px-5 py-3 sm:py-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-900 text-white flex items-center justify-between shrink-0">
+          <div class="flex items-center space-x-2.5 min-w-0">
+            <span class="text-lg sm:text-xl shrink-0">👑</span>
+            <span class="text-xs sm:text-sm font-extrabold tracking-wide text-amber-300 uppercase truncate">
               ${lang === 'bn' ? 'রয়্যাল আর্কিটাইপ ও সামুদ্রিক ব্লুপ্রিন্ট' : 'Royal Archetype & Samudrika Blueprint'}
             </span>
           </div>
 
           <button type="button" id="closeArchetypeDashboardBtn"
-            class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-base font-bold transition-all shadow-sm cursor-pointer"
+            class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm sm:text-base font-bold transition-all shadow-sm cursor-pointer shrink-0 ml-2"
             title="বন্ধ করুন (Esc)">
             ✕
           </button>
         </div>
 
-        <!-- 2-Column Split Body Layout -->
-        <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
+        <!-- Responsive Body Layout: Single unified scroll on mobile (<lg), Dual split column on desktop (>=lg) -->
+        <div class="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden min-h-0 overscroll-contain">
           
-          <!-- LEFT HERO PANEL (VIP Persona Showcase, 40% Width) -->
+          <!-- LEFT HERO PANEL (VIP Persona Showcase) -->
           <aside id="archetypeHeroPanel"
-            class="w-full lg:w-[380px] xl:w-[420px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b from-amber-950/40 via-slate-950 to-stone-950 p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5 transition-colors duration-500">
+            class="w-full lg:w-[380px] xl:w-[420px] lg:shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b from-amber-950/40 via-slate-950 to-stone-950 p-4 sm:p-6 flex flex-col items-center justify-between overflow-visible lg:overflow-y-auto space-y-4 sm:space-y-5 transition-colors duration-500">
             
-            <div class="w-full flex flex-col items-center text-center space-y-4">
+            <div class="w-full flex flex-col items-center text-center space-y-3.5 sm:space-y-4">
               
               <!-- Large VIP 3:4 Portrait Photo Frame with Royal Hologram Aura -->
               <div id="archetypeDashboardAvatarBox"
-                class="hero-photo-glow relative w-full max-w-[260px] sm:max-w-[300px] aspect-[3/4] max-h-[360px] sm:max-h-[380px] rounded-3xl overflow-hidden border-2 border-amber-400 shadow-2xl bg-slate-900 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:scale-[1.01] vip-photo-shimmer"
+                class="hero-photo-glow relative w-full max-w-[220px] sm:max-w-[280px] lg:max-w-[300px] aspect-[3/4] max-h-[300px] sm:max-h-[360px] lg:max-h-[380px] rounded-3xl overflow-hidden border-2 border-amber-400 shadow-2xl bg-slate-900 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:scale-[1.01] vip-photo-shimmer"
                 title="নতুন ছবি দিয়ে পুনরায় স্ক্যান করতে ক্লিক করুন 📸">
                 
                 <!-- Dynamic Corner HUD Brackets -->
@@ -308,11 +308,11 @@ function getArchetypeModalTemplate() {
 
           </aside>
 
-          <!-- RIGHT METRICS & INTELLIGENCE DASHBOARD (Scrollable Panel, 60% Width) -->
-          <main class="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 min-h-0 bg-white dark:bg-slate-900">
+          <!-- RIGHT METRICS & INTELLIGENCE DASHBOARD -->
+          <main class="w-full lg:flex-1 overflow-visible lg:overflow-y-auto p-4 sm:p-7 pb-10 sm:pb-7 space-y-5 sm:space-y-6 lg:min-h-0 bg-white dark:bg-slate-900">
             
             <!-- Top Philosophical Quote & Secondary Impact -->
-            <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
+            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-slate-900/40 border border-amber-500/30 space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <span id="archetypeSecondaryBadge" class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 font-bold border border-purple-500/30">
                   সহকারী প্রভাব
@@ -343,9 +343,9 @@ function getArchetypeModalTemplate() {
                 <span>মহাজাগতিক মেধা ও চারিত্রিক মাত্রা (৬টি ডাইমেনশন)</span>
               </h3>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <!-- Leadership -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>👑</span> নেতৃত্ব ও তেজ
@@ -358,7 +358,7 @@ function getArchetypeModalTemplate() {
                 </div>
 
                 <!-- Creativity -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>🎨</span> সৃজনশীলতা ও শিল্পবোধ
@@ -371,7 +371,7 @@ function getArchetypeModalTemplate() {
                 </div>
 
                 <!-- Spirituality -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>🔮</span> আধ্যাত্মিক অন্তর্দৃষ্টি
@@ -384,7 +384,7 @@ function getArchetypeModalTemplate() {
                 </div>
 
                 <!-- Magnetism / Speech -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>🎙️</span> বাচনভঙ্গি ও আকর্ষণ
@@ -397,7 +397,7 @@ function getArchetypeModalTemplate() {
                 </div>
 
                 <!-- Willpower -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>⚔️</span> ইচ্ছাশক্তি ও মানসিক দৃঢ়তা
@@ -410,7 +410,7 @@ function getArchetypeModalTemplate() {
                 </div>
 
                 <!-- Wisdom -->
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div class="flex justify-between items-center text-xs font-semibold">
                     <span class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                       <span>🦉</span> দূরদর্শিতা ও প্রজ্ঞা
@@ -425,28 +425,28 @@ function getArchetypeModalTemplate() {
             </div>
 
             <!-- Samudrika Shastra Facial Signatures -->
-            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
+            <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-3">
               <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
                 <span>👁️</span>
                 <span>সামুদ্রিক লক্ষণ বিচার (Facial Morpho-Signatures)</span>
               </h3>
 
               <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div class="p-3 sm:p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
                   <span class="text-slate-500 dark:text-slate-400 font-bold block">মুখের গঠন (Face Shape):</span>
                   <p id="samudrikaFaceShapeText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
                     বর্গাকার (Square) — নেতৃত্ব, প্রশাসনিক দৃঢ়তা ও বাস্তববাদী লক্ষ্য।
                   </p>
                 </div>
 
-                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div class="p-3 sm:p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
                   <span class="text-slate-500 dark:text-slate-400 font-bold block">দৃষ্টি ও চোখের অরা (Eyes):</span>
                   <p id="samudrikaEyeAuraText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
                     তীক্ষ্ণ ও প্রখর দৃষ্টি — অন্যকে প্রভাবিত করার ও দূরদর্শী দৃষ্টিভঙ্গির লক্ষণ।
                   </p>
                 </div>
 
-                <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div class="p-3 sm:p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
                   <span class="text-slate-500 dark:text-slate-400 font-bold block">কপাল ও প্রজ্ঞা প্যালেস:</span>
                   <p id="samudrikaForeheadText" class="text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
                     প্রশস্ত ও রাজকীয় কপাল — উচ্চাকাঙ্ক্ষা, সামাজিক প্রতিষ্ঠা ও প্রজ্ঞার উজ্জ্বল ধারা।
@@ -456,9 +456,9 @@ function getArchetypeModalTemplate() {
             </div>
 
             <!-- Strengths, Challenges & Ideal Domains -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               <!-- Strengths -->
-              <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+              <div class="p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
                 <h4 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                   <span>💎</span> রাজকীয় শক্তি ও দক্ষতা
                 </h4>
@@ -470,7 +470,7 @@ function getArchetypeModalTemplate() {
               </div>
 
               <!-- Challenges / Shadow Traits -->
-              <div class="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-2">
+              <div class="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-2">
                 <h4 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
                   <span>⚠️</span> সচেতনতা ও ভারসাম্য রক্ষার দিক
                 </h4>
@@ -483,7 +483,7 @@ function getArchetypeModalTemplate() {
             </div>
 
             <!-- Ideal Careers / Life Domain -->
-            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-slate-700 dark:text-slate-300">
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-slate-700 dark:text-slate-300">
               <strong class="text-indigo-600 dark:text-indigo-400 block mb-1">🏛️ সেরা কর্মক্ষেত্র ও সামাজিক ভূমিকা:</strong>
               <span id="archetypeCareerAdvice">
                 রাষ্ট্রপরিচালনা, সিইও/উদ্যোক্তা, নীতিনির্ধারণ, সামরিক ও মহাকাশ প্রযুক্তি, বিচার বিভাগ ও আন্তর্জাতিক নেতৃত্ব।
@@ -494,14 +494,14 @@ function getArchetypeModalTemplate() {
         </div>
 
         <!-- Dashboard Footer -->
-        <div class="p-3.5 sm:p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80 flex items-center justify-between text-xs text-slate-500">
-          <div class="flex items-center space-x-2">
-            <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-            <span>১০০% ক্লায়েন্ট-সাইড অফস্ক্রিন ক্যানভাস ও সামুদ্রিক শাস্ত্রীয় অ্যালগরিদম</span>
+        <div class="p-3 sm:p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80 flex items-center justify-between gap-2 text-xs text-slate-500 shrink-0">
+          <div class="flex items-center space-x-2 min-w-0 flex-1">
+            <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0"></span>
+            <span class="text-[11px] sm:text-xs truncate">১০০% ক্লায়েন্ট-সাইড অফস্ক্রিন ক্যানভাস ও সামুদ্রিক শাস্ত্রীয় অ্যালগরিদম</span>
           </div>
 
           <button type="button" id="closeArchetypeModalFooterBtn"
-            class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold transition-all cursor-pointer">
+            class="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm transition-all cursor-pointer shrink-0 ml-2">
             বন্ধ করুন
           </button>
         </div>
@@ -528,6 +528,11 @@ export function resetArchetypeModalState() {
 
 export function openArchetypeModal(userData, avatarBase64) {
   if (!userData) return;
+
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ left: 0 });
+    if (document.documentElement) document.documentElement.scrollLeft = 0;
+  }
 
   const appState = getState();
   currentModalUserData = userData;
@@ -818,8 +823,8 @@ function renderArchetypeContent(profile, userData, avatarBase64, modalEl) {
   const avatarBox = (modalEl ? modalEl.querySelector('#archetypeDashboardAvatarBox') : null) || document.getElementById('archetypeDashboardAvatarBox');
 
   if (heroPanel) {
-    // Reset background gradients and apply luxury jewel-tone gradient
-    heroPanel.className = `w-full lg:w-[380px] xl:w-[420px] shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b ${theme.bgGradient} p-5 sm:p-6 flex flex-col items-center justify-between overflow-y-auto no-scrollbar space-y-5 transition-colors duration-500`;
+    // Reset background gradients and apply luxury jewel-tone gradient while preserving responsive scroll
+    heroPanel.className = `w-full lg:w-[380px] xl:w-[420px] lg:shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-gradient-to-b ${theme.bgGradient} p-4 sm:p-6 flex flex-col items-center justify-between overflow-visible lg:overflow-y-auto space-y-4 sm:space-y-5 transition-colors duration-500`;
   }
 
   if (avatarBox) {
