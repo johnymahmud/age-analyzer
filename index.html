@@ -153,8 +153,71 @@
       class="no-print bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-xl dark:shadow-2xl glow-effect max-w-3xl mx-auto">
       <form id="lifeTimelineForm" class="space-y-6">
 
+<<<<<<< Updated upstream
         <!-- Date Row (Day, Month, Year only) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+=======
+        <!-- Profile Picture / Avatar Upload & User Profile Section -->
+        <div
+          class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 pb-6 border-b border-slate-200 dark:border-slate-800/80">
+
+          <!-- Avatar Upload Box -->
+          <div class="relative group cursor-pointer" id="avatarUploadContainer"
+            title="ছবি নির্বাচন বা ড্রপ করতে ক্লিক করুন">
+            <div id="avatarPreviewBox"
+              class="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-gradient-to-tr dark:from-slate-800 dark:to-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 flex items-center justify-center overflow-hidden transition-all shadow-md group-hover:scale-105">
+              <img id="avatarImage" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+              <div id="avatarPlaceholder"
+                class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2 text-center pointer-events-none">
+                <svg class="w-8 h-8 text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span data-i18n="avatarUpload"
+                  class="text-[10px] mt-1 font-semibold text-slate-600 dark:text-slate-400">ছবি আপলোড</span>
+              </div>
+            </div>
+            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
+            <button type="button" id="removeAvatarBtn" title="ছবি মুছুন"
+              class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center text-xs shadow-md hidden transition-transform hover:scale-110">
+              ✕
+            </button>
+          </div>
+
+          <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Full Name -->
+            <div>
+              <label for="userName" data-i18n="userNameLabel"
+                class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                আপনার পুরো নাম (Name)
+              </label>
+              <input type="text" id="userName" data-i18n-placeholder="userNamePlaceholder"
+                placeholder="যেমন: মোঃ শাহ মাহমুদ"
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm">
+            </div>
+
+            <!-- Gender / Sex -->
+            <div>
+              <label for="userGender" data-i18n="userGenderLabel"
+                class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                লিঙ্গ (Gender / Sex)
+              </label>
+              <select id="userGender"
+                class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm">
+                <option value="male" data-i18n="genderMale" selected>👨 পুরুষ (Male)</option>
+                <option value="female" data-i18n="genderFemale">👩 মহিলা (Female)</option>
+                <option value="other" data-i18n="genderOther">✨ অন্যান্য (Other / Non-Binary)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date & Region Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+>>>>>>> Stashed changes
           <!-- Day -->
           <div>
             <label for="dobDay" data-i18n="dayLabel"
@@ -228,6 +291,7 @@
               class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               বছর (Year)
             </label>
+<<<<<<< Updated upstream
             <input type="number" id="dobYear" min="1900" max="2026" data-i18n-placeholder="yearPlaceholder" placeholder="যেমন: 1995" required
               class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-2xl px-4 py-3 text-slate-900 dark:text-slate-100 font-semibold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
           </div>
@@ -235,6 +299,46 @@
 
         <!-- Center-Aligned Calculate Action -->
         <div class="flex flex-col items-center justify-center space-y-3 pt-4">
+=======
+            <input type="number" id="dobYear" min="1900" max="2026" data-i18n-placeholder="yearPlaceholder"
+              placeholder="যেমন: 1988" required
+              class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+          </div>
+
+          <!-- Region / Country -->
+          <div>
+            <label for="userCountry" data-i18n="countryLabel"
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+              দেশ / অঞ্চল (Region)
+            </label>
+            <select id="userCountry"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700/80 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+              <option value="BD" selected>🇧🇩 বাংলাদেশ (Bangladesh)</option>
+              <option value="IN">🇮🇳 ভারত (India)</option>
+              <option value="GLOBAL">🌐 বৈশ্বিক (Global / Others)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Optional Birth Time -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+          <div>
+            <label for="birthTime" data-i18n="birthTimeLabel"
+              class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+              জন্ম সময় (যদি জানা থাকে - ঐচ্ছিক)
+            </label>
+            <input type="time" id="birthTime" value="00:00"
+              class="w-full bg-slate-50 dark:bg-slate-950/70 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+          </div>
+          <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 sm:pt-4">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 shrink-0"></span>
+            <span data-i18n="privacyNote">আপনার ছবি ও তথ্য সম্পূর্ণ সুরক্ষিতভাবে কেবল ব্রাউজারের লোকাল স্টোরেজে
+              থাকে।</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center pt-2">
+>>>>>>> Stashed changes
           <button type="submit" id="calculateBtn"
             class="w-full sm:w-auto px-8 sm:px-12 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 text-white font-bold text-sm sm:text-base shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-2.5 cursor-pointer whitespace-nowrap">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,6 +367,7 @@
     <div id="resultsContainer" class="hidden">
       <div class="flex flex-col lg:flex-row gap-8 items-start">
 
+<<<<<<< Updated upstream
         <!-- 👑 LEFT COLUMN: Large Prominent VIP User Profile Card (Sidebar on Desktop) -->
         <aside class="w-full lg:w-[340px] xl:w-[380px] shrink-0 lg:sticky lg:top-24 space-y-6">
           <div class="bg-white/95 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl dark:shadow-2xl print-card relative overflow-hidden backdrop-blur-xl">
@@ -272,6 +377,56 @@
               <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
                 <span>👑</span> <span>VIP PERSONA</span>
               </span>
+=======
+      <!-- Action Bar -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 backdrop-blur-md shadow-sm no-print">
+        <div class="flex items-center space-x-2 text-slate-600 dark:text-slate-300 text-sm">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+          <span data-i18n="liveUpdateActive" class="font-semibold text-slate-800 dark:text-slate-200">লাইভ আপডেট
+            সক্রিয়</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button id="copySummaryBtn" type="button"
+            class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm font-semibold border border-slate-200 dark:border-slate-700/60 transition-all flex items-center space-x-2 shadow-sm">
+            <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span data-i18n="copySummaryBtn">Copy Summary</span>
+          </button>
+          <button id="downloadPdfBtn" type="button"
+            class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/25 transition-all flex items-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span data-i18n="downloadPdfBtn">Download PDF Report</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Personalized User Bio Card (Appears in UI and Print) -->
+      <section
+        class="bg-white/90 dark:bg-gradient-to-r dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-lg dark:shadow-xl print-card">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-5">
+          <div class="relative shrink-0">
+            <img id="resultAvatarImg" src="" alt="Profile"
+              class="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-500 shadow-md">
+            <div id="resultAvatarFallback"
+              class="w-20 h-20 rounded-2xl bg-indigo-500/10 dark:bg-indigo-600/20 border-2 border-indigo-500 flex items-center justify-center text-3xl font-bold text-indigo-600 dark:text-indigo-300">
+              👤
+            </div>
+            <span id="resultGenderBadge"
+              class="absolute -bottom-2 -right-2 text-xs px-2.5 py-0.5 rounded-full font-bold shadow-md bg-indigo-600 text-white border border-white dark:border-slate-900">
+              👨 পুরুষ
+            </span>
+          </div>
+          <div class="text-center sm:text-left space-y-1.5 flex-1">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h2 id="resultUserName" class="text-2xl font-extrabold text-slate-900 dark:text-white print-text-dark">MD.
+                SHAH MAHMUD</h2>
+>>>>>>> Stashed changes
               <span id="activeBirthDateTag"
                 class="text-xs font-mono px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-300 border border-slate-200 dark:border-slate-700 font-semibold shrink-0"></span>
             </div>
@@ -305,6 +460,7 @@
               <span id="activeBirthDayOfWeekText"
                 class="text-[11px] px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold"></span>
               <span id="resultNextBdayPill"
+<<<<<<< Updated upstream
                 class="text-[11px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold"></span>
               <span id="resultZodiacPill"
                 class="text-[11px] px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-semibold cursor-pointer hover:bg-cyan-500/20 transition-all hidden"></span>
@@ -312,6 +468,180 @@
                 class="text-[11px] px-3 py-1 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/30 font-semibold hidden"></span>
               <span id="resultBloodGroupPill"
                 class="text-[11px] px-3 py-1 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/30 font-semibold hidden"></span>
+=======
+                class="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-semibold"></span>
+              <span data-i18n="profileTitle"
+                class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold">ব্যক্তিগত
+                প্রোফাইল</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. Age Counter Cards -->
+      <section class="space-y-4">
+        <div class="flex items-center space-x-3">
+          <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 data-i18n="ageSectionTitle" class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">
+            ১. নিখুঁত বয়স ও অতিবাহিত সময়</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div
+            class="bg-white/90 dark:bg-gradient-to-br dark:from-indigo-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-indigo-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
+            <span data-i18n="yearsLabel"
+              class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block mb-1">বছর
+              (Years)</span>
+            <div id="statYears"
+              class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
+              ০</div>
+            <span data-i18n="yearsSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">পূর্ণ সৌর
+              পরিক্রমা</span>
+          </div>
+
+          <div
+            class="bg-white/90 dark:bg-gradient-to-br dark:from-purple-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-purple-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
+            <span data-i18n="monthsLabel"
+              class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 block mb-1">মাস
+              (Months)</span>
+            <div id="statMonths"
+              class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
+              ০</div>
+            <span data-i18n="monthsSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত
+              মাস</span>
+          </div>
+
+          <div
+            class="bg-white/90 dark:bg-gradient-to-br dark:from-emerald-950/40 dark:via-slate-900/80 dark:to-slate-900/60 border border-emerald-500/30 rounded-3xl p-6 text-center shadow-lg dark:shadow-xl print-card">
+            <span data-i18n="daysLabel"
+              class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">দিন
+              (Days)</span>
+            <div id="statDays"
+              class="text-5xl sm:text-6xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight print-text-dark">
+              ০</div>
+            <span data-i18n="daysSub" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">অতিরিক্ত দিন</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="totalWeeks" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট
+              সপ্তাহ</span>
+            <span id="statTotalWeeks"
+              class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+          </div>
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="totalDays" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট
+              দিন</span>
+            <span id="statTotalDays"
+              class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+          </div>
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="elapsedHours"
+              class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">অতিবাহিত ঘণ্টা</span>
+            <span id="statTotalHours"
+              class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+          </div>
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="totalMinutes" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">মোট
+              মিনিট</span>
+            <span id="statTotalMinutes"
+              class="text-xl font-bold text-slate-800 dark:text-slate-100 font-mono print-text-dark">০</span>
+          </div>
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-indigo-500/30 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="liveSeconds"
+              class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 block">লাইভ সেকেন্ড ⏱️</span>
+            <span id="statTotalSeconds"
+              class="text-xl font-bold text-indigo-600 dark:text-indigo-300 font-mono print-text-dark">০</span>
+          </div>
+          <div
+            class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm print-card">
+            <span data-i18n="heartbeats"
+              class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">আনুমানিক হৃদস্পন্দন ❤️</span>
+            <span id="statHeartbeats"
+              class="text-xl font-bold text-rose-600 dark:text-rose-400 font-mono print-text-dark">০</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Next Birthday & Zodiac -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Birthday Countdown Card -->
+        <div
+          class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span data-i18n="birthdayCardTitle"
+                class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+                🎂 পরবর্তী জন্মদিন কাউন্টডাউন
+              </span>
+              <span id="nextBirthdayDate"
+                class="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold"></span>
+            </div>
+            <p data-i18n="birthdayRemainingText" class="text-sm text-slate-600 dark:text-slate-300 mb-6">পরবর্তী জন্মদিন
+              উদযাপন করার জন্য সময় বাকি আছে:
+            </p>
+
+            <div class="grid grid-cols-4 gap-2 text-center">
+              <div
+                class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
+                <span id="cdDays"
+                  class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০</span>
+                <span data-i18n="cdDays"
+                  class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">দিন</span>
+              </div>
+              <div
+                class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
+                <span id="cdHours"
+                  class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                <span data-i18n="cdHours"
+                  class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">ঘণ্টা</span>
+              </div>
+              <div
+                class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
+                <span id="cdMinutes"
+                  class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                <span data-i18n="cdMinutes"
+                  class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">মিনিট</span>
+              </div>
+              <div
+                class="bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-inner">
+                <span id="cdSeconds"
+                  class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono block">০০</span>
+                <span data-i18n="cdSeconds"
+                  class="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">সেকেন্ড</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span data-i18n="nextAgeText">পরবর্তী জন্মদিনে আপনার বয়স হবে:</span>
+            <span id="nextAgeLabel" class="font-bold text-slate-800 dark:text-slate-200 text-sm">০ বছর</span>
+          </div>
+        </div>
+
+        <!-- Zodiac Card -->
+        <div
+          class="bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-lg dark:shadow-xl flex flex-col justify-between print-card">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span data-i18n="zodiacCardHeader"
+                class="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                ✨ রাশিচক্র (Zodiac Sign)
+              </span>
+              <span id="zodiacDateSpan" class="text-xs text-slate-500 dark:text-slate-400 font-semibold"></span>
+>>>>>>> Stashed changes
             </div>
 
           </div>
@@ -575,6 +905,7 @@
                 </div>
               </div>
 
+<<<<<<< Updated upstream
               <!-- Card 2: Milestones Benchmark -->
               <div id="cardHookMilestones"
                 class="group relative bg-white/90 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 hover:border-purple-500/60 dark:hover:border-purple-500/60 rounded-3xl p-5 backdrop-blur-xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer">
@@ -600,6 +931,16 @@
                   </button>
                 </div>
               </div>
+=======
+          <div
+            class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
+            <span data-i18n="zodiacCardFooterTrait">বৈশিষ্ট্য: নেতৃত্ব, উদ্যম ও দৃঢ়তা</span>
+            <span data-i18n="zodiacCardFooterSystem" class="text-slate-400 dark:text-slate-500">পাশ্চাত্য
+              জ্যোতিষবিজ্ঞান</span>
+          </div>
+        </div>
+      </section>
+>>>>>>> Stashed changes
 
               <!-- Card 3: Deep Zodiac & Astrology -->
               <div id="cardHookZodiac"
@@ -653,6 +994,7 @@
                 </div>
               </div>
             </div>
+<<<<<<< Updated upstream
           </section>
 
           <!-- 4. Bottom Social & Export Hub (Clean Centered Action Bar) -->
@@ -689,6 +1031,128 @@
             </div>
           </div>
         </div>
+=======
+            <div>
+              <h2 data-i18n="historicalSectionTitle"
+                class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">২. ঐতিহাসিক মেলবন্ধন
+                (Historical Insights)</h2>
+              <p data-i18n="historicalSectionSub" class="text-xs text-slate-500 dark:text-slate-400">আপনার জন্মদিনের
+                তারিখে বিশ্ব ইতিহাসের বিশিষ্ট
+                ব্যক্তিত্ব ও যুগান্তকারী ঘটনা</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personalities Grid -->
+        <div class="space-y-3">
+          <h3 data-i18n="famousPeopleTitle"
+            class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            🌟 আপনার জন্মদিনে জন্ম নেওয়া বিখ্যাত ব্যক্তিত্ব
+          </h3>
+          <div id="famousPersonalitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- Events Container -->
+        <div class="space-y-3">
+          <h3 data-i18n="eventsTitle"
+            class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            📜 উল্লেখযোগ্য ঐতিহাসিক ঘটনা ও আবিষ্কার
+          </h3>
+          <div id="historicalEventsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+      </section>
+
+      <!-- 4. Milestone Benchmark Table -->
+      <section class="space-y-4 page-break">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center space-x-3">
+            <div class="p-2 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <div>
+              <h2 data-i18n="milestonesTitle"
+                class="text-xl font-bold text-slate-900 dark:text-slate-100 print-text-dark">৩. "আপনার বয়সে তাঁরা যা
+                করেছিলেন" (Milestone Benchmark)</h2>
+              <p data-i18n="milestonesSub" class="text-xs text-slate-500 dark:text-slate-400">আপনার বর্তমান বয়সের সাথে
+                মনীষীদের অর্জনের তুলনামূলক
+                পর্যবেক্ষণ</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button id="filterAllMilestones" data-i18n="filterAll" type="button"
+              class="text-xs px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-sm transition-all">সব
+              দেখুন</button>
+            <button id="filterNearMilestones" data-i18n="filterNear" type="button"
+              class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all font-semibold">আপনার
+              বয়সের কাছাকাছি</button>
+          </div>
+        </div>
+
+        <div
+          class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl shadow-lg print-card">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr
+                class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                <th data-i18n="thAge" class="py-3.5 px-4 font-bold">বয়স (Age)</th>
+                <th data-i18n="thPerson" class="py-3.5 px-4 font-bold">মনীষী / ব্যক্তিত্ব</th>
+                <th data-i18n="thField" class="py-3.5 px-4 font-bold">ক্ষেত্র</th>
+                <th data-i18n="thAchievement" class="py-3.5 px-4 font-bold">ঐতিহাসিক কীর্তি ও যুগান্তকারী অর্জন</th>
+                <th data-i18n="thStatus" class="py-3.5 px-4 font-bold text-right">স্ট্যাটাস</th>
+              </tr>
+            </thead>
+            <tbody id="benchmarkTableBody" class="divide-y divide-slate-200 dark:divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. Cosmic Stats -->
+      <section
+        class="no-print bg-white/90 dark:bg-gradient-to-r dark:from-slate-900 dark:via-indigo-950/30 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-lg">
+        <h3 data-i18n="cosmicTitle"
+          class="text-sm font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-4">
+          🚀 আপনার মহাজাগতিক যাত্রা (Cosmic Statistics)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div
+            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span data-i18n="cosmicDist" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">সূর্যকে প্রদক্ষিণ
+              করে মহাকাশে পাড়ি
+              দিয়েছেন</span>
+            <span id="statDistanceTraveled"
+              class="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-300 font-mono">০</span>
+            <span data-i18n="cosmicDistUnit" class="text-[11px] text-slate-500 block mt-1">কিলোমিটার (আনুমানিক)</span>
+          </div>
+          <div
+            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span data-i18n="cosmicBreaths" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">মোট গৃহীত
+              আনুমানিক নিঃশ্বাস</span>
+            <span id="statBreaths"
+              class="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-300 font-mono">০</span>
+            <span data-i18n="cosmicBreathsUnit" class="text-[11px] text-slate-500 block mt-1">বার (প্রতি মিনিটে গড়ে
+              ১৬টি)</span>
+          </div>
+          <div
+            class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span data-i18n="cosmicSleep" class="text-xs text-slate-500 dark:text-slate-400 block mb-1">ঘুমের মধ্যে
+              কাটিয়েছেন প্রায়</span>
+            <span id="statSleepYears"
+              class="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-300 font-mono">০</span>
+            <span data-i18n="cosmicSleepUnit" class="text-[11px] text-slate-500 block mt-1">বছর (দৈনিক গড়ে ৮ ঘণ্টা
+              হিসাব)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Ad Slot (AdSense / Media.net Display Banner 728x90) -->
+      <div class="no-print">
+        <div class="ad-container" id="ad-bottom-slot" data-ad-slot="bottom">
+          <!-- AD_CODE_HERE: Paste Bottom Banner ad script here -->
+        </div>
+>>>>>>> Stashed changes
       </div>
     </div>
   </main>
@@ -696,17 +1160,21 @@
   <!-- Footer with Legal & Privacy Compliance for AdSense / Media.net -->
   <footer
     class="mt-16 border-t border-slate-200 dark:border-slate-900 py-8 text-center text-xs text-slate-500 no-print space-y-2">
-    <p data-i18n="footerCopyright">© লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার | ডেটা ব্রাউজারের লোকাল স্টোরেজে সম্পূর্ণ সুরক্ষিত ও গোপনীয়</p>
+    <p data-i18n="footerCopyright">© লাইফ-টাইমলাইন ও হিস্টোরিক্যাল এজ অ্যানালাইজার | ডেটা ব্রাউজারের লোকাল স্টোরেজে
+      সম্পূর্ণ সুরক্ষিত ও গোপনীয়</p>
     <div class="flex items-center justify-center space-x-4 text-[11px] text-slate-400">
-      <span data-i18n="privacyPolicyLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="privacyPolicyLink"
+        class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('গোপনীয়তা নীতি: এই অ্যাপ্লিকেশনটি আপনার কোনো ব্যক্তিগত তথ্য বা ছবি কোনো সার্ভারে পাঠায় না। সকল তথ্য শুধুমাত্র আপনার নিজস্ব ডিভাইসের ব্রাউজারে সংরক্ষিত থাকে।')">প্রাইভেসি
         পলিসি</span>
       <span>•</span>
-      <span data-i18n="termsLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="termsLink"
+        class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('শর্তাবলী: এই অ্যাপের ঐতিহাসিক ও জ্যোতির্বৈজ্ঞানিক তথ্যসমূহ শিক্ষামূলক এবং বিনোদনমূলক উদ্দেশ্যে উপস্থাপিত।')">ব্যবহারের
         শর্তাবলী</span>
       <span>•</span>
-      <span data-i18n="adPolicyLink" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+      <span data-i18n="adPolicyLink"
+        class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
         onclick="alert('অ্যাডভার্টাইজমেন্ট নীতি: এই সাইটে দেখানো বিজ্ঞাপনসমূহ তৃতীয় পক্ষ অ্যাড নেটওয়ার্ক (যেমন Google AdSense, Media.net) দ্বারা পরিচালিত হতে পারে।')">বিজ্ঞাপন
         নীতিমালা</span>
     </div>
